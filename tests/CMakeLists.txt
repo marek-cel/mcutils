@@ -15,6 +15,7 @@ add_subdirectory(math)
 add_subdirectory(misc)
 add_subdirectory(time)
 add_subdirectory(physics)
+add_subdirectory(xml)
 
 ################################################################################
 
@@ -47,6 +48,7 @@ target_link_libraries(${TARGET_NAME}
     $<TARGET_OBJECTS:tests-mcutils-misc>
     $<TARGET_OBJECTS:tests-mcutils-physics>
     $<TARGET_OBJECTS:tests-mcutils-time>
+    $<TARGET_OBJECTS:tests-mcutils-xml>
     ${LIBS}
 )
 

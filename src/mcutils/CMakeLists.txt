@@ -15,6 +15,7 @@ add_subdirectory(math)
 add_subdirectory(misc)
 add_subdirectory(physics)
 add_subdirectory(time)
+add_subdirectory(xml)
 
 ################################################################################
 
@@ -32,6 +33,7 @@ add_library(${TARGET_NAME} ${SOURCES}
     $<TARGET_OBJECTS:mcutils-math>
     $<TARGET_OBJECTS:mcutils-misc>
     $<TARGET_OBJECTS:mcutils-physics>
+    $<TARGET_OBJECTS:mcutils-xml>
 )
 
 ################################################################################
