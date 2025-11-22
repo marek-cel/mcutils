@@ -1,0 +1,72 @@
+pipeline {
+    agent any
+
+    environment {
+        RECIPIENT_LIST = 'dev@marekcel.pl'
+    }
+
+    triggers {
+        cron('0 1 * * 6')
+        pollSCM('0 1 * * *')
+    }
+
+    options {
+        skipStagesAfterUnstable()
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                bat 'cmake . --preset=windows-release-conf -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake -B build'
+                bat 'cmake --build --preset=windows-release-build'
+            }
+        }
+        stage('Test') {
+            steps {
+                bat 'cd build && ctest'
+            }
+        }
+        stage('Pack') {
+            steps {
+                bat 'cd build && cpack'
+                powershell "mkdir C:/xampp/htdocs/jenkins/${env.JOB_NAME}"
+                powershell "cp build/mc-sim-*-win64.zip C:/xampp/htdocs/jenkins/${env.JOB_NAME}/mc-sim-win64-build-${env.BUILD_NUMBER}.zip"
+            }
+        }
+    }
+
+    post {
+        success {
+            script {
+                def buildDate = new Date(currentBuild.startTimeInMillis).format("yyyy-MM-dd")
+                env.BUILD_DATE = buildDate
+                def jenkinsBaseUrl = env.BUILD_URL.split('/')[2].split(':')[0]
+                env.JENKINS_BASE_URL = jenkinsBaseUrl
+
+                // Extract GitHub repository and commit URL
+                def gitRepo = env.GIT_URL.split(':')[1].replace('.git', '')
+                env.GITHUB_COMMIT_URL = "https://github.com/${gitRepo}/commit/${env.GIT_COMMIT}"
+            }
+            emailext (
+                to: "${env.RECIPIENT_LIST}",
+                subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                <p><a href='${env.GITHUB_COMMIT_URL}'>Git Commit</a></p>
+                <p><a href='${env.BUILD_URL}'>Summary</a></p>
+                <p><a href='http://${env.JENKINS_BASE_URL}/jenkins/${env.JOB_NAME}/'>Download</a></p>""",
+                mimeType: 'text/html'
+            )
+        }
+
+        failure {
+            emailext (
+                to: "${env.RECIPIENT_LIST}",
+                subject: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: """<p>FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                <p><a href='${env.GITHUB_COMMIT_URL}'>Git Commit</a></p>
+                <p><a href='${env.BUILD_URL}'>Summary</a></p>""",
+                mimeType: 'text/html'
+            )
+        }
+    }
+}

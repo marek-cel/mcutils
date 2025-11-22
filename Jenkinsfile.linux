@@ -1,0 +1,108 @@
+pipeline {
+    agent {
+        dockerfile {
+            args '-v /var/www/html/jenkins/:/var/www/html/jenkins/'
+        }
+    }
+
+    environment {
+        RECIPIENT_LIST = 'dev@marekcel.pl'
+    }
+
+    triggers {
+        cron('0 1 * * 6')
+        pollSCM('0 1 * * *')
+    }
+
+    options {
+        skipStagesAfterUnstable()
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'echo ">>> Building..."'
+                sh """cmake . -DCMAKE_BUILD_TYPE=Release \
+                    -DBUILD_TESTING=On \
+                    -DTESTS_COVERAGE=On \
+                    -DCMAKE_CXX_FLAGS="-O0 --coverage -fno-default-inline -fno-inline -fno-inline-small-functions -fprofile-arcs -ftest-coverage -pedantic" \
+                    -B build"""
+                sh 'cmake --build build -j 4 --target all tests-mcutils --'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'echo ">>> Testing..."'
+                sh 'sleep 1'
+                sh 'cd build && ctest'
+            }
+        }
+        stage('Generate reports') {
+            steps {
+                sh 'echo ">>> Generating reports..."'
+                sh 'cd utils && python3 ./generate_coverage-report.py'
+                sh 'cppcheck --enable=style --std=c++17 -I ./src -I ./sdk ./sdk ./src 2> cppcheck-report.txt'
+                sh """cpplint \
+                    --filter=-build/c++11,+build/c++14,+build/c++17,+build/c++20,-readability/multiline_comment,-readability/alt_tokens,-whitespace,-legal/copyright,-build/include_order \
+                    --linelength=120 \
+                    --extensions=h,cpp \
+                    --root=./sdk \
+                    ./src/mcutils//*.h \
+                    ./src/mcutils/*/*.h \
+                    ./src/mcutils/*/*.cpp \
+                    2> cpplint-report.txt || true"""
+            }
+        }
+        stage('Publish') {
+            steps {
+                sh 'echo ">>> Publishing..."'
+                sh "mkdir -p /var/www/html/jenkins/coverage-reports/${env.JOB_NAME}"
+                sh "mkdir -p /var/www/html/jenkins/cppcheck-reports/${env.JOB_NAME}"
+                sh "mkdir -p /var/www/html/jenkins/cpplint-reports/${env.JOB_NAME}"
+                sh """cp -r coverage-report \
+                    /var/www/html/jenkins/coverage-reports/${env.JOB_NAME}/\$(date +%Y-%m-%d)_build-${env.BUILD_NUMBER}"""
+                sh """cp cppcheck-report.txt \
+                    /var/www/html/jenkins/cppcheck-reports/${env.JOB_NAME}/\$(date +%Y-%m-%d)_build-${env.BUILD_NUMBER}.txt"""
+                sh """cp cpplint-report.txt \
+                    /var/www/html/jenkins/cpplint-reports/${env.JOB_NAME}/\$(date +%Y-%m-%d)_build-${env.BUILD_NUMBER}.txt"""
+            }
+        }
+    }
+
+    post {
+        success {
+            script {
+                def buildDate = new Date(currentBuild.startTimeInMillis).format("yyyy-MM-dd")
+                env.BUILD_DATE = buildDate
+                def jenkinsBaseUrl = env.BUILD_URL.split('/')[2].split(':')[0]
+                env.JENKINS_BASE_URL = jenkinsBaseUrl
+
+                // Extract GitHub repository and commit URL
+                def gitRepo = env.GIT_URL.split(':')[1].replace('.git', '')
+                env.GITHUB_COMMIT_URL = "https://github.com/${gitRepo}/commit/${env.GIT_COMMIT}"
+            }
+            emailext (
+                to: "${env.RECIPIENT_LIST}",
+                subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                <p><a href='${env.GITHUB_COMMIT_URL}'>Git Commit</a></p>
+                <p><a href='${env.BUILD_URL}'>Summary</a></p>
+                <p><a href='http://${env.JENKINS_BASE_URL}/jenkins/coverage-reports/${env.JOB_NAME}/${env.BUILD_DATE}_build-${env.BUILD_NUMBER}'>Coverage report</a></p>
+                <p><a href='http://${env.JENKINS_BASE_URL}/jenkins/cppcheck-reports/${env.JOB_NAME}/${env.BUILD_DATE}_build-${env.BUILD_NUMBER}.txt'>Cppcheck report</a></p>
+                <p><a href='http://${env.JENKINS_BASE_URL}/jenkins/cpplint-reports/${env.JOB_NAME}/${env.BUILD_DATE}_build-${env.BUILD_NUMBER}.txt'>Cpplint report</a></p>""",
+                mimeType: 'text/html'
+            )
+        }
+
+        failure {
+            emailext (
+                to: "${env.RECIPIENT_LIST}",
+                subject: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: """<p>FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                <p><a href='${env.GITHUB_COMMIT_URL}'>Git Commit</a></p>
+                <p><a href='${env.BUILD_URL}'>Summary</a></p>""",
+                mimeType: 'text/html'
+            )
+        }
+    }
+}
