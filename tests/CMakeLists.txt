@@ -3,6 +3,7 @@ set(TARGET_NAME tests-mcutils)
 ################################################################################
 
 find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
 
 ################################################################################
 
@@ -31,8 +32,8 @@ add_executable(${TARGET_NAME} ${SOURCES})
 
 set(LIBS
     mcutils
-    gtest
-    gtest_main
+    GTest::gtest
+    GTest::gtest_main
     ${LIBXML2_LIBRARIES}
 )
 
