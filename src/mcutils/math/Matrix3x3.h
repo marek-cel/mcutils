@@ -23,7 +23,7 @@
 #define MCUTILS_MATH_MATRIX3X3_H_
 
 #ifndef MCUTILS_MATH_MATRIX_H_
-#   error "Do not include this file directly. Include <mcsim/utils/math/Matrix.h> instead."
+#   error "Do not include this file directly. Include <mcutils/math/Matrix.h> instead."
 #endif
 
 #include <mcutils/math/MatrixNxN.h>

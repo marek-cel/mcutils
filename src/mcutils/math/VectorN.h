@@ -23,7 +23,7 @@
 #define MCUTILS_MATH_VECTORN_H_
 
 #ifndef MCUTILS_MATH_VECTOR_H_
-#   error "Do not include this file directly. Include <mcsim/utils/math/Vector.h> instead."
+#   error "Do not include this file directly. Include <mcutils/math/Vector.h> instead."
 #endif
 
 #include <algorithm>
