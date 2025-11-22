@@ -3,8 +3,13 @@ set(TARGET_NAME tests-mcutils)
 ################################################################################
 
 find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
-message(">>>>>>>>>>>>>> GTest include dirs: ${GTEST_INCLUDE_DIRS}")
+
+if (TARGET GTest::gtest)
+    message(STATUS "GTest imported target found: GTest::gtest")
+else()
+    message(WARNING "GTest imported target NOT found; check installation")
+endif()
+
 
 ################################################################################
 
