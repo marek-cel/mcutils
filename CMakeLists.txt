@@ -16,6 +16,21 @@ include(GNUInstallDirs)
 
 ################################################################################
 
+include(InstallRequiredSystemLibraries)
+
+set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
+set(CPACK_PACKAGE_VENDOR "MC")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Utilities library")
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+
+set(CPACK_GENERATOR "ZIP")
+
+include(CPack)
+
+################################################################################
+
 if (BUILD_TESTING)
     include(CTest)
     include(GoogleTest)
