@@ -88,6 +88,11 @@ include_directories(${LIBXML2_INCLUDE_DIR})
 
 ################################################################################
 
+find_package(PROJ REQUIRED CONFIG)
+include_directories(${PROJ_INCLUDE_DIRS})
+
+################################################################################
+
 FetchContent_Declare(
     units
     GIT_REPOSITORY https://github.com/nholthaus/units.git
