@@ -9,7 +9,7 @@
 #include <mcutils/log/SysLogger.h>
 
 #define MSG std::string("Lorem ipsum dolor sit amet")
-#define TIME_DELAY() std::chrono::milliseconds(1000);
+#define TIME_DELAY() std::chrono::milliseconds(250);
 
 std::string getSyslogLastLineStripped()
 {
