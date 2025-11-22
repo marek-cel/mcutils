@@ -12,6 +12,7 @@ include_directories(.)
 
 ################################################################################
 
+add_subdirectory(data)
 add_subdirectory(geo)
 add_subdirectory(log)
 add_subdirectory(math)
@@ -46,6 +47,7 @@ elseif(WIN32)
 endif()
 
 target_link_libraries(${TARGET_NAME}
+    $<TARGET_OBJECTS:tests-mcutils-data>
     $<TARGET_OBJECTS:tests-mcutils-geo>
     $<TARGET_OBJECTS:tests-mcutils-log>
     $<TARGET_OBJECTS:tests-mcutils-math>

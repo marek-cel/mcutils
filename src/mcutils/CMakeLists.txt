@@ -10,6 +10,7 @@ endif()
 
 ################################################################################
 
+add_subdirectory(data)
 add_subdirectory(geo)
 add_subdirectory(log)
 add_subdirectory(math)
@@ -30,6 +31,7 @@ set(HEADERS
 ################################################################################
 
 add_library(${TARGET_NAME} ${SOURCES}
+    $<TARGET_OBJECTS:mcutils-data>
     $<TARGET_OBJECTS:mcutils-geo>
     $<TARGET_OBJECTS:mcutils-log>
     $<TARGET_OBJECTS:mcutils-math>
