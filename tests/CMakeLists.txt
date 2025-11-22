@@ -1,0 +1,55 @@
+set(TARGET_NAME tests-mcutils)
+
+################################################################################
+
+find_package(GTest REQUIRED)
+
+################################################################################
+
+include_directories(.)
+
+################################################################################
+
+add_subdirectory(math)
+
+################################################################################
+
+set(SOURCES
+    main.cpp
+    CsvFileReader.cpp
+    XcosBinFileReader.cpp
+)
+
+################################################################################
+
+add_executable(${TARGET_NAME} ${SOURCES})
+
+set(LIBS
+    mcutils
+    GTest::gtest
+    GTest::gtest_main
+    ${LIBXML2_LIBRARIES}
+)
+
+if (UNIX)
+    set(LIBS ${LIBS} gcov)
+elseif(WIN32)
+    set(LIBS ${LIBS} ws2_32)
+endif()
+
+target_link_libraries(${TARGET_NAME}
+    $<TARGET_OBJECTS:tests-mcutils-math>
+    ${LIBS}
+)
+
+################################################################################
+
+set_target_properties(${TARGET_NAME} PROPERTIES
+    EXCLUDE_FROM_ALL True
+)
+
+################################################################################
+
+gtest_discover_tests(${TARGET_NAME}
+    WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+)
