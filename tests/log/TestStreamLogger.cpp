@@ -84,10 +84,10 @@ TEST_F(TestStreamLogger, CanPrintDebugMsg)
     logger->setOutStream(&ss);
     mc::Log::setLogger(logger);
 
+    mc::Log::setVerboseLevel(mc::VerboseLevel::Debug);
+
     EXPECT_NO_THROW(mc::Log::debug(MSG.c_str()));
-    std::string result = ss.str();//.substr(25); // 25 characters for timestamp
+    std::string result = ss.str().substr(25); // 25 characters for timestamp
     std::string expected = "[DEBUG] " + MSG + "\n";
-    std::cout << "Result: " << result << std::endl;
-    std::cout << "Expected: " << expected << std::endl;
     EXPECT_EQ(result, expected);
 }
