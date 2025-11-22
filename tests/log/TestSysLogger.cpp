@@ -48,7 +48,7 @@ protected:
     void TearDown() override {}
 };
 
-TEST_F(TestSysLogger, CanPrintFormatedMsg_DISABLED)
+TEST_F(TestSysLogger, DISABLED_CanPrintFormatedMsg)
 {
     std::shared_ptr<mc::SysLogger> logger = std::make_shared<mc::SysLogger>();
     mc::Log::setLogger(logger);
@@ -60,7 +60,7 @@ TEST_F(TestSysLogger, CanPrintFormatedMsg_DISABLED)
     EXPECT_EQ(result, expected);
 }
 
-TEST_F(TestSysLogger, CanPrintErrorMsg_DISABLED)
+TEST_F(TestSysLogger, DISABLED_CanPrintErrorMsg)
 {
     std::shared_ptr<mc::SysLogger> logger = std::make_shared<mc::SysLogger>();
     mc::Log::setLogger(logger);
@@ -72,7 +72,7 @@ TEST_F(TestSysLogger, CanPrintErrorMsg_DISABLED)
     EXPECT_EQ(result, expected);
 }
 
-TEST_F(TestSysLogger, CanPrintWarningMsg_DISABLED)
+TEST_F(TestSysLogger, DISABLED_CanPrintWarningMsg)
 {
     std::shared_ptr<mc::SysLogger> logger = std::make_shared<mc::SysLogger>();
     mc::Log::setLogger(logger);
@@ -84,7 +84,7 @@ TEST_F(TestSysLogger, CanPrintWarningMsg_DISABLED)
     EXPECT_EQ(result, expected);
 }
 
-TEST_F(TestSysLogger, CanPrintInfoMsg_DISABLED)
+TEST_F(TestSysLogger, DISABLED_CanPrintInfoMsg)
 {
     std::shared_ptr<mc::SysLogger> logger = std::make_shared<mc::SysLogger>();
     mc::Log::setLogger(logger);
@@ -96,7 +96,7 @@ TEST_F(TestSysLogger, CanPrintInfoMsg_DISABLED)
     EXPECT_EQ(result, expected);
 }
 
-TEST_F(TestSysLogger, CanPrintDebugMsg_DISABLED)
+TEST_F(TestSysLogger, DISABLED_CanPrintDebugMsg)
 {
     std::shared_ptr<mc::SysLogger> logger = std::make_shared<mc::SysLogger>();
     mc::Log::setLogger(logger);
