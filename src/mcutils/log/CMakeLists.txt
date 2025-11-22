@@ -7,14 +7,12 @@ set(HEADERS
     Log.h
     LoggerBase.h
     StreamLogger.h
-    SysLogger.h
     VerboseLevel.h
 )
 
 set(SOURCES
     Log.cpp
     StreamLogger.cpp
-    SysLogger.cpp
 )
 
 ################################################################################
