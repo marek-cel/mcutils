@@ -12,7 +12,10 @@ class TestStreamLogger : public ::testing::Test
 {
 protected:
 
-    TestStreamLogger() {}
+    TestStreamLogger()
+    {
+        mc::Log::setVerboseLevel(mc::VerboseLevel::Debug);
+    }
     virtual ~TestStreamLogger() {}
     void SetUp() override {}
     void TearDown() override {}
@@ -83,8 +86,6 @@ TEST_F(TestStreamLogger, CanPrintDebugMsg)
     std::shared_ptr<mc::StreamLogger> logger = std::make_shared<mc::StreamLogger>();
     logger->setOutStream(&ss);
     mc::Log::setLogger(logger);
-
-    mc::Log::setVerboseLevel(mc::VerboseLevel::Debug);
 
     EXPECT_NO_THROW(mc::Log::debug(MSG.c_str()));
     std::string result = ss.str().substr(25); // 25 characters for timestamp
