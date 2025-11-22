@@ -2,11 +2,6 @@ set(MODULE_NAME mcutils-misc)
 
 ################################################################################
 
-set(HEADERS
-    Check.h
-    StringUtils.h
-)
-
 set(SOURCES
     StringUtils.cpp
 )
@@ -14,14 +9,3 @@ set(SOURCES
 ################################################################################
 
 add_library(${MODULE_NAME} OBJECT ${SOURCES})
-
-################################################################################
-
-set_target_properties(${MODULE_NAME} PROPERTIES
-    PUBLIC_HEADER "${HEADERS}"
-)
-
-install(TARGETS ${MODULE_NAME}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/mcutils/misc
-)
-

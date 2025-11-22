@@ -22,15 +22,6 @@ add_subdirectory(xml)
 
 ################################################################################
 
-set(HEADERS
-    doxygen.h
-    extra_units.h
-    mcutils_api.h
-    Result.h
-)
-
-################################################################################
-
 add_library(${TARGET_NAME} ${SOURCES}
     $<TARGET_OBJECTS:mcutils-data>
     $<TARGET_OBJECTS:mcutils-geo>
@@ -51,7 +42,6 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 
 install(TARGETS ${TARGET_NAME}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/mcutils
 )
 
 ################################################################################
