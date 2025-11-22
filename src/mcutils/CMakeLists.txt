@@ -13,6 +13,7 @@ endif()
 add_subdirectory(geo)
 add_subdirectory(math)
 add_subdirectory(misc)
+add_subdirectory(time)
 
 ################################################################################
 
