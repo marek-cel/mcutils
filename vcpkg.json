@@ -1,7 +1,6 @@
 {
   "dependencies": [
     "gtest",
-    "libxml2",
-    "proj"
+    "libxml2"
   ]
 }
