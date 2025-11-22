@@ -146,13 +146,7 @@ endif()
 
 ################################################################################
 
-if(WIN32)
-    set(VCPKG_ROOT "${CMAKE_BINARY_DIR}/vcpkg_installed/${VCPKG_TARGET_TRIPLET}")
-endif()
-
-################################################################################
-
-include_directories(./src)
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
 add_subdirectory(src)
 
