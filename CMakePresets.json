@@ -64,7 +64,8 @@
         {
             "name" : "linux-common-build",
             "hidden": true,
-            "targets": ["all", "tests-mcutils"]
+            "targets": ["all", "tests-mcutils"],
+            "jobs": 0
         },
         {
             "name": "linux-debug-build",
@@ -81,7 +82,8 @@
         {
             "name" : "windows-common-build",
             "hidden": true,
-            "targets": ["ALL_BUILD", "tests-mcutils"]
+            "targets": ["ALL_BUILD", "tests-mcutils"],
+            "jobs": 0
         },
         {
             "name": "windows-debug-build",
