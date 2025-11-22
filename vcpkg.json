@@ -1,6 +1,7 @@
 {
   "dependencies": [
     "gtest",
+    "libiconv",
     "libxml2",
     "proj"
   ]

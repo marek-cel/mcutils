@@ -56,7 +56,10 @@ install(TARGETS ${TARGET_NAME}
 ################################################################################
 
 if(WIN32)
-    set(LIBS ${LIBXML2_LIBRARIES})
+    set(LIBS 
+        ${Iconv_LIBRARIES}
+        ${LIBXML2_LIBRARIES}
+    )
 endif()
 
 target_link_libraries(${TARGET_NAME} ${LIBS})

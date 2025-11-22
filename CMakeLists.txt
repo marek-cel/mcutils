@@ -83,6 +83,16 @@ endif()
 
 ################################################################################
 
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
+################################################################################
+
+find_package(Iconv REQUIRED)
+include_directories(${Iconv_INCLUDE_DIRS})
+
+################################################################################
+
 find_package(LibXml2 REQUIRED)
 include_directories(${LIBXML2_INCLUDE_DIR})
 

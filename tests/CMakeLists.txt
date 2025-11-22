@@ -2,23 +2,23 @@ set(TARGET_NAME tests-mcutils)
 
 ################################################################################
 
-find_package(GTest REQUIRED)
+# find_package(GTest REQUIRED)
 
-if(WIN32)
-    if (TARGET GTest::gtest)
-        message(STATUS "GTest imported target found: GTest::gtest")
-    else()
-        message(WARNING "GTest imported target NOT found; check installation")
-    endif()
+# if(WIN32)
+#     if (TARGET GTest::gtest)
+#         message(STATUS "GTest imported target found: GTest::gtest")
+#     else()
+#         message(WARNING "GTest imported target NOT found; check installation")
+#     endif()
 
-    if (TARGET GTest::gtest)
-        get_target_property(_gtest_includes GTest::gtest INTERFACE_INCLUDE_DIRECTORIES)
-        if (_gtest_includes)
-            message(STATUS "Adding GTest include directories: ${_gtest_includes}")
-            include_directories(${_gtest_includes})
-        endif()
-    endif()
-endif()
+#     if (TARGET GTest::gtest)
+#         get_target_property(_gtest_includes GTest::gtest INTERFACE_INCLUDE_DIRECTORIES)
+#         if (_gtest_includes)
+#             message(STATUS "Adding GTest include directories: ${_gtest_includes}")
+#             include_directories(${_gtest_includes})
+#         endif()
+#     endif()
+# endif()
 
 ################################################################################
 
@@ -51,6 +51,7 @@ set(LIBS
     mcutils
     GTest::gtest
     GTest::gtest_main
+    ${Iconv_LIBRARIES}
     ${LIBXML2_LIBRARIES}
     PROJ::proj
 )
