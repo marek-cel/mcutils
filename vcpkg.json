@@ -1,16 +1,6 @@
 {
   "dependencies": [
-    "boost",
-    "gdal",
-    "glfw3",
-    "gtest",
-    "libgeotiff",
-    "libjpeg-turbo",
-    "libpng",
     "libxml2",
-    "osg",
-    "proj",
-    "sdl2",
-    "tiff"
+    "proj"
   ]
 }
