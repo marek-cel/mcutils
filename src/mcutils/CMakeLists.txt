@@ -11,6 +11,7 @@ endif()
 ################################################################################
 
 add_subdirectory(geo)
+add_subdirectory(log)
 add_subdirectory(math)
 add_subdirectory(misc)
 add_subdirectory(physics)
@@ -30,6 +31,7 @@ set(HEADERS
 
 add_library(${TARGET_NAME} ${SOURCES}
     $<TARGET_OBJECTS:mcutils-geo>
+    $<TARGET_OBJECTS:mcutils-log>
     $<TARGET_OBJECTS:mcutils-math>
     $<TARGET_OBJECTS:mcutils-misc>
     $<TARGET_OBJECTS:mcutils-physics>

@@ -13,6 +13,7 @@ include_directories(.)
 ################################################################################
 
 add_subdirectory(geo)
+add_subdirectory(log)
 add_subdirectory(math)
 add_subdirectory(misc)
 add_subdirectory(time)
@@ -46,6 +47,7 @@ endif()
 
 target_link_libraries(${TARGET_NAME}
     $<TARGET_OBJECTS:tests-mcutils-geo>
+    $<TARGET_OBJECTS:tests-mcutils-log>
     $<TARGET_OBJECTS:tests-mcutils-math>
     $<TARGET_OBJECTS:tests-mcutils-misc>
     $<TARGET_OBJECTS:tests-mcutils-physics>
