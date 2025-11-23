@@ -150,9 +150,8 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 add_subdirectory(src)
 
-target_include_directories(${PROJECT_NAME} PUBLIC 
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/mcutils/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/mcutils
 )
 
 if (BUILD_TESTING)
