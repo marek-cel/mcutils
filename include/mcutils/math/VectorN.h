@@ -323,7 +323,16 @@ public:
         &&
         units::traits::is_unit_t<TYPE2>::value, int>::type = 0
     >
-    auto operator*(TYPE2 value) const
+    VectorN<
+        units::unit_t<
+            units::compound_unit<
+                typename units::traits::unit_t_traits<TYPE>::unit_type,
+                typename units::traits::unit_t_traits<TYPE2>::unit_type
+            >
+        >,
+        SIZE
+    >
+    operator*(TYPE2 value) const
     {
         VectorN<
             units::unit_t<
@@ -364,7 +373,16 @@ public:
         &&
         units::traits::is_unit_t<TYPE2>::value, int>::type = 0
     >
-    auto operator*(TYPE2 value) const
+    VectorN<
+        units::unit_t<
+            units::compound_unit<
+                typename units::traits::unit_t_traits<TYPE2>::unit_type,
+                typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+            >
+        >,
+        SIZE
+    >
+    operator*(TYPE2 value) const
     {
         VectorN<units::angular_velocity::radians_per_second_t,SIZE> temp_rad_per_s = *this;
         VectorN<units::auxiliary::per_second_t,SIZE> temp;
@@ -451,7 +469,16 @@ public:
         &&
         units::traits::is_unit_t<TYPE2>::value, int>::type = 0
     >
-    auto operator*(TYPE2 value) const
+    VectorN<
+        units::unit_t<
+            units::compound_unit<
+                typename units::traits::unit_t_traits<TYPE2>::unit_type,
+                typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+            >
+        >,
+        SIZE
+    >
+    operator*(TYPE2 value) const
     {
         VectorN<units::angular_acceleration::radians_per_second_squared_t,SIZE> temp_rad_per_s_sq = *this;
         VectorN<units::auxiliary::per_second_squared_t,SIZE> temp;
