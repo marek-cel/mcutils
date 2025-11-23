@@ -1,3 +1,23 @@
+bin/*
+build/*
+lib/*
+temp/*
+
+out_clang-tidy.txt
+out_cloc.txt
+out_cppcheck.txt
+out_cpplint.txt
+out_pep.txt
+
+coverage.info
+coverage_full.info
+coverage-report
+coverage_summary.txt
+cppcheck-report.txt
+cpplint-report.txt
+
+################################################################################
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

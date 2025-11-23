@@ -17,7 +17,8 @@
             "inherits": "linux-common-conf",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "BUILD_TESTING": "ON"
+                "BUILD_TESTING": "ON",
+                "ENABLE_CLANG_TIDY": "ON"
             }
         },
         {
@@ -25,7 +26,8 @@
             "inherits": "linux-common-conf",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "BUILD_TESTING": "ON"
+                "BUILD_TESTING": "ON",
+                "ENABLE_CLANG_TIDY": "ON"
             }
         },
         {
@@ -48,7 +50,8 @@
             "inherits": "windows-common-conf",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "BUILD_TESTING": "ON"
+                "BUILD_TESTING": "ON",
+                "ENABLE_CLANG_TIDY": "ON"
             }
         },
         {
@@ -56,7 +59,8 @@
             "inherits": "windows-common-conf",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "BUILD_TESTING": "ON"
+                "BUILD_TESTING": "ON",
+                "ENABLE_CLANG_TIDY": "ON"
             }
         }
     ],

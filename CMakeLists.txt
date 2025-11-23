@@ -11,6 +11,12 @@ project(mcutils VERSION ${PROJECT_VERSION_STRING})
 
 ################################################################################
 
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+option(BUILD_TESTING "Build tests" OFF)
+option(ENABLE_CLANG_TIDY "Enable clang-tidy static analysis" OFF)
+
+################################################################################
+
 include(FetchContent)
 include(GNUInstallDirs)
 
@@ -38,7 +44,16 @@ endif()
 
 ################################################################################
 
-option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+# if(ENABLE_CLANG_TIDY)
+#     find_program(CLANG_TIDY_EXE NAMES clang-tidy clang-tidy-18 clang-tidy-17)
+#     if(CLANG_TIDY_EXE)
+#         message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+#         set(CMAKE_CXX_CLANG_TIDY ${CLANG_TIDY_EXE})
+#     else()
+#         message(SEND_ERROR "clang-tidy requested but executable not found")
+#     endif()
+# endif()
+
 
 ################################################################################
 

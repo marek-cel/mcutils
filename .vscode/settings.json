@@ -1,0 +1,7 @@
+{
+    "C_Cpp.codeAnalysis.runAutomatically": true,
+    "files.associations": {
+        "vector": "cpp",
+        "iosfwd": "cpp"
+    }
+}
