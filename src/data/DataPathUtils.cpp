@@ -70,7 +70,7 @@ std::string stripDataPathDots(const char* path)
     {
         while ( pos == str.length() - 1 )
         {
-            str = str.substr(0, pos);
+            str.resize(pos);
             pos = str.rfind('.');
         }
     }

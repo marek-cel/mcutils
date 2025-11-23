@@ -60,10 +60,9 @@ std::vector<std::string> splitString(const std::string& str, const std::string& 
 
     std::string temp = str;
     size_t pos = 0;
-    std::string token;
     while ((pos = temp.find(sep)) != std::string::npos)
     {
-        token = temp.substr(0, pos);
+        std::string token = temp.substr(0, pos);
         result.push_back(token);
         temp.erase(0, pos + 1);
     }
