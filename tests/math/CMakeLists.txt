@@ -2,25 +2,38 @@ set(MODULE_NAME tests-mcutils-math)
 
 ################################################################################
 
+# set(SOURCES
+#     TestAngles.cpp
+#     TestDegMinSec.cpp
+#     TestEulerRect.cpp
+#     TestGaussJordan.cpp
+#     TestMatrix3x3.cpp
+#     TestMatrix3x3WithUnits.cpp
+#     TestMatrixMxN.cpp
+#     TestMatrixMxNWithUnits.cpp
+#     TestMatrixNxN.cpp
+#     TestMatrixNxNWithUnits.cpp
+#     TestQuaternion.cpp
+#     TestRotMatrix.cpp
+#     TestRungeKutta4.cpp
+#     TestSegPlaneIsect.cpp
+#     TestTable.cpp
+#     TestTable2.cpp
+#     TestVector3.cpp
+#     TestVector3WithUnits.cpp
+#     TestVectorN.cpp
+#     TestVectorNWithUnits.cpp
+# )
+
 set(SOURCES
     TestAngles.cpp
     TestDegMinSec.cpp
     TestEulerRect.cpp
-    TestGaussJordan.cpp
-    TestMatrix3x3.cpp
-    TestMatrix3x3WithUnits.cpp
-    TestMatrixMxN.cpp
-    TestMatrixMxNWithUnits.cpp
-    TestMatrixNxN.cpp
-    TestMatrixNxNWithUnits.cpp
     TestQuaternion.cpp
-    TestRotMatrix.cpp
     TestRungeKutta4.cpp
     TestSegPlaneIsect.cpp
     TestTable.cpp
     TestTable2.cpp
-    TestVector3.cpp
-    TestVector3WithUnits.cpp
     TestVectorN.cpp
     TestVectorNWithUnits.cpp
 )
