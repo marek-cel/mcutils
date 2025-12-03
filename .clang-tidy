@@ -12,6 +12,7 @@ Checks: >
 
 WarningsAsErrors: ''
 HeaderFilterRegex: '^.*/include/mcutils/.*$'
+ExcludeRegex: '(^|.*/)(tests|test)/.*'
 SystemHeaders: false
 FormatStyle: file
 CheckOptions:
