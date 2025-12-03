@@ -51,24 +51,24 @@ namespace math {
  *
  * \return true if there is an intersection, false otherwise
  */
-template <typename TYPE_L, typename TYPE_N>
-bool isSegPlaneIsect(const Vector3<TYPE_L>& b, const Vector3<TYPE_L>& e,
-                     const Vector3<TYPE_L>& r, const Vector3<TYPE_N>& n)
-{
-    TYPE_L num = n * (r - b);
-    TYPE_L den = n * (e - b);
+// template <typename TYPE_L, typename TYPE_N>
+// bool isSegPlaneIsect(const Vector3<TYPE_L>& b, const Vector3<TYPE_L>& e,
+//                      const Vector3<TYPE_L>& r, const Vector3<TYPE_N>& n)
+// {
+//     TYPE_L num = n * (r - b);
+//     TYPE_L den = n * (e - b);
 
-    double u = 0.0;
+//     double u = 0.0;
 
-    if (fabs(den) > TYPE_L{10e-14}) u = num / den;
+//     if (fabs(den) > TYPE_L{10e-14}) u = num / den;
 
-    if (0.0 < u && u < 1.0)
-    {
-        return true;
-    }
+//     if (0.0 < u && u < 1.0)
+//     {
+//         return true;
+//     }
 
-    return false;
-}
+//     return false;
+// }
 
 /**
  * \brief Returns segment and plane intersection point.
@@ -90,36 +90,36 @@ bool isSegPlaneIsect(const Vector3<TYPE_L>& b, const Vector3<TYPE_L>& e,
  *
  * \return intersection point, or end point if there is no intersection, or beginning point if segment lies on the plane
  */
-template <typename TYPE_L, typename TYPE_N>
-Vector3<TYPE_L> getSegPlaneIsect(const Vector3<TYPE_L>& b, const Vector3<TYPE_L>& e,
-                                 const Vector3<TYPE_L>& r, const Vector3<TYPE_N>& n)
-{
-    Vector3<TYPE_L> r_i = e;
+// template <typename TYPE_L, typename TYPE_N>
+// Vector3<TYPE_L> getSegPlaneIsect(const Vector3<TYPE_L>& b, const Vector3<TYPE_L>& e,
+//                                  const Vector3<TYPE_L>& r, const Vector3<TYPE_N>& n)
+// {
+//     Vector3<TYPE_L> r_i = e;
 
-    TYPE_L num = n * (r - b);
-    TYPE_L den = n * (e - b);
+//     TYPE_L num = n * (r - b);
+//     TYPE_L den = n * (e - b);
 
-    if (fabs(den) < TYPE_L{10e-14})
-    {
-        // segment is parallel to the plane
-        if (fabs(num) < TYPE_L{10e-14})
-        {
-            // segment beginning is on the plane
-            r_i = b;
-        }
-    }
-    else
-    {
-        double u = num / den;
+//     if (fabs(den) < TYPE_L{10e-14})
+//     {
+//         // segment is parallel to the plane
+//         if (fabs(num) < TYPE_L{10e-14})
+//         {
+//             // segment beginning is on the plane
+//             r_i = b;
+//         }
+//     }
+//     else
+//     {
+//         double u = num / den;
 
-        if (0.0 <= u && u <= 1.0)
-        {
-            r_i = b + u * (e - b);
-        }
-    }
+//         if (0.0 <= u && u <= 1.0)
+//         {
+//             r_i = b + u * (e - b);
+//         }
+//     }
 
-    return r_i;
-}
+//     return r_i;
+// }
 
 } // namespace math
 } // namespace mc

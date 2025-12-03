@@ -291,609 +291,609 @@ public:
         return result;
     }
 
-    /**
-     * \brief Multiplication by a scalar operator.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     * So operators for angular velocity and angular acceleration are defined
-     * as specializations of this template.
-     *
-     * This template is enabled when TYPE and TYPE2 are both units, but not angular velocity
-     * or angular acceleration, or when TYPE2 is a time unit.
-     *
-     * \tparam TYPE2 RHS operand type
-     * \param value value to be multiplied by
-     * \return product of the vector multiplied by the value
-     */
-    template <class TYPE2, typename std::enable_if<
-        (
-            !units::traits::is_convertible_unit_t<TYPE, units::angular_velocity::radians_per_second_t>::value
-            &&
-            !units::traits::is_convertible_unit_t<TYPE, units::angular_acceleration::radians_per_second_squared_t>::value
-            &&
-            !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
-            &&
-            !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
-            ||
-            units::traits::is_convertible_unit_t<TYPE2, units::time::second_t>::value
-        )
-        &&
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    VectorN<
-        units::unit_t<
-            units::compound_unit<
-                typename units::traits::unit_t_traits<TYPE>::unit_type,
-                typename units::traits::unit_t_traits<TYPE2>::unit_type
-            >
-        >,
-        SIZE
-    >
-    operator*(TYPE2 value) const
-    {
-        VectorN<
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<TYPE2>::unit_type
-                >
-            >,
-            SIZE
-        > result;
-        multiplyVectorByValue(*this, value, &result);
-        return result;
-    }
+    // /**
+    //  * \brief Multiplication by a scalar operator.
+    //  *
+    //  * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+    //  * this makes radians a pure number without physical dimension.
+    //  * So operators for angular velocity and angular acceleration are defined
+    //  * as specializations of this template.
+    //  *
+    //  * This template is enabled when TYPE and TYPE2 are both units, but not angular velocity
+    //  * or angular acceleration, or when TYPE2 is a time unit.
+    //  *
+    //  * \tparam TYPE2 RHS operand type
+    //  * \param value value to be multiplied by
+    //  * \return product of the vector multiplied by the value
+    //  */
+    // template <class TYPE2, typename std::enable_if<
+    //     (
+    //         !units::traits::is_convertible_unit_t<TYPE, units::angular_velocity::radians_per_second_t>::value
+    //         &&
+    //         !units::traits::is_convertible_unit_t<TYPE, units::angular_acceleration::radians_per_second_squared_t>::value
+    //         &&
+    //         !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
+    //         &&
+    //         !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
+    //         ||
+    //         units::traits::is_convertible_unit_t<TYPE2, units::time::second_t>::value
+    //     )
+    //     &&
+    //     units::traits::is_unit_t<TYPE>::value
+    //     &&
+    //     units::traits::is_unit_t<TYPE2>::value, int>::type = 0
+    // >
+    // VectorN<
+    //     units::unit_t<
+    //         units::compound_unit<
+    //             typename units::traits::unit_t_traits<TYPE>::unit_type,
+    //             typename units::traits::unit_t_traits<TYPE2>::unit_type
+    //         >
+    //     >,
+    //     SIZE
+    // >
+    // operator*(TYPE2 value) const
+    // {
+    //     VectorN<
+    //         units::unit_t<
+    //             units::compound_unit<
+    //                 typename units::traits::unit_t_traits<TYPE>::unit_type,
+    //                 typename units::traits::unit_t_traits<TYPE2>::unit_type
+    //             >
+    //         >,
+    //         SIZE
+    //     > result;
+    //     multiplyVectorByValue(*this, value, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Multiplication by a scalar operator.
-     *
-     * This is a specialization for the case when the vector is angular velocity.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     *
-     * This specialization is enabled when TYPE is angular velocity and TYPE2 is a unit other than
-     * angular velocity, angular acceleration or time.
-     *
-     * \tparam TYPE2 RHS operand type
-     * \param value value to be multiplied by
-     * \return product of the vector multiplied by the value
-     */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_convertible_unit_t<TYPE, units::angular_velocity::radians_per_second_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::time::second_t>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    VectorN<
-        units::unit_t<
-            units::compound_unit<
-                typename units::traits::unit_t_traits<TYPE2>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
-            >
-        >,
-        SIZE
-    >
-    operator*(TYPE2 value) const
-    {
-        VectorN<units::angular_velocity::radians_per_second_t,SIZE> temp_rad_per_s = *this;
-        VectorN<units::auxiliary::per_second_t,SIZE> temp;
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            temp(i) = units::auxiliary::per_second_t{ temp_rad_per_s(i)() };
-        }
+    // /**
+    //  * \brief Multiplication by a scalar operator.
+    //  *
+    //  * This is a specialization for the case when the vector is angular velocity.
+    //  *
+    //  * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+    //  * this makes radians a pure number without physical dimension.
+    //  *
+    //  * This specialization is enabled when TYPE is angular velocity and TYPE2 is a unit other than
+    //  * angular velocity, angular acceleration or time.
+    //  *
+    //  * \tparam TYPE2 RHS operand type
+    //  * \param value value to be multiplied by
+    //  * \return product of the vector multiplied by the value
+    //  */
+    // template <class TYPE2, typename std::enable_if<
+    //     units::traits::is_convertible_unit_t<TYPE, units::angular_velocity::radians_per_second_t>::value
+    //     &&
+    //     !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
+    //     &&
+    //     !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
+    //     &&
+    //     !units::traits::is_convertible_unit_t<TYPE2, units::time::second_t>::value
+    //     &&
+    //     units::traits::is_unit_t<TYPE2>::value, int>::type = 0
+    // >
+    // VectorN<
+    //     units::unit_t<
+    //         units::compound_unit<
+    //             typename units::traits::unit_t_traits<TYPE2>::unit_type,
+    //             typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+    //         >
+    //     >,
+    //     SIZE
+    // >
+    // operator*(TYPE2 value) const
+    // {
+    //     VectorN<units::angular_velocity::radians_per_second_t,SIZE> temp_rad_per_s = *this;
+    //     VectorN<units::auxiliary::per_second_t,SIZE> temp;
+    //     for (unsigned int i = 0; i < kSize; ++i)
+    //     {
+    //         temp(i) = units::auxiliary::per_second_t{ temp_rad_per_s(i)() };
+    //     }
 
-        VectorN<
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE2>::unit_type,
-                    typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
-                >
-            >,
-            SIZE
-        > result;
-        multiplyVectorByValue(temp, value, &result);
-        return result;
-    }
+    //     VectorN<
+    //         units::unit_t<
+    //             units::compound_unit<
+    //                 typename units::traits::unit_t_traits<TYPE2>::unit_type,
+    //                 typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+    //             >
+    //         >,
+    //         SIZE
+    //     > result;
+    //     multiplyVectorByValue(temp, value, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Multiplication by a scalar operator.
-     *
-     * This is a specialization for the case when the value is angular velocity.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     *
-     * This specialization is enabled when TYPE is a unit and TYPE2 is angular velocity.
-     *
-     * \tparam TYPE2 RHS operand type
-     * \param value value to be multiplied by
-     * \return product of the vector multiplied by the value
-     */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_convertible_unit_t<
-            TYPE2, units::angular_velocity::radians_per_second_t
-        >::value, int>::type = 0
-    >
-    auto operator*(TYPE2 value) const
-    {
-        units::angular_velocity::radians_per_second_t temp_rad_per_s = value;
-        units::auxiliary::per_second_t temp = units::auxiliary::per_second_t{ temp_rad_per_s() };
+    // /**
+    //  * \brief Multiplication by a scalar operator.
+    //  *
+    //  * This is a specialization for the case when the value is angular velocity.
+    //  *
+    //  * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+    //  * this makes radians a pure number without physical dimension.
+    //  *
+    //  * This specialization is enabled when TYPE is a unit and TYPE2 is angular velocity.
+    //  *
+    //  * \tparam TYPE2 RHS operand type
+    //  * \param value value to be multiplied by
+    //  * \return product of the vector multiplied by the value
+    //  */
+    // template <class TYPE2, typename std::enable_if<
+    //     units::traits::is_unit_t<TYPE>::value
+    //     &&
+    //     units::traits::is_convertible_unit_t<
+    //         TYPE2, units::angular_velocity::radians_per_second_t
+    //     >::value, int>::type = 0
+    // >
+    // auto operator*(TYPE2 value) const
+    // {
+    //     units::angular_velocity::radians_per_second_t temp_rad_per_s = value;
+    //     units::auxiliary::per_second_t temp = units::auxiliary::per_second_t{ temp_rad_per_s() };
 
-        VectorN<
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
-                >
-            >,
-            SIZE
-        > result;
-        multiplyVectorByValue(*this, temp, &result);
-        return result;
-    }
+    //     VectorN<
+    //         units::unit_t<
+    //             units::compound_unit<
+    //                 typename units::traits::unit_t_traits<TYPE>::unit_type,
+    //                 typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+    //             >
+    //         >,
+    //         SIZE
+    //     > result;
+    //     multiplyVectorByValue(*this, temp, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Multiplication by a scalar operator.
-     *
-     * This is a specialization for the case when the vector is angular acceleration.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     *
-     * This specialization is enabled when TYPE is angular acceleration and TYPE2 is a unit other than
-     * angular velocity, angular acceleration or time.
-     *
-     * \tparam TYPE2 RHS operand type
-     * \param value value to be multiplied by
-     * \return product of the vector multiplied by the value
-     */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_convertible_unit_t<TYPE, units::angular_acceleration::radians_per_second_squared_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::time::second_t>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    VectorN<
-        units::unit_t<
-            units::compound_unit<
-                typename units::traits::unit_t_traits<TYPE2>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
-            >
-        >,
-        SIZE
-    >
-    operator*(TYPE2 value) const
-    {
-        VectorN<units::angular_acceleration::radians_per_second_squared_t,SIZE> temp_rad_per_s_sq = *this;
-        VectorN<units::auxiliary::per_second_squared_t,SIZE> temp;
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            temp(i) = units::auxiliary::per_second_squared_t{ temp_rad_per_s_sq(i)() };
-        }
+    // /**
+    //  * \brief Multiplication by a scalar operator.
+    //  *
+    //  * This is a specialization for the case when the vector is angular acceleration.
+    //  *
+    //  * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+    //  * this makes radians a pure number without physical dimension.
+    //  *
+    //  * This specialization is enabled when TYPE is angular acceleration and TYPE2 is a unit other than
+    //  * angular velocity, angular acceleration or time.
+    //  *
+    //  * \tparam TYPE2 RHS operand type
+    //  * \param value value to be multiplied by
+    //  * \return product of the vector multiplied by the value
+    //  */
+    // template <class TYPE2, typename std::enable_if<
+    //     units::traits::is_convertible_unit_t<TYPE, units::angular_acceleration::radians_per_second_squared_t>::value
+    //     &&
+    //     !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
+    //     &&
+    //     !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
+    //     &&
+    //     !units::traits::is_convertible_unit_t<TYPE2, units::time::second_t>::value
+    //     &&
+    //     units::traits::is_unit_t<TYPE2>::value, int>::type = 0
+    // >
+    // VectorN<
+    //     units::unit_t<
+    //         units::compound_unit<
+    //             typename units::traits::unit_t_traits<TYPE2>::unit_type,
+    //             typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+    //         >
+    //     >,
+    //     SIZE
+    // >
+    // operator*(TYPE2 value) const
+    // {
+    //     VectorN<units::angular_acceleration::radians_per_second_squared_t,SIZE> temp_rad_per_s_sq = *this;
+    //     VectorN<units::auxiliary::per_second_squared_t,SIZE> temp;
+    //     for (unsigned int i = 0; i < kSize; ++i)
+    //     {
+    //         temp(i) = units::auxiliary::per_second_squared_t{ temp_rad_per_s_sq(i)() };
+    //     }
 
-        VectorN<
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE2>::unit_type,
-                    typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
-                >
-            >,
-            SIZE
-        > result;
-        multiplyVectorByValue(temp, value, &result);
-        return result;
-    }
+    //     VectorN<
+    //         units::unit_t<
+    //             units::compound_unit<
+    //                 typename units::traits::unit_t_traits<TYPE2>::unit_type,
+    //                 typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+    //             >
+    //         >,
+    //         SIZE
+    //     > result;
+    //     multiplyVectorByValue(temp, value, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Multiplication by a scalar operator.
-     *
-     * This is a specialization for the case when the value is angular acceleration.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     *
-     * This specialization is enabled when TYPE is a unit and TYPE2 is angular acceleration.
-     *
-     * \tparam TYPE2 RHS operand type
-     * \param value value to be multiplied by
-     * \return product of the vector multiplied by the value
-     */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_convertible_unit_t<
-            TYPE2, units::angular_acceleration::radians_per_second_squared_t
-        >::value, int>::type = 0
-    >
-    auto operator*(TYPE2 value) const
-    {
-        units::angular_acceleration::radians_per_second_squared_t temp_rad_per_s_sq = value;
-        units::auxiliary::per_second_squared_t temp = units::auxiliary::per_second_squared_t{ temp_rad_per_s_sq() };
+    // /**
+    //  * \brief Multiplication by a scalar operator.
+    //  *
+    //  * This is a specialization for the case when the value is angular acceleration.
+    //  *
+    //  * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+    //  * this makes radians a pure number without physical dimension.
+    //  *
+    //  * This specialization is enabled when TYPE is a unit and TYPE2 is angular acceleration.
+    //  *
+    //  * \tparam TYPE2 RHS operand type
+    //  * \param value value to be multiplied by
+    //  * \return product of the vector multiplied by the value
+    //  */
+    // template <class TYPE2, typename std::enable_if<
+    //     units::traits::is_unit_t<TYPE>::value
+    //     &&
+    //     units::traits::is_convertible_unit_t<
+    //         TYPE2, units::angular_acceleration::radians_per_second_squared_t
+    //     >::value, int>::type = 0
+    // >
+    // auto operator*(TYPE2 value) const
+    // {
+    //     units::angular_acceleration::radians_per_second_squared_t temp_rad_per_s_sq = value;
+    //     units::auxiliary::per_second_squared_t temp = units::auxiliary::per_second_squared_t{ temp_rad_per_s_sq() };
 
-        VectorN<
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
-                >
-            >,
-            SIZE
-        > result;
-        multiplyVectorByValue(*this, temp, &result);
-        return result;
-    }
+    //     VectorN<
+    //         units::unit_t<
+    //             units::compound_unit<
+    //                 typename units::traits::unit_t_traits<TYPE>::unit_type,
+    //                 typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+    //             >
+    //         >,
+    //         SIZE
+    //     > result;
+    //     multiplyVectorByValue(*this, temp, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Multiplication by a scalar operator.
-     *
-     * This is a specialization for the case when the vector is dimensionless.
-     */
-    template <class TYPE2, typename std::enable_if<
-        !units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    VectorN<TYPE2,SIZE> operator*(TYPE2 value) const
-    {
-        VectorN<TYPE2,SIZE> result;
-        multiplyVectorByValue(*this, value, &result);
-        return result;
-    }
+    // /**
+    //  * \brief Multiplication by a scalar operator.
+    //  *
+    //  * This is a specialization for the case when the vector is dimensionless.
+    //  */
+    // template <class TYPE2, typename std::enable_if<
+    //     !units::traits::is_unit_t<TYPE>::value
+    //     &&
+    //     units::traits::is_unit_t<TYPE2>::value, int>::type = 0
+    // >
+    // VectorN<TYPE2,SIZE> operator*(TYPE2 value) const
+    // {
+    //     VectorN<TYPE2,SIZE> result;
+    //     multiplyVectorByValue(*this, value, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Multiplication by a scalar operator.
-     *
-     * This is a specialization for the case when the value is dimensionless.
-     *
-     * \tparam TYPE2 RHS operand type
-     * \param value [-] value to be multiplied by
-     * \return product of the vector multiplied by the value
-     */
-    VectorN<TYPE,SIZE> operator*(double value) const
-    {
-        VectorN<TYPE,SIZE> result;
-        multiplyVectorByValue(*this, value, &result);
-        return result;
-    }
+    // /**
+    //  * \brief Multiplication by a scalar operator.
+    //  *
+    //  * This is a specialization for the case when the value is dimensionless.
+    //  *
+    //  * \tparam TYPE2 RHS operand type
+    //  * \param value [-] value to be multiplied by
+    //  * \return product of the vector multiplied by the value
+    //  */
+    // VectorN<TYPE,SIZE> operator*(double value) const
+    // {
+    //     VectorN<TYPE,SIZE> result;
+    //     multiplyVectorByValue(*this, value, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Calculates the dot product of two vectors.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     * So operators for angular velocity and angular acceleration are defined
-     * as specializations of this template.
-     *
-     * This template is enabled when TYPE and TYPE2 are both units, but not angular velocity
-     * or angular acceleration.
-     *
-     * \tparam TYPE2 RHS vector type
-     * \param vect RHS vector
-     * \return dot product of two vectors
-     */
-    template <class TYPE2, typename std::enable_if<
-        !units::traits::is_convertible_unit_t<TYPE, units::angular_velocity::radians_per_second_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE, units::angular_acceleration::radians_per_second_squared_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
-        &&
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    auto operator*(const VectorN<TYPE2,SIZE>& vect) const
-    {
-        units::unit_t<
-            units::compound_unit<
-                typename units::traits::unit_t_traits<TYPE>::unit_type,
-                typename units::traits::unit_t_traits<TYPE2>::unit_type
-            >
-        > result {0};
-        calculateDotProduct(*this, vect, &result);
-        return result;
-    }
+    // /**
+    //  * \brief Calculates the dot product of two vectors.
+    //  *
+    //  * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+    //  * this makes radians a pure number without physical dimension.
+    //  * So operators for angular velocity and angular acceleration are defined
+    //  * as specializations of this template.
+    //  *
+    //  * This template is enabled when TYPE and TYPE2 are both units, but not angular velocity
+    //  * or angular acceleration.
+    //  *
+    //  * \tparam TYPE2 RHS vector type
+    //  * \param vect RHS vector
+    //  * \return dot product of two vectors
+    //  */
+    // template <class TYPE2, typename std::enable_if<
+    //     !units::traits::is_convertible_unit_t<TYPE, units::angular_velocity::radians_per_second_t>::value
+    //     &&
+    //     !units::traits::is_convertible_unit_t<TYPE, units::angular_acceleration::radians_per_second_squared_t>::value
+    //     &&
+    //     !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
+    //     &&
+    //     !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
+    //     &&
+    //     units::traits::is_unit_t<TYPE>::value
+    //     &&
+    //     units::traits::is_unit_t<TYPE2>::value, int>::type = 0
+    // >
+    // auto operator*(const VectorN<TYPE2,SIZE>& vect) const
+    // {
+    //     units::unit_t<
+    //         units::compound_unit<
+    //             typename units::traits::unit_t_traits<TYPE>::unit_type,
+    //             typename units::traits::unit_t_traits<TYPE2>::unit_type
+    //         >
+    //     > result {0};
+    //     calculateDotProduct(*this, vect, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Calculates the dot product of two vectors.
-     *
-     * This is a specialization for the case when the first vector is angular velocity.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     *
-     * This specialization is enabled when TYPE is angular velocity and TYPE2 is a unit other than
-     * angular velocity or angular acceleration.
-     *
-     * \tparam TYPE2 RHS vector type
-     * \param vect RHS vector
-     * \return dot product of two vectors
-     */
-    template <typename TYPE2, typename std::enable_if<
-        units::traits::is_convertible_unit_t<TYPE, units::angular_velocity::radians_per_second_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    auto operator*(const VectorN<TYPE2,SIZE>& vect) const
-    {
-        VectorN<units::angular_velocity::radians_per_second_t,SIZE> temp_rad_per_s = *this;
-        VectorN<units::auxiliary::per_second_t,SIZE> temp;
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            temp(i) = units::auxiliary::per_second_t{ temp_rad_per_s(i)() };
-        }
+    // /**
+    //  * \brief Calculates the dot product of two vectors.
+    //  *
+    //  * This is a specialization for the case when the first vector is angular velocity.
+    //  *
+    //  * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+    //  * this makes radians a pure number without physical dimension.
+    //  *
+    //  * This specialization is enabled when TYPE is angular velocity and TYPE2 is a unit other than
+    //  * angular velocity or angular acceleration.
+    //  *
+    //  * \tparam TYPE2 RHS vector type
+    //  * \param vect RHS vector
+    //  * \return dot product of two vectors
+    //  */
+    // template <typename TYPE2, typename std::enable_if<
+    //     units::traits::is_convertible_unit_t<TYPE, units::angular_velocity::radians_per_second_t>::value
+    //     &&
+    //     !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
+    //     &&
+    //     !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
+    //     &&
+    //     units::traits::is_unit_t<TYPE2>::value, int>::type = 0
+    // >
+    // auto operator*(const VectorN<TYPE2,SIZE>& vect) const
+    // {
+    //     VectorN<units::angular_velocity::radians_per_second_t,SIZE> temp_rad_per_s = *this;
+    //     VectorN<units::auxiliary::per_second_t,SIZE> temp;
+    //     for (unsigned int i = 0; i < kSize; ++i)
+    //     {
+    //         temp(i) = units::auxiliary::per_second_t{ temp_rad_per_s(i)() };
+    //     }
 
-        units::unit_t<
-            units::compound_unit<
-                typename units::traits::unit_t_traits<TYPE2>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
-            >
-        > result {0};
-        calculateDotProduct(temp, vect, &result);
-        return result;
-    }
+    //     units::unit_t<
+    //         units::compound_unit<
+    //             typename units::traits::unit_t_traits<TYPE2>::unit_type,
+    //             typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+    //         >
+    //     > result {0};
+    //     calculateDotProduct(temp, vect, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Calculates the dot product of two vectors.
-     *
-     * This is a specialization for the case when the second vector is angular velocity.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     *
-     * This specialization is enabled when TYPE is a unit and TYPE2 is angular velocity.
-     *
-     * \tparam TYPE2 RHS vector type (angular velocity, eg. units::angular_velocity::radians_per_second_t)
-     * \param vect [angular velocity, eg. rad/s] RHS vector
-     * \return dot product of two vectors
-     */
-    template <typename TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_convertible_unit_t<
-            TYPE2, units::angular_velocity::radians_per_second_t
-        >::value, int>::type = 0
-    >
-    auto operator*(const VectorN<TYPE2,SIZE>& vect) const
-    {
-        VectorN<units::angular_velocity::radians_per_second_t,SIZE> temp_rad_per_s = vect;
-        VectorN<units::auxiliary::per_second_t,SIZE> temp;
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            temp(i) = units::auxiliary::per_second_t{ temp_rad_per_s(i)() };
-        }
+    // /**
+    //  * \brief Calculates the dot product of two vectors.
+    //  *
+    //  * This is a specialization for the case when the second vector is angular velocity.
+    //  *
+    //  * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+    //  * this makes radians a pure number without physical dimension.
+    //  *
+    //  * This specialization is enabled when TYPE is a unit and TYPE2 is angular velocity.
+    //  *
+    //  * \tparam TYPE2 RHS vector type (angular velocity, eg. units::angular_velocity::radians_per_second_t)
+    //  * \param vect [angular velocity, eg. rad/s] RHS vector
+    //  * \return dot product of two vectors
+    //  */
+    // template <typename TYPE2, typename std::enable_if<
+    //     units::traits::is_unit_t<TYPE>::value
+    //     &&
+    //     units::traits::is_convertible_unit_t<
+    //         TYPE2, units::angular_velocity::radians_per_second_t
+    //     >::value, int>::type = 0
+    // >
+    // auto operator*(const VectorN<TYPE2,SIZE>& vect) const
+    // {
+    //     VectorN<units::angular_velocity::radians_per_second_t,SIZE> temp_rad_per_s = vect;
+    //     VectorN<units::auxiliary::per_second_t,SIZE> temp;
+    //     for (unsigned int i = 0; i < kSize; ++i)
+    //     {
+    //         temp(i) = units::auxiliary::per_second_t{ temp_rad_per_s(i)() };
+    //     }
 
-        units::unit_t<
-            units::compound_unit<
-                typename units::traits::unit_t_traits<TYPE>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
-            >
-        > result {0};
-        calculateDotProduct(*this, temp, &result);
-        return result;
-    }
+    //     units::unit_t<
+    //         units::compound_unit<
+    //             typename units::traits::unit_t_traits<TYPE>::unit_type,
+    //             typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+    //         >
+    //     > result {0};
+    //     calculateDotProduct(*this, temp, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Calculates the dot product of two vectors.
-     *
-     * This is a specialization for the case when the first vector is angular acceleration.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     *
-     * This specialization is enabled when TYPE is angular acceleration and TYPE2 is a unit other than
-     * angular velocity or angular acceleration.
-     *
-     * \tparam TYPE2 RHS vector type
-     * \param vect RHS vector
-     * \return dot product of two vectors
-     */
-    template <typename TYPE2, typename std::enable_if<
-        units::traits::is_convertible_unit_t<TYPE, units::angular_acceleration::radians_per_second_squared_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    auto operator*(const VectorN<TYPE2,SIZE>& vect) const
-    {
-        VectorN<units::angular_acceleration::radians_per_second_squared_t,SIZE> temp_rad_per_s_sq = *this;
-        VectorN<units::auxiliary::per_second_squared_t,SIZE> temp;
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            temp(i) = units::auxiliary::per_second_squared_t{ temp_rad_per_s_sq(i)() };
-        }
+    // /**
+    //  * \brief Calculates the dot product of two vectors.
+    //  *
+    //  * This is a specialization for the case when the first vector is angular acceleration.
+    //  *
+    //  * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+    //  * this makes radians a pure number without physical dimension.
+    //  *
+    //  * This specialization is enabled when TYPE is angular acceleration and TYPE2 is a unit other than
+    //  * angular velocity or angular acceleration.
+    //  *
+    //  * \tparam TYPE2 RHS vector type
+    //  * \param vect RHS vector
+    //  * \return dot product of two vectors
+    //  */
+    // template <typename TYPE2, typename std::enable_if<
+    //     units::traits::is_convertible_unit_t<TYPE, units::angular_acceleration::radians_per_second_squared_t>::value
+    //     &&
+    //     !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
+    //     &&
+    //     !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
+    //     &&
+    //     units::traits::is_unit_t<TYPE2>::value, int>::type = 0
+    // >
+    // auto operator*(const VectorN<TYPE2,SIZE>& vect) const
+    // {
+    //     VectorN<units::angular_acceleration::radians_per_second_squared_t,SIZE> temp_rad_per_s_sq = *this;
+    //     VectorN<units::auxiliary::per_second_squared_t,SIZE> temp;
+    //     for (unsigned int i = 0; i < kSize; ++i)
+    //     {
+    //         temp(i) = units::auxiliary::per_second_squared_t{ temp_rad_per_s_sq(i)() };
+    //     }
 
-        units::unit_t<
-            units::compound_unit<
-                typename units::traits::unit_t_traits<TYPE2>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
-            >
-        > result {0};
-        calculateDotProduct(temp, vect, &result);
-        return result;
-    }
+    //     units::unit_t<
+    //         units::compound_unit<
+    //             typename units::traits::unit_t_traits<TYPE2>::unit_type,
+    //             typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+    //         >
+    //     > result {0};
+    //     calculateDotProduct(temp, vect, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Calculates the dot product of two vectors.
-     *
-     * This is a specialization for the case when the second vector is angular acceleration.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     *
-     * This specialization is enabled when TYPE is a unit and TYPE2 is angular acceleration.
-     *
-     * \tparam TYPE2 RHS vector type
-     * \param vect [angular acceleration, eg. rad/s^2] RHS vector
-     * \return dot product of two vectors
-     */
-    template <typename TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_convertible_unit_t<
-            TYPE2, units::angular_acceleration::radians_per_second_squared_t
-        >::value, int>::type = 0
-    >
-    auto operator*(const VectorN<TYPE2,SIZE>& vect) const
-    {
-        VectorN<units::angular_acceleration::radians_per_second_squared_t,SIZE> temp_rad_per_s_sq = vect;
-        VectorN<units::auxiliary::per_second_squared_t,SIZE> temp;
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            temp(i) = units::auxiliary::per_second_squared_t{ temp_rad_per_s_sq(i)() };
-        }
+    // /**
+    //  * \brief Calculates the dot product of two vectors.
+    //  *
+    //  * This is a specialization for the case when the second vector is angular acceleration.
+    //  *
+    //  * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+    //  * this makes radians a pure number without physical dimension.
+    //  *
+    //  * This specialization is enabled when TYPE is a unit and TYPE2 is angular acceleration.
+    //  *
+    //  * \tparam TYPE2 RHS vector type
+    //  * \param vect [angular acceleration, eg. rad/s^2] RHS vector
+    //  * \return dot product of two vectors
+    //  */
+    // template <typename TYPE2, typename std::enable_if<
+    //     units::traits::is_unit_t<TYPE>::value
+    //     &&
+    //     units::traits::is_convertible_unit_t<
+    //         TYPE2, units::angular_acceleration::radians_per_second_squared_t
+    //     >::value, int>::type = 0
+    // >
+    // auto operator*(const VectorN<TYPE2,SIZE>& vect) const
+    // {
+    //     VectorN<units::angular_acceleration::radians_per_second_squared_t,SIZE> temp_rad_per_s_sq = vect;
+    //     VectorN<units::auxiliary::per_second_squared_t,SIZE> temp;
+    //     for (unsigned int i = 0; i < kSize; ++i)
+    //     {
+    //         temp(i) = units::auxiliary::per_second_squared_t{ temp_rad_per_s_sq(i)() };
+    //     }
 
-        units::unit_t<
-            units::compound_unit<
-                typename units::traits::unit_t_traits<TYPE>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
-            >
-        > result {0};
-        calculateDotProduct(*this, temp, &result);
-        return result;
-    }
+    //     units::unit_t<
+    //         units::compound_unit<
+    //             typename units::traits::unit_t_traits<TYPE>::unit_type,
+    //             typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+    //         >
+    //     > result {0};
+    //     calculateDotProduct(*this, temp, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Calculates the dot product of two vectors.
-     *
-     * This is a specialization for the case when the first vector is dimensionless.
-     *
-     * \tparam TYPE2 RHS vector type
-     * \param vect RHS vector
-     * \return dot product of two vectors
-     */
-    template <typename TYPE2, typename std::enable_if<
-        !units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    TYPE2 operator*(const VectorN<TYPE2,SIZE>& vect) const
-    {
-        TYPE2 result {0};
-        calculateDotProduct(*this, vect, &result);
-        return result;
-    }
+    // /**
+    //  * \brief Calculates the dot product of two vectors.
+    //  *
+    //  * This is a specialization for the case when the first vector is dimensionless.
+    //  *
+    //  * \tparam TYPE2 RHS vector type
+    //  * \param vect RHS vector
+    //  * \return dot product of two vectors
+    //  */
+    // template <typename TYPE2, typename std::enable_if<
+    //     !units::traits::is_unit_t<TYPE>::value
+    //     &&
+    //     units::traits::is_unit_t<TYPE2>::value, int>::type = 0
+    // >
+    // TYPE2 operator*(const VectorN<TYPE2,SIZE>& vect) const
+    // {
+    //     TYPE2 result {0};
+    //     calculateDotProduct(*this, vect, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Calculates the dot product of two vectors.
-     *
-     * This is a specialization for the case when the second vector is dimensionless.
-     *
-     * \tparam TYPE2 RHS vector type (dimensionless)
-     * \param vect [-] RHS vector
-     * \return dot product of two vectors
-     */
-    template <typename TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        !units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    TYPE operator*(const VectorN<TYPE2,SIZE>& vect) const
-    {
-        TYPE result {0};
-        calculateDotProduct(*this, vect, &result);
-        return result;
-    }
+    // /**
+    //  * \brief Calculates the dot product of two vectors.
+    //  *
+    //  * This is a specialization for the case when the second vector is dimensionless.
+    //  *
+    //  * \tparam TYPE2 RHS vector type (dimensionless)
+    //  * \param vect [-] RHS vector
+    //  * \return dot product of two vectors
+    //  */
+    // template <typename TYPE2, typename std::enable_if<
+    //     units::traits::is_unit_t<TYPE>::value
+    //     &&
+    //     !units::traits::is_unit_t<TYPE2>::value, int>::type = 0
+    // >
+    // TYPE operator*(const VectorN<TYPE2,SIZE>& vect) const
+    // {
+    //     TYPE result {0};
+    //     calculateDotProduct(*this, vect, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Calculates the dot product of two vectors.
-     *
-     * This is a specialization for the case when both vectors are dimensionless.
-     *
-     * \tparam TYPE2 RHS vector type (dimensionless)
-     * \param vect [-] RHS vector
-     * \return dot product of two vectors
-     */
-    template <typename TYPE2, typename std::enable_if<
-        !units::traits::is_unit_t<TYPE>::value
-        &&
-        !units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    double operator*(const VectorN<TYPE2,SIZE>& vect) const
-    {
-        double result = 0.0;
-        calculateDotProduct(*this, vect, &result);
-        return result;
-    }
+    // /**
+    //  * \brief Calculates the dot product of two vectors.
+    //  *
+    //  * This is a specialization for the case when both vectors are dimensionless.
+    //  *
+    //  * \tparam TYPE2 RHS vector type (dimensionless)
+    //  * \param vect [-] RHS vector
+    //  * \return dot product of two vectors
+    //  */
+    // template <typename TYPE2, typename std::enable_if<
+    //     !units::traits::is_unit_t<TYPE>::value
+    //     &&
+    //     !units::traits::is_unit_t<TYPE2>::value, int>::type = 0
+    // >
+    // double operator*(const VectorN<TYPE2,SIZE>& vect) const
+    // {
+    //     double result = 0.0;
+    //     calculateDotProduct(*this, vect, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Division by scalar operator.
-     *
-     * \tparam TYPE2 RHS operand type
-     * \param value value to divide the vector by
-     * \return result of the division
-     */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    auto operator/(TYPE2 value) const
-    {
-        VectorN<
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    units::inverse<typename units::traits::unit_t_traits<TYPE2>::unit_type>
-                >
-            >,
-            SIZE
-        > result;
-        multiplyVectorByValue(*this, 1.0 / value, &result);
-        return result;
-    }
+    // /**
+    //  * \brief Division by scalar operator.
+    //  *
+    //  * \tparam TYPE2 RHS operand type
+    //  * \param value value to divide the vector by
+    //  * \return result of the division
+    //  */
+    // template <class TYPE2, typename std::enable_if<
+    //     units::traits::is_unit_t<TYPE>::value
+    //     &&
+    //     units::traits::is_unit_t<TYPE2>::value, int>::type = 0
+    // >
+    // auto operator/(TYPE2 value) const
+    // {
+    //     VectorN<
+    //         units::unit_t<
+    //             units::compound_unit<
+    //                 typename units::traits::unit_t_traits<TYPE>::unit_type,
+    //                 units::inverse<typename units::traits::unit_t_traits<TYPE2>::unit_type>
+    //             >
+    //         >,
+    //         SIZE
+    //     > result;
+    //     multiplyVectorByValue(*this, 1.0 / value, &result);
+    //     return result;
+    // }
 
-    /**
-     * \brief Division by scalar operator.
-     *
-     * This is a specialization for the case when the vector is a dimensionless.
-     *
-     * \param value [-] value to divide the vector by
-     * \return result of the division
-     */
-    template <class TYPE2, typename std::enable_if<
-        !units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    auto operator/(TYPE2 value) const
-    {
-        VectorN<
-            units::unit_t<
-                units::compound_unit<
-                    units::inverse<typename units::traits::unit_t_traits<TYPE2>::unit_type>
-                >
-            >,
-            SIZE
-        > result;
-        multiplyVectorByValue(*this, 1.0 / value, &result);
-        return result;
-    }
+    // /**
+    //  * \brief Division by scalar operator.
+    //  *
+    //  * This is a specialization for the case when the vector is a dimensionless.
+    //  *
+    //  * \param value [-] value to divide the vector by
+    //  * \return result of the division
+    //  */
+    // template <class TYPE2, typename std::enable_if<
+    //     !units::traits::is_unit_t<TYPE>::value
+    //     &&
+    //     units::traits::is_unit_t<TYPE2>::value, int>::type = 0
+    // >
+    // auto operator/(TYPE2 value) const
+    // {
+    //     VectorN<
+    //         units::unit_t<
+    //             units::compound_unit<
+    //                 units::inverse<typename units::traits::unit_t_traits<TYPE2>::unit_type>
+    //             >
+    //         >,
+    //         SIZE
+    //     > result;
+    //     multiplyVectorByValue(*this, 1.0 / value, &result);
+    //     return result;
+    // }
 
     /**
      * \brief Division by scalar operator.
@@ -932,16 +932,16 @@ public:
         return *this;
     }
 
-    /**
-     * \brief Unary multiplication operator.
-     * \param value [-] value to multiply the vector by
-     * \return reference to the updated vector
-     */
-    VectorN<TYPE, SIZE>& operator*=(double value)
-    {
-        *this = (*this) * value;
-        return *this;
-    }
+    // /**
+    //  * \brief Unary multiplication operator.
+    //  * \param value [-] value to multiply the vector by
+    //  * \return reference to the updated vector
+    //  */
+    // VectorN<TYPE, SIZE>& operator*=(double value)
+    // {
+    //     *this = (*this) * value;
+    //     return *this;
+    // }
 
     /**
      * \brief Unary division operator.

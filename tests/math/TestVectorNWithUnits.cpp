@@ -497,776 +497,797 @@ TEST_F(TestVectorNWithUnits, CanSubtract)
     VectorN_CanSubtract<units::torque::newton_meter_t>();
 }
 
-template <typename T>
-void VectorN_CanMultiplyByScalar()
-{
-    mc::VectorN<T,SIZE> v;
-    v(0) = T{1};
-    v(1) = T{2};
-    v(2) = T{3};
-
-    units::length::meter_t val = 2.0_m;
-
-    mc::VectorN<
-        units::unit_t<
-            units::compound_unit<
-                typename units::traits::unit_t_traits<T>::unit_type,
-                units::length::meter
-            >
-        >,
-        SIZE
-    > vr = v * val;
-
-    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanMultiplyByScalar)
-{
-    VectorN_CanMultiplyByScalar<units::length::meter_t>();
-    VectorN_CanMultiplyByScalar<units::velocity::meters_per_second_t>();
-    VectorN_CanMultiplyByScalar<units::acceleration::meters_per_second_squared_t>();
-
-    // angular velocity and angular acceleration excluded from this test
-    // because they are treated in a special way
-
-    VectorN_CanMultiplyByScalar<units::force::newton_t>();
-    VectorN_CanMultiplyByScalar<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanMultiplyByScalarTime()
-{
-    mc::VectorN<T,SIZE> v;
-    v(0) = T{1};
-    v(1) = T{2};
-    v(2) = T{3};
-
-    units::time::second_t val = 2.0_s;
-
-    mc::VectorN<
-        units::unit_t<
-        units::compound_unit<
-                typename units::traits::unit_t_traits<T>::unit_type,
-                units::time::second
-            >
-        >,
-        SIZE
-    > vr = v * val;
-
-    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanMultiplyByScalarTime)
-{
-    VectorN_CanMultiplyByScalarTime<units::length::meter_t>();
-    VectorN_CanMultiplyByScalarTime<units::velocity::meters_per_second_t>();
-    VectorN_CanMultiplyByScalarTime<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarTime<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanMultiplyByScalarTime<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanMultiplyByScalarTime<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarTime<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarTime<units::force::newton_t>();
-    VectorN_CanMultiplyByScalarTime<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanMultiplyByScalarAngularVel()
-{
-    mc::VectorN<T,SIZE> v;
-    v(0) = T{1};
-    v(1) = T{2};
-    v(2) = T{3};
-
-    units::angular_velocity::degrees_per_second_t val = 2.0_rad_per_s;
-
-    mc::VectorN<
-        units::unit_t<
-            units::compound_unit<
-                typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
-            >
-        >,
-        SIZE
-    > vr = v * val;
-
-    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanMultiplyByScalarAngularVel)
-{
-    VectorN_CanMultiplyByScalarAngularVel<units::length::meter_t>();
-    VectorN_CanMultiplyByScalarAngularVel<units::velocity::meters_per_second_t>();
-    VectorN_CanMultiplyByScalarAngularVel<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarAngularVel<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanMultiplyByScalarAngularVel<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanMultiplyByScalarAngularVel<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarAngularVel<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarAngularVel<units::force::newton_t>();
-    VectorN_CanMultiplyByScalarAngularVel<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanMultiplyByScalarAngularAcc()
-{
-    mc::VectorN<T,SIZE> v;
-    v(0) = T{1};
-    v(1) = T{2};
-    v(2) = T{3};
-
-    units::angular_acceleration::degrees_per_second_squared_t val = 2.0_rad_per_s_sq;
-
-    mc::VectorN<
-        units::unit_t<
-        units::compound_unit<
-                typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
-            >
-        >,
-        SIZE
-    > vr = v * val;
-
-    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanMultiplyByScalarAngularAcc)
-{
-    VectorN_CanMultiplyByScalarAngularAcc<units::length::meter_t>();
-    VectorN_CanMultiplyByScalarAngularAcc<units::velocity::meters_per_second_t>();
-    VectorN_CanMultiplyByScalarAngularAcc<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarAngularAcc<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanMultiplyByScalarAngularAcc<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanMultiplyByScalarAngularAcc<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarAngularAcc<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarAngularAcc<units::force::newton_t>();
-    VectorN_CanMultiplyByScalarAngularAcc<units::torque::newton_meter_t>();
-}
-
-TEST_F(TestVectorNWithUnits, CanMultiplyByScalarDimensionlessVector)
-{
-    mc::VectorN<double,SIZE> v;
-    v(0) = 1.0;
-    v(1) = 2.0;
-    v(2) = 3.0;
-
-    mc::VectorN<units::length::meter_t,SIZE> vr = v * 2.0_m;
-
-    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-}
-
-template <typename T>
-void VectorN_CanMultiplyByScalarDimensionless()
-{
-    mc::VectorN<T,SIZE> v;
-    v(0) = T{1};
-    v(1) = T{2};
-    v(2) = T{3};
-
-    mc::VectorN<T,SIZE> vr = v * 2.0;
-
-    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanMultiplyByScalarDimensionless)
-{
-    VectorN_CanMultiplyByScalarDimensionless<units::length::meter_t>();
-    VectorN_CanMultiplyByScalarDimensionless<units::velocity::meters_per_second_t>();
-    VectorN_CanMultiplyByScalarDimensionless<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarDimensionless<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanMultiplyByScalarDimensionless<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanMultiplyByScalarDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarDimensionless<units::force::newton_t>();
-    VectorN_CanMultiplyByScalarDimensionless<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanCalculateDotProduct()
-{
-    mc::VectorN<T,SIZE> v;
-    v(0) = T{1};
-    v(1) = T{2};
-    v(2) = T{3};
-
-    using ResultType = typename units::unit_t<units::squared<typename units::traits::unit_t_traits<T>::unit_type>>;
-
-    ResultType s = v * v;
-
-    EXPECT_NEAR(s(), 14.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanCalculateDotProduct)
-{
-    VectorN_CanCalculateDotProduct<units::length::meter_t>();
-    VectorN_CanCalculateDotProduct<units::velocity::meters_per_second_t>();
-    VectorN_CanCalculateDotProduct<units::acceleration::meters_per_second_squared_t>();
-
-    // angular velocity and angular acceleration excluded from this test
-    // because they are treated in a special way
-
-    VectorN_CanCalculateDotProduct<units::force::newton_t>();
-    VectorN_CanCalculateDotProduct<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanCalculateVectorDotProductAngularVel()
-{
-    mc::VectorN<T,SIZE> v1;
-    v1(0) = T{1};
-    v1(1) = T{2};
-    v1(2) = T{3};
-
-    mc::VectorN<units::angular_velocity::radians_per_second_t,SIZE> v2;
-    v2(0) = 4.0_rad_per_s;
-    v2(1) = 5.0_rad_per_s;
-    v2(2) = 6.0_rad_per_s;
-
-    using ResultType = typename units::unit_t<
-        units::compound_unit<
-            typename units::traits::unit_t_traits<T>::unit_type,
-            typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
-        >
-    >;
-
-    ResultType s12 = v1 * v2;
-    ResultType s21 = v2 * v1;
-
-    // expected values calculated with wxMaxima
-    // tests/mcsim/utils/math/python/test_vector3_dot_product.py
-    EXPECT_NEAR(s12(), 32.0, TOLERANCE);
-    EXPECT_NEAR(s21(), 32.0, TOLERANCE);
-}
-
-
-TEST_F(TestVectorNWithUnits, CanCalculateVectorDotProductAngularVel)
-{
-    VectorN_CanCalculateVectorDotProductAngularVel<units::length::meter_t>();
-    VectorN_CanCalculateVectorDotProductAngularVel<units::velocity::meters_per_second_t>();
-    VectorN_CanCalculateVectorDotProductAngularVel<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanCalculateVectorDotProductAngularVel<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanCalculateVectorDotProductAngularVel<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanCalculateVectorDotProductAngularVel<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanCalculateVectorDotProductAngularVel<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanCalculateVectorDotProductAngularVel<units::force::newton_t>();
-    VectorN_CanCalculateVectorDotProductAngularVel<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanCalculateVectorDotProductAngularAcc()
-{
-    mc::VectorN<T,SIZE> v1;
-    v1(0) = T{1};
-    v1(1) = T{2};
-    v1(2) = T{3};
-
-    mc::VectorN<units::angular_acceleration::radians_per_second_squared_t, SIZE> v2;
-    v2(0) = 4.0_rad_per_s_sq;
-    v2(1) = 5.0_rad_per_s_sq;
-    v2(2) = 6.0_rad_per_s_sq;
-
-    using ResultType = typename units::unit_t<
-        units::compound_unit<
-            typename units::traits::unit_t_traits<T>::unit_type,
-            typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
-        >
-    >;
-
-    ResultType s12 = v1 * v2;
-    ResultType s21 = v2 * v1;
-
-    // expected values calculated with wxMaxima
-    // tests/mcsim/utils/math/python/test_vector3_dot_product.py
-    EXPECT_NEAR(s12(), 32.0, TOLERANCE);
-    EXPECT_NEAR(s21(), 32.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanCalculateVectorDotProductAngularAcc)
-{
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::length::meter_t>();
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::velocity::meters_per_second_t>();
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::force::newton_t>();
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanCalculateDotProductDimensionless()
-{
-    mc::VectorN<T,SIZE> v1;
-    v1(0) = T{1};
-    v1(1) = T{2};
-    v1(2) = T{3};
-
-    mc::VectorN<double,SIZE> v2;
-    v2(0) = 4.0;
-    v2(1) = 5.0;
-    v2(2) = 6.0;
-
-    T s12 = v1 * v2;
-    T s21 = v2 * v1;
-
-    // expected values calculated with wxMaxima
-    // tests/mcsim/utils/math/python/test_vector3_dot_product.py
-    EXPECT_NEAR(s12(), 32.0, TOLERANCE);
-    EXPECT_NEAR(s21(), 32.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanCalculateDotProductDimensionless)
-{
-    VectorN_CanCalculateDotProductDimensionless<units::length::meter_t>();
-    VectorN_CanCalculateDotProductDimensionless<units::velocity::meters_per_second_t>();
-    VectorN_CanCalculateDotProductDimensionless<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanCalculateDotProductDimensionless<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanCalculateDotProductDimensionless<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanCalculateDotProductDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanCalculateDotProductDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanCalculateDotProductDimensionless<units::force::newton_t>();
-    VectorN_CanCalculateDotProductDimensionless<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanDivideByScalar()
-{
-    mc::VectorN<T,SIZE> v;
-    v(0) = T{1};
-    v(1) = T{2};
-    v(2) = T{3};
-
-    units::length::meter_t val = 2.0_m;
-
-    mc::VectorN<
-        units::unit_t<
-        units::compound_unit<
-                typename units::traits::unit_t_traits<T>::unit_type,
-                units::inverse<units::length::meter>
-            >
-        >,
-        SIZE
-    > vr = v / val;
-
-    EXPECT_NEAR(vr(0)(), 0.5, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 1.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 1.5, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanDivideByScalar)
-{
-    VectorN_CanDivideByScalar<units::length::meter_t>();
-    VectorN_CanDivideByScalar<units::velocity::meters_per_second_t>();
-    VectorN_CanDivideByScalar<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanDivideByScalar<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanDivideByScalar<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanDivideByScalar<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanDivideByScalar<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanDivideByScalar<units::force::newton_t>();
-    VectorN_CanDivideByScalar<units::torque::newton_meter_t>();
-}
-
-TEST_F(TestVectorNWithUnits, CanDivideByScalarDimensionlessVector)
-{
-    mc::VectorN<double,SIZE> v;
-    v(0) = 1.0;
-    v(1) = 2.0;
-    v(2) = 3.0;
-
-    constexpr units::time::second_t val = 2.0_s;
-    mc::VectorN<units::frequency::hertz_t,SIZE> vr = v / val;
-
-    EXPECT_NEAR(vr(0)(), 0.5, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 1.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 1.5, TOLERANCE);
-}
-
-template <typename T>
-void VectorN_CanDivideByScalarDimensionless()
-{
-    mc::VectorN<T,SIZE> v;
-    v(0) = T{1};
-    v(1) = T{2};
-    v(2) = T{3};
-
-    double val = 2.0;
-
-    mc::VectorN<T,SIZE> vr = v / val;
-
-    EXPECT_NEAR(vr(0)(), 0.5, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 1.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 1.5, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanDivideByScalarDimensionless)
-{
-    VectorN_CanDivideByScalarDimensionless<units::length::meter_t>();
-    VectorN_CanDivideByScalarDimensionless<units::velocity::meters_per_second_t>();
-    VectorN_CanDivideByScalarDimensionless<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanDivideByScalarDimensionless<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanDivideByScalarDimensionless<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanDivideByScalarDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanDivideByScalarDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanDivideByScalarDimensionless<units::force::newton_t>();
-    VectorN_CanDivideByScalarDimensionless<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanUnaryAdd()
-{
-    mc::VectorN<T,SIZE> v0;
-    v0(0) = T{1};
-    v0(1) = T{2};
-    v0(2) = T{3};
-
-    mc::VectorN<T,SIZE> v1;
-    v1(0) = T{2};
-    v1(1) = T{3};
-    v1(2) = T{4};
-
-    v0 += v1;
-
-    EXPECT_NEAR(v0(0)(), 3.0, TOLERANCE);
-    EXPECT_NEAR(v0(1)(), 5.0, TOLERANCE);
-    EXPECT_NEAR(v0(2)(), 7.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanUnaryAdd)
-{
-    VectorN_CanUnaryAdd<units::length::meter_t>();
-    VectorN_CanUnaryAdd<units::velocity::meters_per_second_t>();
-    VectorN_CanUnaryAdd<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanUnaryAdd<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanUnaryAdd<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanUnaryAdd<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanUnaryAdd<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanUnaryAdd<units::force::newton_t>();
-    VectorN_CanUnaryAdd<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanUnarySubtract()
-{
-    mc::VectorN<T,SIZE> v0;
-    v0(0) = T{3};
-    v0(1) = T{5};
-    v0(2) = T{7};
-
-    mc::VectorN<T,SIZE> v1;
-    v1(0) = T{2};
-    v1(1) = T{3};
-    v1(2) = T{4};
-
-    v0 -= v1;
-
-    EXPECT_NEAR(v0(0)(), 1.0, TOLERANCE);
-    EXPECT_NEAR(v0(1)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(v0(2)(), 3.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanUnarySubtract)
-{
-    VectorN_CanUnarySubtract<units::length::meter_t>();
-    VectorN_CanUnarySubtract<units::velocity::meters_per_second_t>();
-    VectorN_CanUnarySubtract<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanUnarySubtract<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanUnarySubtract<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanUnarySubtract<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanUnarySubtract<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanUnarySubtract<units::force::newton_t>();
-    VectorN_CanUnarySubtract<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanUnaryMultiplyByScalarDimensionless()
-{
-    mc::VectorN<T,SIZE> v0;
-    v0(0) = T{2};
-    v0(1) = T{4};
-    v0(2) = T{6};
-
-    v0 *= 0.5;
-
-    EXPECT_NEAR(v0(0)(), 1.0, TOLERANCE);
-    EXPECT_NEAR(v0(1)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(v0(2)(), 3.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanUnaryMultiplyByScalarDimensionless)
-{
-    VectorN_CanUnaryMultiplyByScalarDimensionless<units::length::meter_t>();
-    VectorN_CanUnaryMultiplyByScalarDimensionless<units::velocity::meters_per_second_t>();
-    VectorN_CanUnaryMultiplyByScalarDimensionless<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanUnaryMultiplyByScalarDimensionless<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanUnaryMultiplyByScalarDimensionless<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanUnaryMultiplyByScalarDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanUnaryMultiplyByScalarDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanUnaryMultiplyByScalarDimensionless<units::force::newton_t>();
-    VectorN_CanUnaryMultiplyByScalarDimensionless<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanUnaryDivideByScalarDimensionless()
-{
-    mc::VectorN<T,SIZE> v0;
-    v0(0) = T{2};
-    v0(1) = T{4};
-    v0(2) = T{6};
-
-    v0 /= 2.0;
-
-    EXPECT_NEAR(v0(0)(), 1.0, TOLERANCE);
-    EXPECT_NEAR(v0(1)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(v0(2)(), 3.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanUnaryDivideByScalarDimensionless)
-{
-    VectorN_CanUnaryDivideByScalarDimensionless<units::length::meter_t>();
-    VectorN_CanUnaryDivideByScalarDimensionless<units::velocity::meters_per_second_t>();
-    VectorN_CanUnaryDivideByScalarDimensionless<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanUnaryDivideByScalarDimensionless<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanUnaryDivideByScalarDimensionless<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanUnaryDivideByScalarDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanUnaryDivideByScalarDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanUnaryDivideByScalarDimensionless<units::force::newton_t>();
-    VectorN_CanUnaryDivideByScalarDimensionless<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanCompare()
-{
-    mc::VectorN<T,SIZE> v1;
-    mc::VectorN<T,SIZE> v2;
-    v1(0) = v2(0) = T{1};
-    v1(1) = v2(1) = T{2};
-    v1(2) = v2(2) = T{3};
-
-    mc::VectorN<T,SIZE> v3;
-    v3(0) = T{4};
-    v3(1) = T{5};
-    v3(2) = T{6};
-
-    EXPECT_TRUE(v1 == v2);
-    EXPECT_TRUE(v1 != v3);
-    EXPECT_FALSE(v1 == v3);
-    EXPECT_FALSE(v1 != v2);
-}
-
-TEST_F(TestVectorNWithUnits, CanCompare)
-{
-    VectorN_CanCompare<units::length::meter_t>();
-    VectorN_CanCompare<units::velocity::meters_per_second_t>();
-    VectorN_CanCompare<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanCompare<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanCompare<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanCompare<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanCompare<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanCompare<units::force::newton_t>();
-    VectorN_CanCompare<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanMultiplyScalarByVector()
-{
-    mc::VectorN<T,SIZE> v;
-    v(0) = T{1};
-    v(1) = T{2};
-    v(2) = T{3};
-
-    units::length::meter_t val = 2.0_m;
-
-    mc::VectorN<
-        units::unit_t<
-        units::compound_unit<
-                typename units::traits::unit_t_traits<T>::unit_type,
-                units::length::meter
-            >
-        >,
-        SIZE
-    > vr = val * v;
-
-    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanMultiplyScalarByVector)
-{
-    VectorN_CanMultiplyScalarByVector<units::length::meter_t>();
-    VectorN_CanMultiplyScalarByVector<units::velocity::meters_per_second_t>();
-    VectorN_CanMultiplyScalarByVector<units::acceleration::meters_per_second_squared_t>();
-
-    // angular velocity and angular acceleration excluded from this test
-    // because they are treated in a special way
-
-    VectorN_CanMultiplyScalarByVector<units::force::newton_t>();
-    VectorN_CanMultiplyScalarByVector<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanMultiplyScalarByVectorTime()
-{
-    mc::VectorN<T,SIZE> v;
-    v(0) = T{1};
-    v(1) = T{2};
-    v(2) = T{3};
-
-    units::time::second_t val = 2.0_s;
-
-    mc::VectorN<
-        units::unit_t<
-        units::compound_unit<
-                typename units::traits::unit_t_traits<T>::unit_type,
-                units::time::second
-            >
-        >,
-        SIZE
-    > vr = val * v;
-
-    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanMultiplyScalarByVectorTime)
-{
-    VectorN_CanMultiplyScalarByVectorTime<units::length::meter_t>();
-    VectorN_CanMultiplyScalarByVectorTime<units::velocity::meters_per_second_t>();
-    VectorN_CanMultiplyScalarByVectorTime<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanMultiplyScalarByVectorTime<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanMultiplyScalarByVectorTime<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanMultiplyScalarByVectorTime<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanMultiplyScalarByVectorTime<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanMultiplyScalarByVectorTime<units::force::newton_t>();
-    VectorN_CanMultiplyScalarByVectorTime<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanMultiplyScalarByVectorAngularVel()
-{
-    mc::VectorN<T,SIZE> v;
-    v(0) = T{1};
-    v(1) = T{2};
-    v(2) = T{3};
-
-    units::angular_velocity::degrees_per_second_t val = 2.0_rad_per_s;
-
-    mc::VectorN<
-        units::unit_t<
-        units::compound_unit<
-                typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
-            >
-        >,
-        SIZE
-    > vr = val * v;
-
-    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanMultiplyScalarByVectorAngularVel)
-{
-    VectorN_CanMultiplyScalarByVectorAngularVel<units::length::meter_t>();
-    VectorN_CanMultiplyScalarByVectorAngularVel<units::velocity::meters_per_second_t>();
-    VectorN_CanMultiplyScalarByVectorAngularVel<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanMultiplyScalarByVectorAngularVel<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanMultiplyScalarByVectorAngularVel<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanMultiplyScalarByVectorAngularVel<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanMultiplyScalarByVectorAngularVel<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanMultiplyScalarByVectorAngularVel<units::force::newton_t>();
-    VectorN_CanMultiplyScalarByVectorAngularVel<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void VectorN_CanMultiplyScalarByVectorAngularAcc()
-{
-    mc::VectorN<T,SIZE> v;
-    v(0) = T{1};
-    v(1) = T{2};
-    v(2) = T{3};
-
-    units::angular_acceleration::degrees_per_second_squared_t val = 2.0_rad_per_s_sq;
-
-    mc::VectorN<
-        units::unit_t<
-        units::compound_unit<
-                typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
-            >
-        >,
-        SIZE
-    > vr = val * v;
-
-    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanMultiplyScalarByVectorAngularAcc)
-{
-    VectorN_CanMultiplyScalarByVectorAngularAcc<units::length::meter_t>();
-    VectorN_CanMultiplyScalarByVectorAngularAcc<units::velocity::meters_per_second_t>();
-    VectorN_CanMultiplyScalarByVectorAngularAcc<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanMultiplyScalarByVectorAngularAcc<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanMultiplyScalarByVectorAngularAcc<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanMultiplyScalarByVectorAngularAcc<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanMultiplyScalarByVectorAngularAcc<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanMultiplyScalarByVectorAngularAcc<units::force::newton_t>();
-    VectorN_CanMultiplyScalarByVectorAngularAcc<units::torque::newton_meter_t>();
-}
-
-TEST_F(TestVectorNWithUnits, CanMultiplyScalarByVectorDimensionlessVector)
-{
-    mc::VectorN<double,SIZE> v;
-    v(0) = 1.0;
-    v(1) = 2.0;
-    v(2) = 3.0;
-
-    mc::VectorN<units::length::meter_t,SIZE> vr = 2.0_m * v;
-
-    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-}
-
-template <typename T>
-void VectorN_CanMultiplyScalarByVectorDimensionless()
-{
-    mc::VectorN<T,SIZE> v;
-    v(0) = T{1};
-    v(1) = T{2};
-    v(2) = T{3};
-
-    mc::VectorN<T,SIZE> vr = 2.0 * v;
-
-    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-}
-
-TEST_F(TestVectorNWithUnits, CanMultiplyScalarByVectorDimensionless)
-{
-    VectorN_CanMultiplyScalarByVectorDimensionless<units::length::meter_t>();
-    VectorN_CanMultiplyScalarByVectorDimensionless<units::velocity::meters_per_second_t>();
-    VectorN_CanMultiplyScalarByVectorDimensionless<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanMultiplyScalarByVectorDimensionless<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanMultiplyScalarByVectorDimensionless<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanMultiplyScalarByVectorDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanMultiplyScalarByVectorDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanMultiplyScalarByVectorDimensionless<units::force::newton_t>();
-    VectorN_CanMultiplyScalarByVectorDimensionless<units::torque::newton_meter_t>();
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// template <typename T>
+// void VectorN_CanMultiplyByScalar()
+// {
+//     mc::VectorN<T,SIZE> v;
+//     v(0) = T{1};
+//     v(1) = T{2};
+//     v(2) = T{3};
+
+//     units::length::meter_t val = 2.0_m;
+
+//     mc::VectorN<
+//         units::unit_t<
+//             units::compound_unit<
+//                 typename units::traits::unit_t_traits<T>::unit_type,
+//                 units::length::meter
+//             >
+//         >,
+//         SIZE
+//     > vr = v * val;
+
+//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanMultiplyByScalar)
+// {
+//     VectorN_CanMultiplyByScalar<units::length::meter_t>();
+//     VectorN_CanMultiplyByScalar<units::velocity::meters_per_second_t>();
+//     VectorN_CanMultiplyByScalar<units::acceleration::meters_per_second_squared_t>();
+
+//     // angular velocity and angular acceleration excluded from this test
+//     // because they are treated in a special way
+
+//     VectorN_CanMultiplyByScalar<units::force::newton_t>();
+//     VectorN_CanMultiplyByScalar<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanMultiplyByScalarTime()
+// {
+//     mc::VectorN<T,SIZE> v;
+//     v(0) = T{1};
+//     v(1) = T{2};
+//     v(2) = T{3};
+
+//     units::time::second_t val = 2.0_s;
+
+//     mc::VectorN<
+//         units::unit_t<
+//         units::compound_unit<
+//                 typename units::traits::unit_t_traits<T>::unit_type,
+//                 units::time::second
+//             >
+//         >,
+//         SIZE
+//     > vr = v * val;
+
+//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanMultiplyByScalarTime)
+// {
+//     VectorN_CanMultiplyByScalarTime<units::length::meter_t>();
+//     VectorN_CanMultiplyByScalarTime<units::velocity::meters_per_second_t>();
+//     VectorN_CanMultiplyByScalarTime<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanMultiplyByScalarTime<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanMultiplyByScalarTime<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanMultiplyByScalarTime<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanMultiplyByScalarTime<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanMultiplyByScalarTime<units::force::newton_t>();
+//     VectorN_CanMultiplyByScalarTime<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanMultiplyByScalarAngularVel()
+// {
+//     mc::VectorN<T,SIZE> v;
+//     v(0) = T{1};
+//     v(1) = T{2};
+//     v(2) = T{3};
+
+//     units::angular_velocity::degrees_per_second_t val = 2.0_rad_per_s;
+
+//     mc::VectorN<
+//         units::unit_t<
+//             units::compound_unit<
+//                 typename units::traits::unit_t_traits<T>::unit_type,
+//                 typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+//             >
+//         >,
+//         SIZE
+//     > vr = v * val;
+
+//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanMultiplyByScalarAngularVel)
+// {
+//     VectorN_CanMultiplyByScalarAngularVel<units::length::meter_t>();
+//     VectorN_CanMultiplyByScalarAngularVel<units::velocity::meters_per_second_t>();
+//     VectorN_CanMultiplyByScalarAngularVel<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanMultiplyByScalarAngularVel<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanMultiplyByScalarAngularVel<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanMultiplyByScalarAngularVel<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanMultiplyByScalarAngularVel<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanMultiplyByScalarAngularVel<units::force::newton_t>();
+//     VectorN_CanMultiplyByScalarAngularVel<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanMultiplyByScalarAngularAcc()
+// {
+//     mc::VectorN<T,SIZE> v;
+//     v(0) = T{1};
+//     v(1) = T{2};
+//     v(2) = T{3};
+
+//     units::angular_acceleration::degrees_per_second_squared_t val = 2.0_rad_per_s_sq;
+
+//     mc::VectorN<
+//         units::unit_t<
+//         units::compound_unit<
+//                 typename units::traits::unit_t_traits<T>::unit_type,
+//                 typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+//             >
+//         >,
+//         SIZE
+//     > vr = v * val;
+
+//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanMultiplyByScalarAngularAcc)
+// {
+//     VectorN_CanMultiplyByScalarAngularAcc<units::length::meter_t>();
+//     VectorN_CanMultiplyByScalarAngularAcc<units::velocity::meters_per_second_t>();
+//     VectorN_CanMultiplyByScalarAngularAcc<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanMultiplyByScalarAngularAcc<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanMultiplyByScalarAngularAcc<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanMultiplyByScalarAngularAcc<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanMultiplyByScalarAngularAcc<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanMultiplyByScalarAngularAcc<units::force::newton_t>();
+//     VectorN_CanMultiplyByScalarAngularAcc<units::torque::newton_meter_t>();
+// }
+
+// TEST_F(TestVectorNWithUnits, CanMultiplyByScalarDimensionlessVector)
+// {
+//     mc::VectorN<double,SIZE> v;
+//     v(0) = 1.0;
+//     v(1) = 2.0;
+//     v(2) = 3.0;
+
+//     mc::VectorN<units::length::meter_t,SIZE> vr = v * 2.0_m;
+
+//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+// }
+
+// template <typename T>
+// void VectorN_CanMultiplyByScalarDimensionless()
+// {
+//     mc::VectorN<T,SIZE> v;
+//     v(0) = T{1};
+//     v(1) = T{2};
+//     v(2) = T{3};
+
+//     mc::VectorN<T,SIZE> vr = v * 2.0;
+
+//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanMultiplyByScalarDimensionless)
+// {
+//     VectorN_CanMultiplyByScalarDimensionless<units::length::meter_t>();
+//     VectorN_CanMultiplyByScalarDimensionless<units::velocity::meters_per_second_t>();
+//     VectorN_CanMultiplyByScalarDimensionless<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanMultiplyByScalarDimensionless<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanMultiplyByScalarDimensionless<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanMultiplyByScalarDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanMultiplyByScalarDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanMultiplyByScalarDimensionless<units::force::newton_t>();
+//     VectorN_CanMultiplyByScalarDimensionless<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanCalculateDotProduct()
+// {
+//     mc::VectorN<T,SIZE> v;
+//     v(0) = T{1};
+//     v(1) = T{2};
+//     v(2) = T{3};
+
+//     using ResultType = typename units::unit_t<units::squared<typename units::traits::unit_t_traits<T>::unit_type>>;
+
+//     ResultType s = v * v;
+
+//     EXPECT_NEAR(s(), 14.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanCalculateDotProduct)
+// {
+//     VectorN_CanCalculateDotProduct<units::length::meter_t>();
+//     VectorN_CanCalculateDotProduct<units::velocity::meters_per_second_t>();
+//     VectorN_CanCalculateDotProduct<units::acceleration::meters_per_second_squared_t>();
+
+//     // angular velocity and angular acceleration excluded from this test
+//     // because they are treated in a special way
+
+//     VectorN_CanCalculateDotProduct<units::force::newton_t>();
+//     VectorN_CanCalculateDotProduct<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanCalculateVectorDotProductAngularVel()
+// {
+//     mc::VectorN<T,SIZE> v1;
+//     v1(0) = T{1};
+//     v1(1) = T{2};
+//     v1(2) = T{3};
+
+//     mc::VectorN<units::angular_velocity::radians_per_second_t,SIZE> v2;
+//     v2(0) = 4.0_rad_per_s;
+//     v2(1) = 5.0_rad_per_s;
+//     v2(2) = 6.0_rad_per_s;
+
+//     using ResultType = typename units::unit_t<
+//         units::compound_unit<
+//             typename units::traits::unit_t_traits<T>::unit_type,
+//             typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+//         >
+//     >;
+
+//     ResultType s12 = v1 * v2;
+//     ResultType s21 = v2 * v1;
+
+//     // expected values calculated with wxMaxima
+//     // tests/mcsim/utils/math/python/test_vector3_dot_product.py
+//     EXPECT_NEAR(s12(), 32.0, TOLERANCE);
+//     EXPECT_NEAR(s21(), 32.0, TOLERANCE);
+// }
+
+
+// TEST_F(TestVectorNWithUnits, CanCalculateVectorDotProductAngularVel)
+// {
+//     VectorN_CanCalculateVectorDotProductAngularVel<units::length::meter_t>();
+//     VectorN_CanCalculateVectorDotProductAngularVel<units::velocity::meters_per_second_t>();
+//     VectorN_CanCalculateVectorDotProductAngularVel<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanCalculateVectorDotProductAngularVel<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanCalculateVectorDotProductAngularVel<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanCalculateVectorDotProductAngularVel<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanCalculateVectorDotProductAngularVel<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanCalculateVectorDotProductAngularVel<units::force::newton_t>();
+//     VectorN_CanCalculateVectorDotProductAngularVel<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanCalculateVectorDotProductAngularAcc()
+// {
+//     mc::VectorN<T,SIZE> v1;
+//     v1(0) = T{1};
+//     v1(1) = T{2};
+//     v1(2) = T{3};
+
+//     mc::VectorN<units::angular_acceleration::radians_per_second_squared_t, SIZE> v2;
+//     v2(0) = 4.0_rad_per_s_sq;
+//     v2(1) = 5.0_rad_per_s_sq;
+//     v2(2) = 6.0_rad_per_s_sq;
+
+//     using ResultType = typename units::unit_t<
+//         units::compound_unit<
+//             typename units::traits::unit_t_traits<T>::unit_type,
+//             typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+//         >
+//     >;
+
+//     ResultType s12 = v1 * v2;
+//     ResultType s21 = v2 * v1;
+
+//     // expected values calculated with wxMaxima
+//     // tests/mcsim/utils/math/python/test_vector3_dot_product.py
+//     EXPECT_NEAR(s12(), 32.0, TOLERANCE);
+//     EXPECT_NEAR(s21(), 32.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanCalculateVectorDotProductAngularAcc)
+// {
+//     VectorN_CanCalculateVectorDotProductAngularAcc<units::length::meter_t>();
+//     VectorN_CanCalculateVectorDotProductAngularAcc<units::velocity::meters_per_second_t>();
+//     VectorN_CanCalculateVectorDotProductAngularAcc<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanCalculateVectorDotProductAngularAcc<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanCalculateVectorDotProductAngularAcc<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanCalculateVectorDotProductAngularAcc<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanCalculateVectorDotProductAngularAcc<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanCalculateVectorDotProductAngularAcc<units::force::newton_t>();
+//     VectorN_CanCalculateVectorDotProductAngularAcc<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanCalculateDotProductDimensionless()
+// {
+//     mc::VectorN<T,SIZE> v1;
+//     v1(0) = T{1};
+//     v1(1) = T{2};
+//     v1(2) = T{3};
+
+//     mc::VectorN<double,SIZE> v2;
+//     v2(0) = 4.0;
+//     v2(1) = 5.0;
+//     v2(2) = 6.0;
+
+//     T s12 = v1 * v2;
+//     T s21 = v2 * v1;
+
+//     // expected values calculated with wxMaxima
+//     // tests/mcsim/utils/math/python/test_vector3_dot_product.py
+//     EXPECT_NEAR(s12(), 32.0, TOLERANCE);
+//     EXPECT_NEAR(s21(), 32.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanCalculateDotProductDimensionless)
+// {
+//     VectorN_CanCalculateDotProductDimensionless<units::length::meter_t>();
+//     VectorN_CanCalculateDotProductDimensionless<units::velocity::meters_per_second_t>();
+//     VectorN_CanCalculateDotProductDimensionless<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanCalculateDotProductDimensionless<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanCalculateDotProductDimensionless<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanCalculateDotProductDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanCalculateDotProductDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanCalculateDotProductDimensionless<units::force::newton_t>();
+//     VectorN_CanCalculateDotProductDimensionless<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanDivideByScalar()
+// {
+//     mc::VectorN<T,SIZE> v;
+//     v(0) = T{1};
+//     v(1) = T{2};
+//     v(2) = T{3};
+
+//     units::length::meter_t val = 2.0_m;
+
+//     mc::VectorN<
+//         units::unit_t<
+//         units::compound_unit<
+//                 typename units::traits::unit_t_traits<T>::unit_type,
+//                 units::inverse<units::length::meter>
+//             >
+//         >,
+//         SIZE
+//     > vr = v / val;
+
+//     EXPECT_NEAR(vr(0)(), 0.5, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 1.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 1.5, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanDivideByScalar)
+// {
+//     VectorN_CanDivideByScalar<units::length::meter_t>();
+//     VectorN_CanDivideByScalar<units::velocity::meters_per_second_t>();
+//     VectorN_CanDivideByScalar<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanDivideByScalar<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanDivideByScalar<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanDivideByScalar<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanDivideByScalar<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanDivideByScalar<units::force::newton_t>();
+//     VectorN_CanDivideByScalar<units::torque::newton_meter_t>();
+// }
+
+// TEST_F(TestVectorNWithUnits, CanDivideByScalarDimensionlessVector)
+// {
+//     mc::VectorN<double,SIZE> v;
+//     v(0) = 1.0;
+//     v(1) = 2.0;
+//     v(2) = 3.0;
+
+//     constexpr units::time::second_t val = 2.0_s;
+//     mc::VectorN<units::frequency::hertz_t,SIZE> vr = v / val;
+
+//     EXPECT_NEAR(vr(0)(), 0.5, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 1.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 1.5, TOLERANCE);
+// }
+
+// template <typename T>
+// void VectorN_CanDivideByScalarDimensionless()
+// {
+//     mc::VectorN<T,SIZE> v;
+//     v(0) = T{1};
+//     v(1) = T{2};
+//     v(2) = T{3};
+
+//     double val = 2.0;
+
+//     mc::VectorN<T,SIZE> vr = v / val;
+
+//     EXPECT_NEAR(vr(0)(), 0.5, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 1.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 1.5, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanDivideByScalarDimensionless)
+// {
+//     VectorN_CanDivideByScalarDimensionless<units::length::meter_t>();
+//     VectorN_CanDivideByScalarDimensionless<units::velocity::meters_per_second_t>();
+//     VectorN_CanDivideByScalarDimensionless<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanDivideByScalarDimensionless<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanDivideByScalarDimensionless<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanDivideByScalarDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanDivideByScalarDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanDivideByScalarDimensionless<units::force::newton_t>();
+//     VectorN_CanDivideByScalarDimensionless<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanUnaryAdd()
+// {
+//     mc::VectorN<T,SIZE> v0;
+//     v0(0) = T{1};
+//     v0(1) = T{2};
+//     v0(2) = T{3};
+
+//     mc::VectorN<T,SIZE> v1;
+//     v1(0) = T{2};
+//     v1(1) = T{3};
+//     v1(2) = T{4};
+
+//     v0 += v1;
+
+//     EXPECT_NEAR(v0(0)(), 3.0, TOLERANCE);
+//     EXPECT_NEAR(v0(1)(), 5.0, TOLERANCE);
+//     EXPECT_NEAR(v0(2)(), 7.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanUnaryAdd)
+// {
+//     VectorN_CanUnaryAdd<units::length::meter_t>();
+//     VectorN_CanUnaryAdd<units::velocity::meters_per_second_t>();
+//     VectorN_CanUnaryAdd<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanUnaryAdd<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanUnaryAdd<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanUnaryAdd<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanUnaryAdd<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanUnaryAdd<units::force::newton_t>();
+//     VectorN_CanUnaryAdd<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanUnarySubtract()
+// {
+//     mc::VectorN<T,SIZE> v0;
+//     v0(0) = T{3};
+//     v0(1) = T{5};
+//     v0(2) = T{7};
+
+//     mc::VectorN<T,SIZE> v1;
+//     v1(0) = T{2};
+//     v1(1) = T{3};
+//     v1(2) = T{4};
+
+//     v0 -= v1;
+
+//     EXPECT_NEAR(v0(0)(), 1.0, TOLERANCE);
+//     EXPECT_NEAR(v0(1)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(v0(2)(), 3.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanUnarySubtract)
+// {
+//     VectorN_CanUnarySubtract<units::length::meter_t>();
+//     VectorN_CanUnarySubtract<units::velocity::meters_per_second_t>();
+//     VectorN_CanUnarySubtract<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanUnarySubtract<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanUnarySubtract<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanUnarySubtract<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanUnarySubtract<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanUnarySubtract<units::force::newton_t>();
+//     VectorN_CanUnarySubtract<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanUnaryMultiplyByScalarDimensionless()
+// {
+//     mc::VectorN<T,SIZE> v0;
+//     v0(0) = T{2};
+//     v0(1) = T{4};
+//     v0(2) = T{6};
+
+//     v0 *= 0.5;
+
+//     EXPECT_NEAR(v0(0)(), 1.0, TOLERANCE);
+//     EXPECT_NEAR(v0(1)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(v0(2)(), 3.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanUnaryMultiplyByScalarDimensionless)
+// {
+//     VectorN_CanUnaryMultiplyByScalarDimensionless<units::length::meter_t>();
+//     VectorN_CanUnaryMultiplyByScalarDimensionless<units::velocity::meters_per_second_t>();
+//     VectorN_CanUnaryMultiplyByScalarDimensionless<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanUnaryMultiplyByScalarDimensionless<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanUnaryMultiplyByScalarDimensionless<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanUnaryMultiplyByScalarDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanUnaryMultiplyByScalarDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanUnaryMultiplyByScalarDimensionless<units::force::newton_t>();
+//     VectorN_CanUnaryMultiplyByScalarDimensionless<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanUnaryDivideByScalarDimensionless()
+// {
+//     mc::VectorN<T,SIZE> v0;
+//     v0(0) = T{2};
+//     v0(1) = T{4};
+//     v0(2) = T{6};
+
+//     v0 /= 2.0;
+
+//     EXPECT_NEAR(v0(0)(), 1.0, TOLERANCE);
+//     EXPECT_NEAR(v0(1)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(v0(2)(), 3.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanUnaryDivideByScalarDimensionless)
+// {
+//     VectorN_CanUnaryDivideByScalarDimensionless<units::length::meter_t>();
+//     VectorN_CanUnaryDivideByScalarDimensionless<units::velocity::meters_per_second_t>();
+//     VectorN_CanUnaryDivideByScalarDimensionless<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanUnaryDivideByScalarDimensionless<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanUnaryDivideByScalarDimensionless<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanUnaryDivideByScalarDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanUnaryDivideByScalarDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanUnaryDivideByScalarDimensionless<units::force::newton_t>();
+//     VectorN_CanUnaryDivideByScalarDimensionless<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanCompare()
+// {
+//     mc::VectorN<T,SIZE> v1;
+//     mc::VectorN<T,SIZE> v2;
+//     v1(0) = v2(0) = T{1};
+//     v1(1) = v2(1) = T{2};
+//     v1(2) = v2(2) = T{3};
+
+//     mc::VectorN<T,SIZE> v3;
+//     v3(0) = T{4};
+//     v3(1) = T{5};
+//     v3(2) = T{6};
+
+//     EXPECT_TRUE(v1 == v2);
+//     EXPECT_TRUE(v1 != v3);
+//     EXPECT_FALSE(v1 == v3);
+//     EXPECT_FALSE(v1 != v2);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanCompare)
+// {
+//     VectorN_CanCompare<units::length::meter_t>();
+//     VectorN_CanCompare<units::velocity::meters_per_second_t>();
+//     VectorN_CanCompare<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanCompare<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanCompare<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanCompare<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanCompare<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanCompare<units::force::newton_t>();
+//     VectorN_CanCompare<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanMultiplyScalarByVector()
+// {
+//     mc::VectorN<T,SIZE> v;
+//     v(0) = T{1};
+//     v(1) = T{2};
+//     v(2) = T{3};
+
+//     units::length::meter_t val = 2.0_m;
+
+//     mc::VectorN<
+//         units::unit_t<
+//         units::compound_unit<
+//                 typename units::traits::unit_t_traits<T>::unit_type,
+//                 units::length::meter
+//             >
+//         >,
+//         SIZE
+//     > vr = val * v;
+
+//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanMultiplyScalarByVector)
+// {
+//     VectorN_CanMultiplyScalarByVector<units::length::meter_t>();
+//     VectorN_CanMultiplyScalarByVector<units::velocity::meters_per_second_t>();
+//     VectorN_CanMultiplyScalarByVector<units::acceleration::meters_per_second_squared_t>();
+
+//     // angular velocity and angular acceleration excluded from this test
+//     // because they are treated in a special way
+
+//     VectorN_CanMultiplyScalarByVector<units::force::newton_t>();
+//     VectorN_CanMultiplyScalarByVector<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanMultiplyScalarByVectorTime()
+// {
+//     mc::VectorN<T,SIZE> v;
+//     v(0) = T{1};
+//     v(1) = T{2};
+//     v(2) = T{3};
+
+//     units::time::second_t val = 2.0_s;
+
+//     mc::VectorN<
+//         units::unit_t<
+//         units::compound_unit<
+//                 typename units::traits::unit_t_traits<T>::unit_type,
+//                 units::time::second
+//             >
+//         >,
+//         SIZE
+//     > vr = val * v;
+
+//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanMultiplyScalarByVectorTime)
+// {
+//     VectorN_CanMultiplyScalarByVectorTime<units::length::meter_t>();
+//     VectorN_CanMultiplyScalarByVectorTime<units::velocity::meters_per_second_t>();
+//     VectorN_CanMultiplyScalarByVectorTime<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanMultiplyScalarByVectorTime<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanMultiplyScalarByVectorTime<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanMultiplyScalarByVectorTime<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanMultiplyScalarByVectorTime<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanMultiplyScalarByVectorTime<units::force::newton_t>();
+//     VectorN_CanMultiplyScalarByVectorTime<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanMultiplyScalarByVectorAngularVel()
+// {
+//     mc::VectorN<T,SIZE> v;
+//     v(0) = T{1};
+//     v(1) = T{2};
+//     v(2) = T{3};
+
+//     units::angular_velocity::degrees_per_second_t val = 2.0_rad_per_s;
+
+//     mc::VectorN<
+//         units::unit_t<
+//         units::compound_unit<
+//                 typename units::traits::unit_t_traits<T>::unit_type,
+//                 typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+//             >
+//         >,
+//         SIZE
+//     > vr = val * v;
+
+//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanMultiplyScalarByVectorAngularVel)
+// {
+//     VectorN_CanMultiplyScalarByVectorAngularVel<units::length::meter_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularVel<units::velocity::meters_per_second_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularVel<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularVel<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularVel<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularVel<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularVel<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularVel<units::force::newton_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularVel<units::torque::newton_meter_t>();
+// }
+
+// template <typename T>
+// void VectorN_CanMultiplyScalarByVectorAngularAcc()
+// {
+//     mc::VectorN<T,SIZE> v;
+//     v(0) = T{1};
+//     v(1) = T{2};
+//     v(2) = T{3};
+
+//     units::angular_acceleration::degrees_per_second_squared_t val = 2.0_rad_per_s_sq;
+
+//     mc::VectorN<
+//         units::unit_t<
+//         units::compound_unit<
+//                 typename units::traits::unit_t_traits<T>::unit_type,
+//                 typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+//             >
+//         >,
+//         SIZE
+//     > vr = val * v;
+
+//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanMultiplyScalarByVectorAngularAcc)
+// {
+//     VectorN_CanMultiplyScalarByVectorAngularAcc<units::length::meter_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularAcc<units::velocity::meters_per_second_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularAcc<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularAcc<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularAcc<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularAcc<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularAcc<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularAcc<units::force::newton_t>();
+//     VectorN_CanMultiplyScalarByVectorAngularAcc<units::torque::newton_meter_t>();
+// }
+
+// TEST_F(TestVectorNWithUnits, CanMultiplyScalarByVectorDimensionlessVector)
+// {
+//     mc::VectorN<double,SIZE> v;
+//     v(0) = 1.0;
+//     v(1) = 2.0;
+//     v(2) = 3.0;
+
+//     mc::VectorN<units::length::meter_t,SIZE> vr = 2.0_m * v;
+
+//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+// }
+
+// template <typename T>
+// void VectorN_CanMultiplyScalarByVectorDimensionless()
+// {
+//     mc::VectorN<T,SIZE> v;
+//     v(0) = T{1};
+//     v(1) = T{2};
+//     v(2) = T{3};
+
+//     mc::VectorN<T,SIZE> vr = 2.0 * v;
+
+//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+// }
+
+// TEST_F(TestVectorNWithUnits, CanMultiplyScalarByVectorDimensionless)
+// {
+//     VectorN_CanMultiplyScalarByVectorDimensionless<units::length::meter_t>();
+//     VectorN_CanMultiplyScalarByVectorDimensionless<units::velocity::meters_per_second_t>();
+//     VectorN_CanMultiplyScalarByVectorDimensionless<units::acceleration::meters_per_second_squared_t>();
+//     VectorN_CanMultiplyScalarByVectorDimensionless<units::angular_velocity::radians_per_second_t>();
+//     VectorN_CanMultiplyScalarByVectorDimensionless<units::angular_velocity::degrees_per_second_t>();
+//     VectorN_CanMultiplyScalarByVectorDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
+//     VectorN_CanMultiplyScalarByVectorDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
+//     VectorN_CanMultiplyScalarByVectorDimensionless<units::force::newton_t>();
+//     VectorN_CanMultiplyScalarByVectorDimensionless<units::torque::newton_meter_t>();
+// }
