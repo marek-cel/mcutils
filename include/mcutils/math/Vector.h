@@ -26,7 +26,7 @@
 
 #include <mcutils/extra_units.h>
 #include <mcutils/math/VectorN.h>
-#include <mcutils/math/Vector3.h>
+// #include <mcutils/math/Vector3.h>
 
 namespace mc {
 
