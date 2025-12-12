@@ -291,6 +291,33 @@ public:
         return result;
     }
 
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator*(const RHS_TYPE& value) const
+    {
+        // return type should be the wider of TYPE and RHS_TYPE
+        VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result;
+        multiplyVectorByValue(*this, value, &result);
+        return result;
+    }
+
+    // template <typename TYPE2>
+    // requires units::traits::is_unit_t<TYPE>::value && units::traits::is_unit_t<TYPE2>::value
+    // auto operator*(TYPE2 value) const
+    // {
+    //     VectorN<
+    //         units::unit_t<
+    //             units::compound_unit<
+    //                 typename units::traits::unit_t_traits<TYPE>::unit_type,
+    //                 typename units::traits::unit_t_traits<TYPE2>::unit_type
+    //             >
+    //         >,
+    //         SIZE
+    //     > result;
+    //     multiplyVectorByValue(*this, value, &result);
+    //     return result;
+    // }
+
     // /**
     //  * \brief Multiplication by a scalar operator.
     //  *
