@@ -325,105 +325,105 @@ TEST_F(TestVectorN, CanDivideByScalar)
     }
 }
 
-// TEST_F(TestVectorN, CanUnaryAdd)
-// {
-//     std::vector<double> x1 { 1.0, 2.0, 3.0 };
-//     std::vector<double> x2 { 4.0, 5.0, 6.0 };
+TEST_F(TestVectorN, CanUnaryAdd)
+{
+    std::vector<double> x1 { 1.0, 2.0, 3.0 };
+    std::vector<double> x2 { 4.0, 5.0, 6.0 };
 
-//     mc::VectorN<double,SIZE> v1;
-//     mc::VectorN<double,SIZE> v2;
+    mc::VectorN<double,SIZE> v1;
+    mc::VectorN<double,SIZE> v2;
 
-//     v1.setFromStdVector(x1);
-//     v2.setFromStdVector(x2);
+    v1.setFromStdVector(x1);
+    v2.setFromStdVector(x2);
 
-//     v1 += v2;
+    v1 += v2;
 
-//     for ( int i = 0; i < SIZE; ++i )
-//     {
-//         EXPECT_DOUBLE_EQ(v1(i), x1[i] + x2[i]) << "Error at index " << i;
-//     }
-// }
+    for ( int i = 0; i < SIZE; ++i )
+    {
+        EXPECT_DOUBLE_EQ(v1(i), x1[i] + x2[i]) << "Error at index " << i;
+    }
+}
 
-// TEST_F(TestVectorN, CanUnarySubtract)
-// {
-//     std::vector<double> x1 { 1.0, 2.0, 3.0 };
-//     std::vector<double> x2 { 4.0, 5.0, 6.0 };
+TEST_F(TestVectorN, CanUnarySubtract)
+{
+    std::vector<double> x1 { 1.0, 2.0, 3.0 };
+    std::vector<double> x2 { 4.0, 5.0, 6.0 };
 
-//     mc::VectorN<double,SIZE> v1;
-//     mc::VectorN<double,SIZE> v2;
+    mc::VectorN<double,SIZE> v1;
+    mc::VectorN<double,SIZE> v2;
 
-//     v1.setFromStdVector(x1);
-//     v2.setFromStdVector(x2);
+    v1.setFromStdVector(x1);
+    v2.setFromStdVector(x2);
 
-//     v1 -= v2;
+    v1 -= v2;
 
-//     for ( int i = 0; i < SIZE; ++i )
-//     {
-//         EXPECT_DOUBLE_EQ(v1(i), x1[i] - x2[i]) << "Error at index " << i;
-//     }
-// }
+    for ( int i = 0; i < SIZE; ++i )
+    {
+        EXPECT_DOUBLE_EQ(v1(i), x1[i] - x2[i]) << "Error at index " << i;
+    }
+}
 
-// TEST_F(TestVectorN, CanUnaryMultiplyByScalar)
-// {
-//     std::vector<double> x { 1.0, 2.0, 3.0 };
-//     mc::VectorN<double,SIZE> v;
-//     v.setFromStdVector(x);
+TEST_F(TestVectorN, CanUnaryMultiplyByScalar)
+{
+    std::vector<double> x { 1.0, 2.0, 3.0 };
+    mc::VectorN<double,SIZE> v;
+    v.setFromStdVector(x);
 
-//     constexpr double val = 2.0;
-//     v *= val;
+    constexpr double val = 2.0;
+    v *= val;
 
-//     for ( int i = 0; i < SIZE; ++i )
-//     {
-//         EXPECT_DOUBLE_EQ(v(i), x[i] * val) << "Error at index " << i;
-//     }
-// }
+    for ( int i = 0; i < SIZE; ++i )
+    {
+        EXPECT_DOUBLE_EQ(v(i), x[i] * val) << "Error at index " << i;
+    }
+}
 
-// TEST_F(TestVectorN, CanUnaryDivideByScalar)
-// {
-//     std::vector<double> x { 1.0, 2.0, 3.0 };
-//     mc::VectorN<double,SIZE> v;
-//     v.setFromStdVector(x);
+TEST_F(TestVectorN, CanUnaryDivideByScalar)
+{
+    std::vector<double> x { 1.0, 2.0, 3.0 };
+    mc::VectorN<double,SIZE> v;
+    v.setFromStdVector(x);
 
-//     constexpr double val = 2.0;
-//     v /= val;
+    constexpr double val = 2.0;
+    v /= val;
 
-//     for ( int i = 0; i < SIZE; ++i )
-//     {
-//         EXPECT_DOUBLE_EQ(v(i), x[i] / val) << "Error at index " << i;
-//     }
-// }
+    for ( int i = 0; i < SIZE; ++i )
+    {
+        EXPECT_DOUBLE_EQ(v(i), x[i] / val) << "Error at index " << i;
+    }
+}
 
-// TEST_F(TestVectorN, CanCompareVectors)
-// {
-//     std::vector<double> x1 { 1.0, 2.0, 3.0 };
-//     std::vector<double> x2 { 4.0, 5.0, 6.0 };
-//     std::vector<double> x3 { 1.0, 2.0, 3.0 };
+TEST_F(TestVectorN, CanCompareVectors)
+{
+    std::vector<double> x1 { 1.0, 2.0, 3.0 };
+    std::vector<double> x2 { 4.0, 5.0, 6.0 };
+    std::vector<double> x3 { 1.0, 2.0, 3.0 };
 
-//     mc::VectorN<double,SIZE> v1;
-//     mc::VectorN<double,SIZE> v2;
-//     mc::VectorN<double,SIZE> v3;
+    mc::VectorN<double,SIZE> v1;
+    mc::VectorN<double,SIZE> v2;
+    mc::VectorN<double,SIZE> v3;
 
-//     v1.setFromStdVector(x1);
-//     v2.setFromStdVector(x2);
-//     v3.setFromStdVector(x3);
+    v1.setFromStdVector(x1);
+    v2.setFromStdVector(x2);
+    v3.setFromStdVector(x3);
 
-//     EXPECT_FALSE(v1 == v2);
-//     EXPECT_FALSE(v1 != v3);
-//     EXPECT_TRUE(v1 == v3);
-//     EXPECT_TRUE(v1 != v2);
-// }
+    EXPECT_FALSE(v1 == v2);
+    EXPECT_FALSE(v1 != v3);
+    EXPECT_TRUE(v1 == v3);
+    EXPECT_TRUE(v1 != v2);
+}
 
-// TEST_F(TestVectorN, CanMultiplyScalarByVector)
-// {
-//     std::vector<double> x { 1.0, 2.0, 3.0 };
-//     mc::VectorN<double,SIZE> v;
-//     v.setFromStdVector(x);
+TEST_F(TestVectorN, CanMultiplyScalarByVector)
+{
+    std::vector<double> x { 1.0, 2.0, 3.0 };
+    mc::VectorN<double,SIZE> v;
+    v.setFromStdVector(x);
 
-//     constexpr double val = 2.0;
-//     mc::VectorN<double,SIZE> vr = val * v;
+    constexpr double val = 2.0;
+    mc::VectorN<double,SIZE> vr = val * v;
 
-//     for ( int i = 0; i < SIZE; ++i )
-//     {
-//         EXPECT_DOUBLE_EQ(vr(i), x[i] * val) << "Error at index " << i;
-//     }
-// }
+    for ( int i = 0; i < SIZE; ++i )
+    {
+        EXPECT_DOUBLE_EQ(vr(i), x[i] * val) << "Error at index " << i;
+    }
+}

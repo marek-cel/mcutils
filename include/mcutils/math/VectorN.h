@@ -940,21 +940,6 @@ public:
     // }
 
     /**
-     * \brief Division by scalar operator.
-     *
-     * This is a specialization for the case when the value is a number.
-     *
-     * \param value [-] value to divide the vector by
-     * \return result of the division
-     */
-    VectorN<TYPE,SIZE> operator/(double value) const
-    {
-        VectorN<TYPE,SIZE> result;
-        multiplyVectorByValue(*this, 1.0 / value, &result);
-        return result;
-    }
-
-    /**
      * \brief Unary addition operator.
      * \param vect vector to be added
      * \return reference to the updated vector
@@ -976,16 +961,16 @@ public:
         return *this;
     }
 
-    // /**
-    //  * \brief Unary multiplication operator.
-    //  * \param value [-] value to multiply the vector by
-    //  * \return reference to the updated vector
-    //  */
-    // VectorN<TYPE, SIZE>& operator*=(double value)
-    // {
-    //     *this = (*this) * value;
-    //     return *this;
-    // }
+    /**
+     * \brief Unary multiplication operator.
+     * \param value [-] value to multiply the vector by
+     * \return reference to the updated vector
+     */
+    VectorN<TYPE, SIZE>& operator*=(double value)
+    {
+        *this = (*this) * value;
+        return *this;
+    }
 
     /**
      * \brief Unary division operator.
@@ -1115,21 +1100,8 @@ protected:
  *
  * This is an operator for multiplying a scalar by a vector, which is commutative.
  */
-template <typename TYPE1, class TYPE2, unsigned int SIZE, typename std::enable_if<
-    units::traits::is_unit_t<TYPE1>::value, int>::type = 0
->
-auto operator*(TYPE1 value, const VectorN<TYPE2, SIZE>& vect)
-{
-    return vect * value;
-}
-
-/**
- * \brief Multiplication operator.
- *
- * This is a specialization for the case when the scalar is a number.
- */
-template<typename TYPE, unsigned int SIZE>
-VectorN<TYPE, SIZE> operator*(double value, const VectorN<TYPE, SIZE>& vect)
+template <typename TYPE_LHS, class TYPE_RHS, unsigned int SIZE>
+auto operator*(TYPE_LHS value, const VectorN<TYPE_RHS, SIZE>& vect)
 {
     return vect * value;
 }
