@@ -295,7 +295,6 @@ public:
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
     auto operator*(const RHS_TYPE& value) const
     {
-        // return type should be the wider of TYPE and RHS_TYPE
         VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result;
         multiplyVectorByValue(*this, value, &result);
         return result;
@@ -598,6 +597,15 @@ public:
     //     multiplyVectorByValue(*this, value, &result);
     //     return result;
     // }
+
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
+    {
+        std::common_type_t<TYPE, RHS_TYPE> result;
+        calculateDotProduct(*this, vect, &result);
+        return result;
+    }
 
     // /**
     //  * \brief Calculates the dot product of two vectors.

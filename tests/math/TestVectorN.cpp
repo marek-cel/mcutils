@@ -282,33 +282,33 @@ TEST_F(TestVectorN, CanMultiplyFloatVectorByDoubleScalar)
     }
 }
 
-// TEST_F(TestVectorN, CanCalculateDotProduct)
-// {
-//     std::vector<double> x1 { 1.0, 0.0, 0.0 };
-//     std::vector<double> x2 { 0.0, 1.0, 0.0 };
-//     std::vector<double> x3 { 0.0, 0.0, 1.0 };
-//     std::vector<double> x4 { 1.0, 2.0, 3.0 };
+TEST_F(TestVectorN, CanCalculateDotProduct)
+{
+    std::vector<double> x1 { 1.0, 0.0, 0.0 };
+    std::vector<double> x2 { 0.0, 1.0, 0.0 };
+    std::vector<double> x3 { 0.0, 0.0, 1.0 };
+    std::vector<double> x4 { 1.0, 2.0, 3.0 };
 
-//     mc::VectorN<double,SIZE> v1;
-//     mc::VectorN<double,SIZE> v2;
-//     mc::VectorN<double,SIZE> v3;
-//     mc::VectorN<double,SIZE> v4;
+    mc::VectorN<double,SIZE> v1;
+    mc::VectorN<double,SIZE> v2;
+    mc::VectorN<double,SIZE> v3;
+    mc::VectorN<double,SIZE> v4;
 
-//     v1.setFromStdVector(x1);
-//     v2.setFromStdVector(x2);
-//     v3.setFromStdVector(x3);
-//     v4.setFromStdVector(x4);
+    v1.setFromStdVector(x1);
+    v2.setFromStdVector(x2);
+    v3.setFromStdVector(x3);
+    v4.setFromStdVector(x4);
 
-//     double s1 = v4 * v1;
-//     double s2 = v4 * v2;
-//     double s3 = v4 * v3;
-//     double s4 = v4 * v4;
+    double s1 = v4 * v1;
+    double s2 = v4 * v2;
+    double s3 = v4 * v3;
+    double s4 = v4 * v4;
 
-//     EXPECT_DOUBLE_EQ(s1,  1.0);
-//     EXPECT_DOUBLE_EQ(s2,  2.0);
-//     EXPECT_DOUBLE_EQ(s3,  3.0);
-//     EXPECT_DOUBLE_EQ(s4, 14.0);
-// }
+    EXPECT_DOUBLE_EQ(s1,  1.0);
+    EXPECT_DOUBLE_EQ(s2,  2.0);
+    EXPECT_DOUBLE_EQ(s3,  3.0);
+    EXPECT_DOUBLE_EQ(s4, 14.0);
+}
 
 // TEST_F(TestVectorN, CanDivideByScalar)
 // {
