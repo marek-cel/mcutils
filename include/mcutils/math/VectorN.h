@@ -876,6 +876,15 @@ public:
     //     return result;
     // }
 
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator/(const RHS_TYPE& vect) const
+    {
+        VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result;
+        multiplyVectorByValue(*this, 1.0 / vect, &result);
+        return result;
+    }
+
     // /**
     //  * \brief Division by scalar operator.
     //  *

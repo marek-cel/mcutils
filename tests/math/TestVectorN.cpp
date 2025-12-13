@@ -310,20 +310,20 @@ TEST_F(TestVectorN, CanCalculateDotProduct)
     EXPECT_DOUBLE_EQ(s4, 14.0);
 }
 
-// TEST_F(TestVectorN, CanDivideByScalar)
-// {
-//     std::vector<double> x { 1.0, 2.0, 3.0 };
-//     mc::VectorN<double,SIZE> v;
-//     v.setFromStdVector(x);
+TEST_F(TestVectorN, CanDivideByScalar)
+{
+    std::vector<double> x { 1.0, 2.0, 3.0 };
+    mc::VectorN<double,SIZE> v;
+    v.setFromStdVector(x);
 
-//     constexpr double val = 2.0;
-//     mc::VectorN<double,SIZE> vr = v / val;
+    constexpr double val = 2.0;
+    mc::VectorN<double,SIZE> vr = v / val;
 
-//     for ( int i = 0; i < SIZE; ++i )
-//     {
-//         EXPECT_DOUBLE_EQ(vr(i), x[i] / val) << "Error at index " << i;
-//     }
-// }
+    for ( int i = 0; i < SIZE; ++i )
+    {
+        EXPECT_DOUBLE_EQ(vr(i), x[i] / val) << "Error at index " << i;
+    }
+}
 
 // TEST_F(TestVectorN, CanUnaryAdd)
 // {
