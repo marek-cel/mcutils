@@ -261,12 +261,24 @@ public:
      * \param vect vector to be added
      * \return sum of the vectors
      */
-    VectorN<TYPE, SIZE> operator+(const VectorN<TYPE, SIZE>& vect) const
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator+(const VectorN<RHS_TYPE, SIZE>& vect) const
     {
-        VectorN<TYPE, kSize> result(*this);
+        VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result(*this);
         result.add(vect);
         return result;
     }
+
+    // template <typename RHS_TYPE>
+    // requires units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    // VectorN<TYPE, SIZE> operator+(const VectorN<RHS_TYPE, SIZE>& vect) const
+    // {
+    //     VectorN<TYPE, kSize> result(*this);
+    //     result.add(vect);
+    //     return result;
+    // }
+    
 
     /**
      * \brief Negation operator.
@@ -284,9 +296,11 @@ public:
      * \param vect vector to be subtracted
      * \return difference of the vectors
      */
-    VectorN<TYPE, SIZE> operator-(const VectorN<TYPE, SIZE>& vect) const
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator-(const VectorN<RHS_TYPE, SIZE>& vect) const
     {
-        VectorN<TYPE, kSize> result(*this);
+        VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result(*this);
         result.subtract(vect);
         return result;
     }
