@@ -497,64 +497,103 @@ TEST_F(TestVectorNWithUnits, CanSubtract)
     VectorN_CanSubtract<units::torque::newton_meter_t>();
 }
 
+template <typename T>
+void VectorN_CanMultiplyByDouble()
+{
+    mc::VectorN<T,SIZE> v;
+    v(0) = T{1};
+    v(1) = T{2};
+    v(2) = T{3};
 
+    double val = 2.0;
 
+    mc::VectorN<T, SIZE> vr = v * val;
 
+    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+}
 
+TEST_F(TestVectorNWithUnits, CanMultiplyByDouble)
+{
+    VectorN_CanMultiplyByDouble<units::length::meter_t>();
+    VectorN_CanMultiplyByDouble<units::velocity::meters_per_second_t>();
+    VectorN_CanMultiplyByDouble<units::acceleration::meters_per_second_squared_t>();
+    VectorN_CanMultiplyByDouble<units::angular_velocity::radians_per_second_t>();
+    VectorN_CanMultiplyByDouble<units::angular_velocity::degrees_per_second_t>();
+    VectorN_CanMultiplyByDouble<units::angular_acceleration::radians_per_second_squared_t>();
+    VectorN_CanMultiplyByDouble<units::angular_acceleration::degrees_per_second_squared_t>();
+    VectorN_CanMultiplyByDouble<units::force::newton_t>();
+    VectorN_CanMultiplyByDouble<units::torque::newton_meter_t>();
+}
 
+template <typename T>
+void VectorN_CanMultiplyDimensionlessVectorByScalar()
+{
+    mc::VectorN<double,SIZE> v;
+    v(0) = 1.0;
+    v(1) = 2.0;
+    v(2) = 3.0;
 
+    T val = T{2.0};
 
+    mc::VectorN<T, SIZE> vr = v * val;
 
+    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+}
 
+TEST_F(TestVectorNWithUnits, CanMultiplyDimensionlessVectorByScalar)
+{
+    VectorN_CanMultiplyDimensionlessVectorByScalar<units::length::meter_t>();
+    VectorN_CanMultiplyDimensionlessVectorByScalar<units::velocity::meters_per_second_t>();
+    VectorN_CanMultiplyDimensionlessVectorByScalar<units::acceleration::meters_per_second_squared_t>();
+    VectorN_CanMultiplyDimensionlessVectorByScalar<units::angular_velocity::radians_per_second_t>();
+    VectorN_CanMultiplyDimensionlessVectorByScalar<units::angular_velocity::degrees_per_second_t>();
+    VectorN_CanMultiplyDimensionlessVectorByScalar<units::angular_acceleration::radians_per_second_squared_t>();
+    VectorN_CanMultiplyDimensionlessVectorByScalar<units::angular_acceleration::degrees_per_second_squared_t>();
+    VectorN_CanMultiplyDimensionlessVectorByScalar<units::force::newton_t>();
+    VectorN_CanMultiplyDimensionlessVectorByScalar<units::torque::newton_meter_t>();
+}
 
+template <typename T>
+void VectorN_CanMultiplyByScalar()
+{
+    mc::VectorN<T,SIZE> v;
+    v(0) = T{1};
+    v(1) = T{2};
+    v(2) = T{3};
 
+    units::length::meter_t val = 2.0_m;
 
+    mc::VectorN<
+        units::unit_t<
+            units::compound_unit<
+                typename units::traits::unit_t_traits<T>::unit_type,
+                units::length::meter
+            >
+        >,
+        SIZE
+    > vr = v * val;
 
+    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+}
 
+TEST_F(TestVectorNWithUnits, CanMultiplyByScalar)
+{
+    VectorN_CanMultiplyByScalar<units::length::meter_t>();
+    VectorN_CanMultiplyByScalar<units::velocity::meters_per_second_t>();
+    VectorN_CanMultiplyByScalar<units::acceleration::meters_per_second_squared_t>();
 
+    // angular velocity and angular acceleration excluded from this test
+    // because they are treated in a special way
 
-
-
-
-
-
-// template <typename T>
-// void VectorN_CanMultiplyByScalar()
-// {
-//     mc::VectorN<T,SIZE> v;
-//     v(0) = T{1};
-//     v(1) = T{2};
-//     v(2) = T{3};
-
-//     units::length::meter_t val = 2.0_m;
-
-//     mc::VectorN<
-//         units::unit_t<
-//             units::compound_unit<
-//                 typename units::traits::unit_t_traits<T>::unit_type,
-//                 units::length::meter
-//             >
-//         >,
-//         SIZE
-//     > vr = v * val;
-
-//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-// }
-
-// TEST_F(TestVectorNWithUnits, CanMultiplyByScalar)
-// {
-//     VectorN_CanMultiplyByScalar<units::length::meter_t>();
-//     VectorN_CanMultiplyByScalar<units::velocity::meters_per_second_t>();
-//     VectorN_CanMultiplyByScalar<units::acceleration::meters_per_second_squared_t>();
-
-//     // angular velocity and angular acceleration excluded from this test
-//     // because they are treated in a special way
-
-//     VectorN_CanMultiplyByScalar<units::force::newton_t>();
-//     VectorN_CanMultiplyByScalar<units::torque::newton_meter_t>();
-// }
+    VectorN_CanMultiplyByScalar<units::force::newton_t>();
+    VectorN_CanMultiplyByScalar<units::torque::newton_meter_t>();
+}
 
 // template <typename T>
 // void VectorN_CanMultiplyByScalarTime()

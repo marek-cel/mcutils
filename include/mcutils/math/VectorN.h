@@ -291,6 +291,15 @@ public:
         return result;
     }
 
+    /**
+     * \brief Multiplication by a scalar operator.
+     * 
+     * This template is enabled when both TYPE and TYPE_RHS are arithmetic types.
+     * 
+     * \tparam TYPE_RHS RHS operand type
+     * \param value value to be multiplied by
+     * \return product of the vector multiplied by the value
+     */
     template <typename RHS_TYPE>
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
     auto operator*(const RHS_TYPE& value) const
@@ -300,22 +309,67 @@ public:
         return result;
     }
 
-    // template <typename TYPE2>
-    // requires units::traits::is_unit_t<TYPE>::value && units::traits::is_unit_t<TYPE2>::value
-    // auto operator*(TYPE2 value) const
-    // {
-    //     VectorN<
-    //         units::unit_t<
-    //             units::compound_unit<
-    //                 typename units::traits::unit_t_traits<TYPE>::unit_type,
-    //                 typename units::traits::unit_t_traits<TYPE2>::unit_type
-    //             >
-    //         >,
-    //         SIZE
-    //     > result;
-    //     multiplyVectorByValue(*this, value, &result);
-    //     return result;
-    // }
+    /**
+     * \brief Multiplication by a scalar operator.
+     * 
+     * This template is enabled when TYPE is a unit and TYPE_RHS is an arithmetic type.
+     * 
+     * \tparam TYPE_RHS RHS operand type
+     * \param value value to be multiplied by
+     * \return product of the vector multiplied by the value
+     */
+    template <typename RHS_TYPE>
+    requires (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator*(const RHS_TYPE& value) const
+    {
+        VectorN<TYPE, SIZE> result;
+        multiplyVectorByValue(*this, value, &result);
+        return result;
+    }
+
+    /**
+     * \brief Multiplication by a scalar operator.
+     * 
+     * This template is enabled when TYPE is an arithmetic type and TYPE_RHS is a unit.
+     * 
+     * \tparam TYPE_RHS RHS operand type
+     * \param value value to be multiplied by
+     * \return product of the vector multiplied by the value
+     */
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    auto operator*(const RHS_TYPE& value) const
+    {
+        VectorN<RHS_TYPE, SIZE> result;
+        multiplyVectorByValue(*this, value, &result);
+        return result;
+    }
+
+    /**
+     * \brief Multiplication by a scalar operator.
+     * 
+     * This template is enabled when both TYPE and TYPE_RHS are units.
+     * 
+     * \tparam TYPE_RHS RHS operand type
+     * \param value value to be multiplied by
+     * \return product of the vector multiplied by the value
+     */
+    template <typename RHS_TYPE>
+    requires (units::traits::is_unit_t<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    auto operator*(const RHS_TYPE& value) const
+    {
+        VectorN<
+            units::unit_t<
+                units::compound_unit<
+                    typename units::traits::unit_t_traits<TYPE>::unit_type,
+                    typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
+                >
+            >,
+            SIZE
+        > result;
+        multiplyVectorByValue(*this, value, &result);
+        return result;
+    }
 
     // /**
     //  * \brief Multiplication by a scalar operator.
