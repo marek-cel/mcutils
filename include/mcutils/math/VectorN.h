@@ -256,13 +256,28 @@ public:
         return _elements[index];
     }
 
+    template <typename RHS_TYPE>
+    requires (std::is_same<TYPE, RHS_TYPE>::value)
+    auto operator+(const VectorN<RHS_TYPE, SIZE>& vect) const
+    {
+        VectorN<TYPE, SIZE> result(*this);
+        result.add(vect);
+        return result;
+    }
+
     /**
      * \brief Addition operator.
      * \param vect vector to be added
      * \return sum of the vectors
      */
     template <typename RHS_TYPE>
-    requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    requires (
+        std::is_arithmetic<TYPE>::value 
+        && 
+        std::is_arithmetic<RHS_TYPE>::value 
+        && 
+        !std::is_same<TYPE, RHS_TYPE>::value
+    )
     auto operator+(const VectorN<RHS_TYPE, SIZE>& vect) const
     {
         VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result(*this);
@@ -270,14 +285,22 @@ public:
         return result;
     }
 
-    // template <typename RHS_TYPE>
-    // requires units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
-    // VectorN<TYPE, SIZE> operator+(const VectorN<RHS_TYPE, SIZE>& vect) const
-    // {
-    //     VectorN<TYPE, kSize> result(*this);
-    //     result.add(vect);
-    //     return result;
-    // }
+    template <typename RHS_TYPE>
+    requires (
+        !std::is_arithmetic<TYPE>::value 
+        && 
+        !std::is_arithmetic<RHS_TYPE>::value 
+        &&
+        !std::is_same<TYPE, RHS_TYPE>::value
+        &&
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    VectorN<TYPE, SIZE> operator+(const VectorN<RHS_TYPE, SIZE>& vect) const
+    {
+        VectorN<TYPE, kSize> result(*this);
+        result.add(vect);
+        return result;
+    }
     
 
     /**
@@ -291,16 +314,56 @@ public:
         return result;
     }
 
+
+
+
     /**
      * \brief Subtraction operator.
      * \param vect vector to be subtracted
      * \return difference of the vectors
      */
     template <typename RHS_TYPE>
-    requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    requires (std::is_same<TYPE, RHS_TYPE>::value)
+    auto operator-(const VectorN<RHS_TYPE, SIZE>& vect) const
+    {
+        VectorN<TYPE, SIZE> result(*this);
+        result.subtract(vect);
+        return result;
+    }
+
+    /**
+     * \brief Addition operator.
+     * \param vect vector to be added
+     * \return sum of the vectors
+     */
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value 
+        && 
+        std::is_arithmetic<RHS_TYPE>::value 
+        && 
+        !std::is_same<TYPE, RHS_TYPE>::value
+    )
     auto operator-(const VectorN<RHS_TYPE, SIZE>& vect) const
     {
         VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result(*this);
+        result.subtract(vect);
+        return result;
+    }
+
+    template <typename RHS_TYPE>
+    requires (
+        !std::is_arithmetic<TYPE>::value 
+        && 
+        !std::is_arithmetic<RHS_TYPE>::value 
+        &&
+        !std::is_same<TYPE, RHS_TYPE>::value
+        &&
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    VectorN<TYPE, SIZE> operator-(const VectorN<RHS_TYPE, SIZE>& vect) const
+    {
+        VectorN<TYPE, kSize> result(*this);
         result.subtract(vect);
         return result;
     }
