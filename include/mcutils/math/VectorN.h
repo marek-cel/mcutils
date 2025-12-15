@@ -260,6 +260,7 @@ public:
 
     /**
      * \brief Adds the vectors.
+     * \tparam RHS_TYPE type of the other vector elements
      * \param vect vector to be added
      */
     template <typename RHS_TYPE>
@@ -287,13 +288,20 @@ public:
 
     /**
      * \brief Subtracts the vectors.
+     * \tparam RHS_TYPE type of the other vector elements
      * \param vect vector to be subtracted
      */
-    void subtract(const VectorN<TYPE, SIZE>& vect)
+    template <typename RHS_TYPE>
+    requires (
+        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+        ||
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    void subtract(const VectorN<RHS_TYPE, SIZE>& vect)
     {
         for (unsigned int i = 0; i < kSize; ++i)
         {
-            _elements[i] -= vect._elements[i];
+            _elements[i] -= vect(i);
         }
     }
 
