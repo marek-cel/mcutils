@@ -247,17 +247,6 @@ public:
         }
     }
 
-    /** \brief Converts the vector to a dimensionless vector. */
-    inline VectorN<double, SIZE> getDimensionless() const
-    {
-        VectorN<double, kSize> result;
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            result(i) = static_cast<double>(_elements[i]);
-        }
-        return result;
-    }
-
     /**
      * \brief Adds the vectors.
      * \tparam RHS_TYPE type of the other vector elements
@@ -310,19 +299,22 @@ public:
      *
      * Converts the vector to another type if the units are compatible.
      */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
+    template <typename NEW_TYPE>
+    requires (
+        !std::is_same<TYPE, NEW_TYPE>::value
         &&
-        units::traits::is_unit_t<TYPE2>::value
-        &&
-        units::traits::is_convertible_unit_t<TYPE, TYPE2>::value, int>::type = 0
-    >
-    operator VectorN<TYPE2, SIZE>() const
+        (
+            std::is_arithmetic<NEW_TYPE>::value
+            ||
+            units::traits::is_convertible_unit_t<NEW_TYPE, TYPE>::value
+        )
+    )
+    operator VectorN<NEW_TYPE, SIZE>() const
     {
-        VectorN<TYPE2, kSize> result;
+        VectorN<NEW_TYPE, SIZE> result;
         for (unsigned int i = 0; i < kSize; ++i)
         {
-            result(i) = _elements[i];
+            result(i) = static_cast<NEW_TYPE>(_elements[i]);
         }
         return result;
     }
@@ -540,11 +532,55 @@ public:
         return result;
     }
 
+    /**
+     * \brief Dot product operator.
+     */
     template <typename RHS_TYPE>
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
     auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
     {
         std::common_type_t<TYPE, RHS_TYPE> result;
+        calculateDotProduct(*this, vect, &result);
+        return result;
+    }
+
+    /**
+     * \brief Dot product operator.
+     */
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
+    {
+        RHS_TYPE result;
+        calculateDotProduct(*this, vect, &result);
+        return result;
+    }
+
+    /**
+     * \brief Dot product operator.
+     */
+    template <typename RHS_TYPE>
+    requires (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
+    {
+        TYPE result;
+        calculateDotProduct(*this, vect, &result);
+        return result;
+    }
+
+    /**
+     * \brief Dot product operator.
+     */
+    template <typename RHS_TYPE>
+    requires (units::traits::is_unit_t<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
+    {
+        units::unit_t<
+            units::compound_unit<
+                typename units::traits::unit_t_traits<TYPE>::unit_type,
+                typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
+            >
+        > result;
         calculateDotProduct(*this, vect, &result);
         return result;
     }
@@ -740,8 +776,8 @@ protected:
  *
  * This is an operator for multiplying a scalar by a vector, which is commutative.
  */
-template <typename TYPE_LHS, class TYPE_RHS, unsigned int SIZE>
-auto operator*(TYPE_LHS value, const VectorN<TYPE_RHS, SIZE>& vect)
+template <typename LHS_TYPE, typename RHS_TYPE, unsigned int SIZE>
+auto operator*(LHS_TYPE value, const VectorN<RHS_TYPE, SIZE>& vect)
 {
     return vect * value;
 }

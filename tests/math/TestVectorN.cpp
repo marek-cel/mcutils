@@ -172,15 +172,15 @@ TEST_F(TestVectorN, CanZeroize)
     }
 }
 
-TEST_F(TestVectorN, CanGetDimensionless)
+TEST_F(TestVectorN, CanCast)
 {
     mc::VectorN<double,SIZE> v1;
     v1(0) = 1.0;
     v1(1) = 2.0;
     v1(2) = 3.0;
 
-    mc::VectorN<double,SIZE> v2;
-    v2 = v1.getDimensionless();
+    mc::VectorN<float,SIZE> v2;
+    v2 = static_cast<mc::VectorN<float,SIZE>>(v1);
     EXPECT_DOUBLE_EQ(v2(0), 1.0);
     EXPECT_DOUBLE_EQ(v2(1), 2.0);
     EXPECT_DOUBLE_EQ(v2(2), 3.0);
