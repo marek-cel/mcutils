@@ -133,7 +133,7 @@ void VectorN_CanGetLengthSquared()
     v(2) = T{3};
 
     // 1^2 + 2^2 + 3^2 = 1 + 4 + 9 = 14
-    EXPECT_DOUBLE_EQ(v.getLength2()(), 14.0);
+    EXPECT_DOUBLE_EQ(v.getLengthSq()(), 14.0);
 }
 
 TEST_F(TestVectorNWithUnits, CanGetLengthSquared)
