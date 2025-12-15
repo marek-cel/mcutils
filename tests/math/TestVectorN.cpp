@@ -274,6 +274,26 @@ TEST_F(TestVectorN, CanSubtract)
     EXPECT_DOUBLE_EQ(vr(2), 5.0);
 }
 
+TEST_F(TestVectorN, CanSubtractDifferentTypes)
+{
+    mc::VectorN<float,SIZE> v1;
+    mc::VectorN<double,SIZE> v2;
+
+    v1(0) = 4.0f;
+    v1(1) = 5.0f;
+    v1(2) = 6.0f;
+
+    v2(0) = 3.0;
+    v2(1) = 2.0;
+    v2(2) = 1.0;
+
+    mc::VectorN<double,SIZE> vr = v1 - v2;
+
+    EXPECT_DOUBLE_EQ(vr(0), 1.0);
+    EXPECT_DOUBLE_EQ(vr(1), 3.0);
+    EXPECT_DOUBLE_EQ(vr(2), 5.0);
+}
+
 TEST_F(TestVectorN, CanMultiplyFloatVectorByFloatScalar)
 {
     std::vector<float> x { 1.0f, 2.0f, 3.0f };
