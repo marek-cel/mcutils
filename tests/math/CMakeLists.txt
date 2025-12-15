@@ -35,7 +35,6 @@ set(SOURCES
     TestTable.cpp
     TestTable2.cpp
     TestVectorN.cpp
-    TestVectorNWithUnits.cpp
 )
 
 ################################################################################

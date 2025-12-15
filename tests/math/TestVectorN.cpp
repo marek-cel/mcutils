@@ -23,6 +23,20 @@ TEST_F(TestVectorN, CanInstantiate)
     }
 }
 
+TEST_F(TestVectorN, CanInstantiateFromDifferentType)
+{
+    mc::VectorN<float,SIZE> v1;
+    v1(0) = 1.0f;
+    v1(1) = 2.0f;
+    v1(2) = 3.0f;
+
+    mc::VectorN<double,SIZE> v2(v1);
+
+    EXPECT_DOUBLE_EQ(v2(0), 1.0);
+    EXPECT_DOUBLE_EQ(v2(1), 2.0);
+    EXPECT_DOUBLE_EQ(v2(2), 3.0);
+}
+
 TEST_F(TestVectorN, CanValidate)
 {
     std::vector<double> x { 1.0, 2.0, 3.0 };
@@ -185,56 +199,79 @@ TEST_F(TestVectorN, CanAccessElement)
     EXPECT_DOUBLE_EQ(v(2), 3.0);
 }
 
-TEST_F(TestVectorN, CanAdd)
+TEST_F(TestVectorN, CanAddSameType)
 {
-    std::vector<double> x1 { 1.0, 2.0, 3.0 };
-    std::vector<double> x2 { 4.0, 5.0, 6.0 };
-
     mc::VectorN<double,SIZE> v1;
     mc::VectorN<double,SIZE> v2;
 
-    v1.setFromStdVector(x1);
-    v2.setFromStdVector(x2);
+    v1(0) = 4.0;
+    v1(1) = 5.0;
+    v1(2) = 6.0;
+
+    v2(0) = 3.0;
+    v2(1) = 2.0;
+    v2(2) = 1.0;
 
     mc::VectorN<double,SIZE> vr = v1 + v2;
 
-    for ( int i = 0; i < SIZE; ++i )
-    {
-        EXPECT_DOUBLE_EQ(vr(i), x1[i] + x2[i]) << "Error at index " << i;
-    }
+    EXPECT_DOUBLE_EQ(vr(0), 7.0);
+    EXPECT_DOUBLE_EQ(vr(1), 7.0);
+    EXPECT_DOUBLE_EQ(vr(2), 7.0);
+}
+
+TEST_F(TestVectorN, CanAddDifferentTypes)
+{
+    mc::VectorN<float,SIZE> v1;
+    mc::VectorN<double,SIZE> v2;
+
+    v1(0) = 4.0f;
+    v1(1) = 5.0f;
+    v1(2) = 6.0f;
+
+    v2(0) = 3.0;
+    v2(1) = 2.0;
+    v2(2) = 1.0;
+
+    mc::VectorN<double,SIZE> vr = v1 + v2;
+
+    EXPECT_DOUBLE_EQ(vr(0), 7.0);
+    EXPECT_DOUBLE_EQ(vr(1), 7.0);
+    EXPECT_DOUBLE_EQ(vr(2), 7.0);
 }
 
 TEST_F(TestVectorN, CanNegate)
 {
     mc::VectorN<double,SIZE> v;
-    std::vector<double> x { 1.0, 2.0, 3.0 };
-    v.setFromStdVector(x);
+
+    v(0) = 1.0;
+    v(1) = 2.0;
+    v(2) = 3.0;
 
     mc::VectorN<double,SIZE> vr = -v;
 
-    for ( int i = 0; i < SIZE; ++i )
-    {
-        EXPECT_DOUBLE_EQ(vr(i), -x[i]) << "Error at index " << i;
-    }
+    EXPECT_DOUBLE_EQ(vr(0), -1.0);
+    EXPECT_DOUBLE_EQ(vr(1), -2.0);
+    EXPECT_DOUBLE_EQ(vr(2), -3.0);
 }
 
 TEST_F(TestVectorN, CanSubtract)
 {
-    std::vector<double> x1 { 1.0, 2.0, 3.0 };
-    std::vector<double> x2 { 4.0, 5.0, 6.0 };
-
     mc::VectorN<double,SIZE> v1;
     mc::VectorN<double,SIZE> v2;
 
-    v1.setFromStdVector(x1);
-    v2.setFromStdVector(x2);
+    v1(0) = 4.0;
+    v1(1) = 5.0;
+    v1(2) = 6.0;
+
+    v2(0) = 3.0;
+    v2(1) = 2.0;
+    v2(2) = 1.0;
 
     mc::VectorN<double,SIZE> vr = v1 - v2;
 
-    for ( int i = 0; i < SIZE; ++i )
-    {
-        EXPECT_DOUBLE_EQ(vr(i), x1[i] - x2[i]) << "Error at index " << i;
-    }
+    EXPECT_DOUBLE_EQ(vr(0), 1.0);
+    EXPECT_DOUBLE_EQ(vr(1), 3.0);
+    EXPECT_DOUBLE_EQ(vr(2), 5.0);
 }
 
 TEST_F(TestVectorN, CanMultiplyFloatVectorByFloatScalar)

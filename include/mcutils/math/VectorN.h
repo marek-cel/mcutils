@@ -70,6 +70,56 @@ public:
     // LCOV_EXCL_STOP
 
     /**
+     * \brief Converting constructor.
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
+     * \param other other vector
+     */
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value 
+        && 
+        std::is_arithmetic<RHS_TYPE>::value 
+        && 
+        !std::is_same<TYPE, RHS_TYPE>::value
+    )
+    VectorN(const VectorN<RHS_TYPE, SIZE>& vect)
+    {
+        for (unsigned int i = 0; i < kSize; ++i)
+        {
+            _elements[i] = static_cast<TYPE>(vect(i));
+        }
+    }
+
+    /**
+     * \brief Converting constructor.
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are convertible units.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
+     * \param other other vector
+     */
+    template <typename RHS_TYPE>
+    requires (
+        !std::is_arithmetic<TYPE>::value 
+        && 
+        !std::is_arithmetic<RHS_TYPE>::value 
+        &&
+        !std::is_same<TYPE, RHS_TYPE>::value
+        &&
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    VectorN(const VectorN<RHS_TYPE, SIZE>& vect)
+    {
+        for (unsigned int i = 0; i < kSize; ++i)
+        {
+            _elements[i] = vect(i);
+        }
+    }
+
+    /**
      * \brief Checks if all elements in the vector are valid.
      *
      * This function verifies that none of the elements in the vector are NaN (not a number)
@@ -209,6 +259,45 @@ public:
     }
 
     /**
+     * \brief Adds the vectors.
+     * \param vect vector to be added
+     */
+    template <typename RHS_TYPE>
+    requires (
+        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+        ||
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    void add(const VectorN<RHS_TYPE, SIZE>& vect)
+    {
+        for (unsigned int i = 0; i < kSize; ++i)
+        {
+            _elements[i] += vect(i);
+        }
+    }
+
+    /** \brief Negates (inverts) the vector. */
+    void negate()
+    {
+        for (unsigned int i = 0; i < kSize; ++i)
+        {
+            _elements[i] = -_elements[i];
+        }
+    }
+
+    /**
+     * \brief Subtracts the vectors.
+     * \param vect vector to be subtracted
+     */
+    void subtract(const VectorN<TYPE, SIZE>& vect)
+    {
+        for (unsigned int i = 0; i < kSize; ++i)
+        {
+            _elements[i] -= vect._elements[i];
+        }
+    }
+
+    /**
      * \brief Casting operator.
      *
      * Converts the vector to another type if the units are compatible.
@@ -256,9 +345,7 @@ public:
         return _elements[index];
     }
 
-    template <typename RHS_TYPE>
-    requires (std::is_same<TYPE, RHS_TYPE>::value)
-    auto operator+(const VectorN<RHS_TYPE, SIZE>& vect) const
+    VectorN<TYPE, SIZE> operator+(const VectorN<TYPE, SIZE>& vect) const
     {
         VectorN<TYPE, SIZE> result(*this);
         result.add(vect);
@@ -301,7 +388,6 @@ public:
         result.add(vect);
         return result;
     }
-    
 
     /**
      * \brief Negation operator.
@@ -313,9 +399,6 @@ public:
         result.negate();
         return result;
     }
-
-
-
 
     /**
      * \brief Subtraction operator.
@@ -331,6 +414,9 @@ public:
 
     /**
      * \brief Addition operator.
+     * 
+     * 
+     * 
      * \param vect vector to be added
      * \return sum of the vectors
      */
@@ -369,7 +455,7 @@ public:
     /**
      * \brief Multiplication by a scalar operator.
      * 
-     * This template is enabled when both TYPE and TYPE_RHS are arithmetic types.
+     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
      * \tparam TYPE_RHS RHS operand type
      * \param value value to be multiplied by
@@ -465,6 +551,56 @@ public:
     }
 
     /**
+     * \brief Assignment operator.
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
+     * \param other other vector
+     */
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value 
+        && 
+        std::is_arithmetic<RHS_TYPE>::value 
+        && 
+        !std::is_same<TYPE, RHS_TYPE>::value
+    )
+    VectorN& operator=(const VectorN<RHS_TYPE, SIZE>& vect)
+    {
+        for (unsigned int i = 0; i < kSize; ++i)
+        {
+            _elements[i] = static_cast<TYPE>(vect(i));
+        }
+    }
+
+    /**
+     * \brief Assignment operator.
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are convertible units.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
+     * \param other other vector
+     */
+    template <typename RHS_TYPE>
+    requires (
+        !std::is_arithmetic<TYPE>::value 
+        && 
+        !std::is_arithmetic<RHS_TYPE>::value 
+        &&
+        !std::is_same<TYPE, RHS_TYPE>::value
+        &&
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    VectorN& operator=(const VectorN<RHS_TYPE, SIZE>& vect)
+    {
+        for (unsigned int i = 0; i < kSize; ++i)
+        {
+            _elements[i] = vect(i);
+        }
+    }
+
+    /**
      * \brief Unary addition operator.
      * \param vect vector to be added
      * \return reference to the updated vector
@@ -536,39 +672,6 @@ public:
 protected:
 
     TYPE _elements[kSize] = { TYPE{0} };    ///< vector elements
-
-    /**
-     * \brief Adds the vectors.
-     * \param vect vector to be added
-     */
-    void add(const VectorN<TYPE, SIZE>& vect)
-    {
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            _elements[i] += vect._elements[i];
-        }
-    }
-
-    /** \brief Negates (inverts) the vector. */
-    void negate()
-    {
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            _elements[i] = -_elements[i];
-        }
-    }
-
-    /**
-     * \brief Subtracts the vectors.
-     * \param vect vector to be subtracted
-     */
-    void subtract(const VectorN<TYPE, SIZE>& vect)
-    {
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            _elements[i] -= vect._elements[i];
-        }
-    }
 
     /**
      * \brief Normalized vector calculation algorithm.
