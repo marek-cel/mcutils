@@ -382,6 +382,22 @@ TEST_F(TestVectorN, CanDivideByScalar)
     }
 }
 
+TEST_F(TestVectorN, CanAssign)
+{
+    mc::VectorN<double,SIZE> v1;
+    mc::VectorN<double,SIZE> v2;
+
+    v1(0) = 1.0;
+    v1(1) = 2.0;
+    v1(2) = 3.0;
+
+    v2 = v1;
+
+    EXPECT_DOUBLE_EQ(v2(0), 1.0);
+    EXPECT_DOUBLE_EQ(v2(1), 2.0);
+    EXPECT_DOUBLE_EQ(v2(2), 3.0);
+}
+
 TEST_F(TestVectorN, CanAssignFromDifferentType)
 {
     mc::VectorN<float,SIZE> v1;

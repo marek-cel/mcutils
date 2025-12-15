@@ -62,11 +62,11 @@ public:
 
     // LCOV_EXCL_START
     VectorN() = default;
-    VectorN(const VectorN&) = default;
-    VectorN(VectorN&&) = default;
+    VectorN(const VectorN<TYPE,SIZE>&) = default;
+    VectorN(VectorN<TYPE,SIZE>&&) = default;
     virtual ~VectorN() = default;
-    VectorN& operator=(const VectorN&) = default;
-    VectorN& operator=(VectorN&&) = default;
+    VectorN<TYPE,SIZE>& operator=(const VectorN<TYPE,SIZE>&) = default;
+    VectorN<TYPE,SIZE>& operator=(VectorN<TYPE,SIZE>&&) = default;
     // LCOV_EXCL_STOP
 
     /**
@@ -566,12 +566,14 @@ public:
         && 
         !std::is_same<TYPE, RHS_TYPE>::value
     )
-    VectorN& operator=(const VectorN<RHS_TYPE, SIZE>& vect)
+    VectorN<TYPE,SIZE>& operator=(const VectorN<RHS_TYPE, SIZE>& vect)
     {
         for (unsigned int i = 0; i < kSize; ++i)
         {
             _elements[i] = static_cast<TYPE>(vect(i));
         }
+
+        return *this;
     }
 
     /**
@@ -598,6 +600,8 @@ public:
         {
             _elements[i] = vect(i);
         }
+
+        return *this;
     }
 
     /**
