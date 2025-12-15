@@ -133,7 +133,7 @@ public:
     }
 
     /** \return vector length squared */
-    auto getLength2() const
+    auto getLengthSq() const
     {
         auto length2 = _elements[0] * _elements[0];
         for (unsigned int i = 1; i < kSize; ++i)
@@ -146,7 +146,7 @@ public:
     /** \return vector length */
     TYPE getLength() const
     {
-        return sqrt(getLength2());
+        return sqrt(getLengthSq());
     }
 
     /** \brief Returns normalized vector. */
@@ -296,8 +296,7 @@ public:
 
     /**
      * \brief Casting operator.
-     *
-     * Converts the vector to another type if the units are compatible.
+     * Converts the vector to another type.
      */
     template <typename NEW_TYPE>
     requires (
@@ -345,6 +344,11 @@ public:
         return _elements[index];
     }
 
+    /**
+     * \brief Addition operator.
+     * \param vect vector to be added
+     * \return sum of the vectors
+     */
     VectorN<TYPE, SIZE> operator+(const VectorN<TYPE, SIZE>& vect) const
     {
         VectorN<TYPE, SIZE> result(*this);
@@ -354,6 +358,10 @@ public:
 
     /**
      * \brief Addition operator.
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
      * \param vect vector to be added
      * \return sum of the vectors
      */
@@ -372,6 +380,15 @@ public:
         return result;
     }
 
+    /**
+     * \brief Addition operator.
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are convertible units.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
+     * \param vect vector to be added
+     * \return sum of the vectors
+     */
     template <typename RHS_TYPE>
     requires (
         !std::is_arithmetic<TYPE>::value 
@@ -415,7 +432,7 @@ public:
     /**
      * \brief Addition operator.
      * 
-     * 
+     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
      * \param vect vector to be added
      * \return sum of the vectors
@@ -435,6 +452,15 @@ public:
         return result;
     }
 
+
+    /**
+     * \brief Addition operator.
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are convertible units.
+     * 
+     * \param vect vector to be added
+     * \return sum of the vectors
+     */
     template <typename RHS_TYPE>
     requires (
         !std::is_arithmetic<TYPE>::value 
@@ -534,6 +560,12 @@ public:
 
     /**
      * \brief Dot product operator.
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
+     * \param vect other vector
+     * \return dot product of the vectors
      */
     template <typename RHS_TYPE>
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
@@ -546,22 +578,16 @@ public:
 
     /**
      * \brief Dot product operator.
-     */
-    template <typename RHS_TYPE>
-    requires (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
-    auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
-    {
-        RHS_TYPE result;
-        calculateDotProduct(*this, vect, &result);
-        return result;
-    }
-
-    /**
-     * \brief Dot product operator.
+     * 
+     * This template is enabled when TYPE is a unit and RHS_TYPE is an arithmetic type.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
+     * \param vect other vector
+     * \return dot product of the vectors
      */
     template <typename RHS_TYPE>
     requires (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
-    auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
+    TYPE operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
     {
         TYPE result;
         calculateDotProduct(*this, vect, &result);
@@ -570,6 +596,30 @@ public:
 
     /**
      * \brief Dot product operator.
+     * 
+     * This template is enabled when TYPE is an arithmetic type and RHS_TYPE is a unit.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
+     * \param vect other vector
+     * \return dot product of the vectors
+     */
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    RHS_TYPE operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
+    {
+        RHS_TYPE result;
+        calculateDotProduct(*this, vect, &result);
+        return result;
+    }
+
+    /**
+     * \brief Dot product operator.
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are both units.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
+     * \param vect other vector
+     * \return dot product of the vectors
      */
     template <typename RHS_TYPE>
     requires (units::traits::is_unit_t<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
@@ -585,6 +635,15 @@ public:
         return result;
     }
 
+    /**
+     * \brief Division by a scalar operator.
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
+     * \param vect value to be divided by
+     * \return vector divided by the value
+     */
     template <typename RHS_TYPE>
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
     auto operator/(const RHS_TYPE& vect) const
@@ -653,7 +712,13 @@ public:
      * \param vect vector to be added
      * \return reference to the updated vector
      */
-    VectorN<TYPE, SIZE>& operator+=(const VectorN<TYPE, SIZE>& vect)
+    template <typename RHS_TYPE>
+    requires (
+        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+        ||
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    VectorN<TYPE, SIZE>& operator+=(const VectorN<RHS_TYPE, SIZE>& vect)
     {
         add(vect);
         return *this;
@@ -664,7 +729,13 @@ public:
      * \param vect vector to be subtracted
      * \return reference to the updated vector
      */
-    VectorN<TYPE, SIZE>& operator-=(const VectorN<TYPE, SIZE>& vect)
+    template <typename RHS_TYPE>
+    requires (
+        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+        ||
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    VectorN<TYPE, SIZE>& operator-=(const VectorN<RHS_TYPE, SIZE>& vect)
     {
         subtract(vect);
         return *this;
@@ -675,7 +746,9 @@ public:
      * \param value [-] value to multiply the vector by
      * \return reference to the updated vector
      */
-    VectorN<TYPE, SIZE>& operator*=(double value)
+    template <typename RHS_TYPE>
+    requires std::is_arithmetic<RHS_TYPE>::value
+    VectorN<TYPE, SIZE>& operator*=(RHS_TYPE value)
     {
         *this = (*this) * value;
         return *this;
@@ -686,7 +759,9 @@ public:
      * \param value [-] value to divide the vector by
      * \return reference to the updated vector
      */
-    VectorN<TYPE, SIZE>& operator/=(double value)
+    template <typename RHS_TYPE>
+    requires std::is_arithmetic<RHS_TYPE>::value
+    VectorN<TYPE, SIZE>& operator/=(RHS_TYPE value)
     {
         *this = (*this) / value;
         return *this;
