@@ -659,9 +659,7 @@ public:
     {
         VectorN<
             units::unit_t<
-                units::compound_unit<
-                    units::inverse<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type>
-                >
+                units::inverse<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type>
             >,
             SIZE
         > result;
@@ -674,6 +672,23 @@ public:
     auto operator/(const RHS_TYPE& value) const
     {
         VectorN<TYPE,SIZE> result;
+        multiplyVectorByValue(*this, 1.0 / value, &result);
+        return result;
+    }
+
+    template <typename RHS_TYPE>
+    requires (units::traits::is_unit_t<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    auto operator/(const RHS_TYPE& value) const
+    {
+        VectorN<
+            units::unit_t<
+                units::compound_unit<
+                    typename units::traits::unit_t_traits<TYPE>::unit_type,
+                    units::inverse<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type>
+                >
+            >,
+            SIZE
+        > result;
         multiplyVectorByValue(*this, 1.0 / value, &result);
         return result;
     }
