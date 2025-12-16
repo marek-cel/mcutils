@@ -1092,50 +1092,50 @@ TEST_F(TestVectorNWithUnits, CanCalculateDotProduct)
 //     VectorN_CanDivideByScalar<units::torque::newton_meter_t>();
 // }
 
-// TEST_F(TestVectorNWithUnits, CanDivideByScalarDimensionlessVector)
-// {
-//     mc::VectorN<double,SIZE> v;
-//     v(0) = 1.0;
-//     v(1) = 2.0;
-//     v(2) = 3.0;
+TEST_F(TestVectorNWithUnits, CanDivideByScalarDimensionlessVector)
+{
+    mc::VectorN<double,SIZE> v;
+    v(0) = 1.0;
+    v(1) = 2.0;
+    v(2) = 3.0;
 
-//     constexpr units::time::second_t val = 2.0_s;
-//     mc::VectorN<units::frequency::hertz_t,SIZE> vr = v / val;
+    constexpr units::time::second_t val = 2.0_s;
+    mc::VectorN<units::frequency::hertz_t,SIZE> vr = v / val;
 
-//     EXPECT_NEAR(vr(0)(), 0.5, TOLERANCE);
-//     EXPECT_NEAR(vr(1)(), 1.0, TOLERANCE);
-//     EXPECT_NEAR(vr(2)(), 1.5, TOLERANCE);
-// }
+    EXPECT_NEAR(vr(0)(), 0.5, TOLERANCE);
+    EXPECT_NEAR(vr(1)(), 1.0, TOLERANCE);
+    EXPECT_NEAR(vr(2)(), 1.5, TOLERANCE);
+}
 
-// template <typename T>
-// void VectorN_CanDivideByScalarDimensionless()
-// {
-//     mc::VectorN<T,SIZE> v;
-//     v(0) = T{1};
-//     v(1) = T{2};
-//     v(2) = T{3};
+template <typename T>
+void VectorN_CanDivideByScalarDimensionless()
+{
+    mc::VectorN<T,SIZE> v;
+    v(0) = T{1};
+    v(1) = T{2};
+    v(2) = T{3};
 
-//     double val = 2.0;
+    double val = 2.0;
 
-//     mc::VectorN<T,SIZE> vr = v / val;
+    mc::VectorN<T,SIZE> vr = v / val;
 
-//     EXPECT_NEAR(vr(0)(), 0.5, TOLERANCE);
-//     EXPECT_NEAR(vr(1)(), 1.0, TOLERANCE);
-//     EXPECT_NEAR(vr(2)(), 1.5, TOLERANCE);
-// }
+    EXPECT_NEAR(vr(0)(), 0.5, TOLERANCE);
+    EXPECT_NEAR(vr(1)(), 1.0, TOLERANCE);
+    EXPECT_NEAR(vr(2)(), 1.5, TOLERANCE);
+}
 
-// TEST_F(TestVectorNWithUnits, CanDivideByScalarDimensionless)
-// {
-//     VectorN_CanDivideByScalarDimensionless<units::length::meter_t>();
-//     VectorN_CanDivideByScalarDimensionless<units::velocity::meters_per_second_t>();
-//     VectorN_CanDivideByScalarDimensionless<units::acceleration::meters_per_second_squared_t>();
-//     VectorN_CanDivideByScalarDimensionless<units::angular_velocity::radians_per_second_t>();
-//     VectorN_CanDivideByScalarDimensionless<units::angular_velocity::degrees_per_second_t>();
-//     VectorN_CanDivideByScalarDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
-//     VectorN_CanDivideByScalarDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
-//     VectorN_CanDivideByScalarDimensionless<units::force::newton_t>();
-//     VectorN_CanDivideByScalarDimensionless<units::torque::newton_meter_t>();
-// }
+TEST_F(TestVectorNWithUnits, CanDivideByScalarDimensionless)
+{
+    VectorN_CanDivideByScalarDimensionless<units::length::meter_t>();
+    VectorN_CanDivideByScalarDimensionless<units::velocity::meters_per_second_t>();
+    VectorN_CanDivideByScalarDimensionless<units::acceleration::meters_per_second_squared_t>();
+    VectorN_CanDivideByScalarDimensionless<units::angular_velocity::radians_per_second_t>();
+    VectorN_CanDivideByScalarDimensionless<units::angular_velocity::degrees_per_second_t>();
+    VectorN_CanDivideByScalarDimensionless<units::angular_acceleration::radians_per_second_squared_t>();
+    VectorN_CanDivideByScalarDimensionless<units::angular_acceleration::degrees_per_second_squared_t>();
+    VectorN_CanDivideByScalarDimensionless<units::force::newton_t>();
+    VectorN_CanDivideByScalarDimensionless<units::torque::newton_meter_t>();
+}
 
 // template <typename T>
 // void VectorN_CanUnaryAdd()

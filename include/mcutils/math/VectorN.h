@@ -641,15 +641,40 @@ public:
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
      * \tparam RHS_TYPE type of the other vector elements
-     * \param vect value to be divided by
+     * \param value value to be divided by
      * \return vector divided by the value
      */
     template <typename RHS_TYPE>
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
-    auto operator/(const RHS_TYPE& vect) const
+    auto operator/(const RHS_TYPE& value) const
     {
         VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result;
-        multiplyVectorByValue(*this, 1.0 / vect, &result);
+        multiplyVectorByValue(*this, 1.0 / value, &result);
+        return result;
+    }
+
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    auto operator/(const RHS_TYPE& value) const
+    {
+        VectorN<
+            units::unit_t<
+                units::compound_unit<
+                    units::inverse<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type>
+                >
+            >,
+            SIZE
+        > result;
+        multiplyVectorByValue(*this, 1.0 / value, &result);
+        return result;
+    }
+
+    template <typename RHS_TYPE>
+    requires (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator/(const RHS_TYPE& value) const
+    {
+        VectorN<TYPE,SIZE> result;
+        multiplyVectorByValue(*this, 1.0 / value, &result);
         return result;
     }
 
