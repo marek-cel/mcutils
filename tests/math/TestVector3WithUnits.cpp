@@ -640,7 +640,7 @@ void Vector3_CanMultiplyByScalarAngularVel()
         units::unit_t<
         units::compound_unit<
                 typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+                typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
             >
         >
     > vr = v * val;
@@ -674,7 +674,7 @@ void Vector3_CanMultiplyByScalarAngularAcc()
         units::unit_t<
         units::compound_unit<
                 typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+                typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
             >
         >
     > vr = v * val;
@@ -774,7 +774,7 @@ void Vector3_CanCalculateVectorDotProductAngularVel()
     using ResultType = typename units::unit_t<
         units::compound_unit<
             typename units::traits::unit_t_traits<T>::unit_type,
-            typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+            typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
         >
     >;
 
@@ -810,7 +810,7 @@ void Vector3_CanCalculateVectorDotProductAngularAcc()
     using ResultType = typename units::unit_t<
         units::compound_unit<
             typename units::traits::unit_t_traits<T>::unit_type,
-            typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+            typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
         >
     >;
 
@@ -984,7 +984,7 @@ void Vector3_CanCalculateVectorCrossProductAngularVel()
         units::unit_t<
         units::compound_unit<
                 typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+                typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
             >
         >
     > v1, v2;
@@ -1028,7 +1028,7 @@ void Vector3_CanCalculateVectorCrossProductAngularAcc()
         units::unit_t<
         units::compound_unit<
                 typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+                typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
             >
         >
     > v1, v2;
@@ -1275,7 +1275,7 @@ void Vector3_CanMultiplyScalarByVectorAngularVel()
         units::unit_t<
         units::compound_unit<
                 typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+                typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
             >
         >
     > vr = val * v;
@@ -1309,7 +1309,7 @@ void Vector3_CanMultiplyScalarByVectorAngularAcc()
         units::unit_t<
         units::compound_unit<
                 typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+                typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
             >
         >
     > vr = val * v;

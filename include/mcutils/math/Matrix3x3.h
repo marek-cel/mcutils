@@ -237,13 +237,13 @@ public:
     auto operator*(TYPE2 value) const
     {
         units::angular_velocity::radians_per_second_t temp_rad_per_s = value;
-        units::auxiliary::per_second_t temp = units::auxiliary::per_second_t{ temp_rad_per_s() };
+        units::inverted::per_second_t temp = units::inverted::per_second_t{ temp_rad_per_s() };
 
         Matrix3x3<
             units::unit_t<
                 units::compound_unit<
                     typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+                    typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
                 >
             >
         > result;
@@ -278,13 +278,13 @@ public:
     auto operator*(TYPE2 value) const
     {
         units::angular_acceleration::radians_per_second_squared_t temp_rad_per_s_sq = value;
-        units::auxiliary::per_second_squared_t temp = units::auxiliary::per_second_squared_t{ temp_rad_per_s_sq() };
+        units::inverted::per_second_squared_t temp = units::inverted::per_second_squared_t{ temp_rad_per_s_sq() };
 
         Matrix3x3<
             units::unit_t<
                 units::compound_unit<
                     typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+                    typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
                 >
             >
         > result;
@@ -382,16 +382,16 @@ public:
     auto operator*(const Vector3<TYPE2>& vect) const
     {
         Vector3<units::angular_velocity::radians_per_second_t> temp_rad_per_s = vect;
-        Vector3<units::auxiliary::per_second_t> temp;
-        temp.x() = units::auxiliary::per_second_t{ temp_rad_per_s.x()() };
-        temp.y() = units::auxiliary::per_second_t{ temp_rad_per_s.y()() };
-        temp.z() = units::auxiliary::per_second_t{ temp_rad_per_s.z()() };
+        Vector3<units::inverted::per_second_t> temp;
+        temp.x() = units::inverted::per_second_t{ temp_rad_per_s.x()() };
+        temp.y() = units::inverted::per_second_t{ temp_rad_per_s.y()() };
+        temp.z() = units::inverted::per_second_t{ temp_rad_per_s.z()() };
 
         Vector3<
             units::unit_t<
                 units::compound_unit<
                     typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+                    typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
                 >
             >
         > result;
@@ -426,16 +426,16 @@ public:
     auto operator*(const Vector3<TYPE2>& vect) const
     {
         Vector3<units::angular_acceleration::radians_per_second_squared_t> temp_rad_per_s = vect;
-        Vector3<units::auxiliary::per_second_squared_t> temp;
-        temp.x() = units::auxiliary::per_second_squared_t{ temp_rad_per_s.x()() };
-        temp.y() = units::auxiliary::per_second_squared_t{ temp_rad_per_s.y()() };
-        temp.z() = units::auxiliary::per_second_squared_t{ temp_rad_per_s.z()() };
+        Vector3<units::inverted::per_second_squared_t> temp;
+        temp.x() = units::inverted::per_second_squared_t{ temp_rad_per_s.x()() };
+        temp.y() = units::inverted::per_second_squared_t{ temp_rad_per_s.y()() };
+        temp.z() = units::inverted::per_second_squared_t{ temp_rad_per_s.z()() };
 
         Vector3<
             units::unit_t<
                 units::compound_unit<
                     typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+                    typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
                 >
             >
         > result;

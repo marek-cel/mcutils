@@ -830,30 +830,30 @@ TEST_F(TestVectorNWithUnits, CanMultiplyByScalar)
 //     VectorN_CanMultiplyByScalarTime<units::torque::newton_meter_t>();
 // }
 
-// template <typename T>
-// void VectorN_CanMultiplyByScalarAngularVel()
-// {
-//     mc::VectorN<T,SIZE> v;
-//     v(0) = T{1};
-//     v(1) = T{2};
-//     v(2) = T{3};
+template <typename T>
+void VectorN_CanMultiplyByScalarAngularVel()
+{
+    mc::VectorN<T,SIZE> v;
+    v(0) = T{1};
+    v(1) = T{2};
+    v(2) = T{3};
 
-//     units::angular_velocity::degrees_per_second_t val = 2.0_rad_per_s;
+    units::angular_velocity::degrees_per_second_t val = 2.0_rad_per_s;
 
-//     mc::VectorN<
-//         units::unit_t<
-//             units::compound_unit<
-//                 typename units::traits::unit_t_traits<T>::unit_type,
-//                 typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
-//             >
-//         >,
-//         SIZE
-//     > vr = v * val;
+    mc::VectorN<
+        units::unit_t<
+            units::compound_unit<
+                typename units::traits::unit_t_traits<T>::unit_type,
+                typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
+            >
+        >,
+        SIZE
+    > vr = v * val;
 
-//     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
-//     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
-//     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
-// }
+    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+}
 
 // TEST_F(TestVectorNWithUnits, CanMultiplyByScalarAngularVel)
 // {
@@ -882,7 +882,7 @@ TEST_F(TestVectorNWithUnits, CanMultiplyByScalar)
 //         units::unit_t<
 //         units::compound_unit<
 //                 typename units::traits::unit_t_traits<T>::unit_type,
-//                 typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+//                 typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
 //             >
 //         >,
 //         SIZE
@@ -950,7 +950,7 @@ TEST_F(TestVectorNWithUnits, CanCalculateDotProduct)
 //     using ResultType = typename units::unit_t<
 //         units::compound_unit<
 //             typename units::traits::unit_t_traits<T>::unit_type,
-//             typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+//             typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
 //         >
 //     >;
 
@@ -993,7 +993,7 @@ TEST_F(TestVectorNWithUnits, CanCalculateDotProduct)
 //     using ResultType = typename units::unit_t<
 //         units::compound_unit<
 //             typename units::traits::unit_t_traits<T>::unit_type,
-//             typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+//             typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
 //         >
 //     >;
 
@@ -1382,7 +1382,7 @@ TEST_F(TestVectorNWithUnits, CanDivideByScalarDimensionless)
 //         units::unit_t<
 //         units::compound_unit<
 //                 typename units::traits::unit_t_traits<T>::unit_type,
-//                 typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+//                 typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
 //             >
 //         >,
 //         SIZE
@@ -1420,7 +1420,7 @@ TEST_F(TestVectorNWithUnits, CanDivideByScalarDimensionless)
 //         units::unit_t<
 //         units::compound_unit<
 //                 typename units::traits::unit_t_traits<T>::unit_type,
-//                 typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+//                 typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
 //             >
 //         >,
 //         SIZE

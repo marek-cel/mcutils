@@ -27,21 +27,30 @@
 namespace units {
 
 	//------------------------------
-	// AUXILIARY UNITS
+	// INVERTED UNITS
 	//------------------------------
-#   if !defined(DISABLE_PREDEFINED_UNITS) || defined(ENABLE_PREDEFINED_AUXILIARY_UNITS)
-	UNIT_ADD(auxiliary, per_meter          , per_meter          , per_m    , compound_unit<inverse<length::meter>>)
-	UNIT_ADD(auxiliary, per_centimeter     , per_centimeter     , per_cm   , compound_unit<inverse<length::centimeter>>)
-	UNIT_ADD(auxiliary, per_foot           , per_foot           , per_ft   , compound_unit<inverse<length::foot>>)
-	UNIT_ADD(auxiliary, per_inch           , per_inch           , per_in   , compound_unit<inverse<length::inch>>)
-	//UNIT_ADD(auxiliary, per_second         , per_second         , per_s    , unit<std::ratio<1>, frequency::hertz>)
-	UNIT_ADD(auxiliary, per_second_squared , per_second_squared , per_s_sq , compound_unit<inverse<squared<time::second>>>)
-	UNIT_ADD(auxiliary, per_radian         , per_radian         , per_rad  , compound_unit<inverse<angle::radian>>)
-	UNIT_ADD(auxiliary, per_degree         , per_degree         , per_deg  , compound_unit<inverse<angle::degree>>)
+#   if !defined(DISABLE_PREDEFINED_UNITS) || defined(ENABLE_PREDEFINED_INVERTED_UNITS)
+	UNIT_ADD(inverted, per_meter          , per_meter          , per_m    , compound_unit<inverse<length::meter>>)
+	UNIT_ADD(inverted, per_centimeter     , per_centimeter     , per_cm   , compound_unit<inverse<length::centimeter>>)
+	UNIT_ADD(inverted, per_foot           , per_foot           , per_ft   , compound_unit<inverse<length::foot>>)
+	UNIT_ADD(inverted, per_inch           , per_inch           , per_in   , compound_unit<inverse<length::inch>>)
+	UNIT_ADD(inverted, per_second_squared , per_second_squared , per_s_sq , compound_unit<inverse<squared<time::second>>>)
+	UNIT_ADD(inverted, per_radian         , per_radian         , per_rad  , compound_unit<inverse<angle::radian>>)
+	UNIT_ADD(inverted, per_degree         , per_degree         , per_deg  , compound_unit<inverse<angle::degree>>)
 
-	namespace auxiliary {
-		using per_second_t = frequency::hertz_t;
-	} // namespace auxiliary
+	namespace inverted {
+		using per_second = compound_unit<inverse<time::second>>;
+		using per_second_t = unit_t<per_second>;
+	}
+
+	namespace literals {
+		inline constexpr inverted::per_second_t operator""_per_s(long double val) {
+			return inverted::per_second_t(static_cast<double>(val));
+		}
+		inline constexpr inverted::per_second_t operator""_per_s(unsigned long long val) {
+			return inverted::per_second_t(static_cast<double>(val));
+		}
+	}
 #   endif
 
 	//------------------------------
@@ -110,7 +119,10 @@ namespace units {
 	//------------------------------
 #   if !defined(DISABLE_PREDEFINED_UNITS) || defined(ENABLE_PREDEFINED_AERODYNAMIC_DERIVATIVES_UNITS)
 	namespace aero_derivative {
-		using per_radian_t = auxiliary::per_radian_t;
+		using per_degree = compound_unit<inverse<angle::degree>>;
+		using per_degree_t = inverted::per_degree_t;
+		using per_radian = compound_unit<inverse<angle::radian>>;
+		using per_radian_t = inverted::per_radian_t;
 	}
 #   endif
 

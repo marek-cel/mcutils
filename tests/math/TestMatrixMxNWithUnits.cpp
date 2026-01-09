@@ -584,7 +584,7 @@ void MatrixMxN_CanMultiplyByScalarAngularVel()
         units::unit_t<
             units::compound_unit<
                 typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+                typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
             >
         >,
         ROWS,COLS
@@ -624,7 +624,7 @@ void MatrixMxN_CanMultiplyByScalarAngularAcc()
         units::unit_t<
             units::compound_unit<
                 typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+                typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
             >
         >,
         ROWS,COLS
@@ -769,7 +769,7 @@ void MatrixMxN_CanMultiplyMatrixByVectorAngularVel()
         units::unit_t<
             units::compound_unit<
                 typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+                typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
             >
         >,
         ROWS
@@ -811,7 +811,7 @@ void MatrixMxN_CanMultiplyMatrixByVectorAngularAcc()
         units::unit_t<
             units::compound_unit<
                 typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+                typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
             >
         >,
         ROWS
@@ -1316,7 +1316,7 @@ void MatrixMxN_CanMultiplyScalarByMatrixAngularVel()
         units::unit_t<
             units::compound_unit<
                 typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_t>::unit_type
+                typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
             >
         >,
         ROWS,COLS
@@ -1356,7 +1356,7 @@ void MatrixMxN_CanMultiplyScalarByMatrixAngularAcc()
         units::unit_t<
             units::compound_unit<
                 typename units::traits::unit_t_traits<T>::unit_type,
-                typename units::traits::unit_t_traits<units::auxiliary::per_second_squared_t>::unit_type
+                typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
             >
         >,
         ROWS,COLS
