@@ -24,8 +24,8 @@
 
 #include <units.h>
 
-namespace units {
-
+namespace units
+{
 	//------------------------------
 	// INVERTED UNITS
 	//------------------------------
@@ -38,19 +38,24 @@ namespace units {
 	UNIT_ADD(inverted, per_radian         , per_radian         , per_rad  , compound_unit<inverse<angle::radian>>)
 	UNIT_ADD(inverted, per_degree         , per_degree         , per_deg  , compound_unit<inverse<angle::degree>>)
 
-	namespace inverted {
+	namespace inverted
+	{
 		using per_second = compound_unit<inverse<time::second>>;
 		using per_second_t = unit_t<per_second>;
-	}
+	} // namespace inverted
 
-	namespace literals {
-		inline constexpr inverted::per_second_t operator""_per_s(long double val) {
+	namespace literals
+	{
+		inline constexpr inverted::per_second_t operator""_per_s(long double val)
+		{
 			return inverted::per_second_t(static_cast<double>(val));
 		}
-		inline constexpr inverted::per_second_t operator""_per_s(unsigned long long val) {
+
+		inline constexpr inverted::per_second_t operator""_per_s(unsigned long long val)
+		{
 			return inverted::per_second_t(static_cast<double>(val));
 		}
-	}
+	} // namespace literals
 #   endif
 
 	//------------------------------
