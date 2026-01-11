@@ -422,11 +422,9 @@ public:
      */
     template <typename RHS_TYPE>
     requires (
-        std::is_arithmetic<TYPE>::value 
-        && 
-        std::is_arithmetic<RHS_TYPE>::value 
-        && 
-        !std::is_same<TYPE, RHS_TYPE>::value
+        std::is_arithmetic<TYPE>::value  && 
+        std::is_arithmetic<RHS_TYPE>::value && 
+        std::is_same<TYPE, RHS_TYPE>::value == false
     )
     auto operator-(const VectorN<RHS_TYPE, SIZE>& vect) const
     {
@@ -446,12 +444,9 @@ public:
      */
     template <typename RHS_TYPE>
     requires (
-        !std::is_arithmetic<TYPE>::value 
-        && 
-        !std::is_arithmetic<RHS_TYPE>::value 
-        &&
-        !std::is_same<TYPE, RHS_TYPE>::value
-        &&
+        std::is_arithmetic<TYPE>::value == false && 
+        std::is_arithmetic<RHS_TYPE>::value == false &&
+        std::is_same<TYPE, RHS_TYPE>::value == false &&
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
     VectorN<TYPE, SIZE> operator-(const VectorN<RHS_TYPE, SIZE>& vect) const
@@ -780,11 +775,9 @@ public:
      */
     template <typename RHS_TYPE>
     requires (
-        std::is_arithmetic<TYPE>::value 
-        && 
-        std::is_arithmetic<RHS_TYPE>::value 
-        && 
-        !std::is_same<TYPE, RHS_TYPE>::value
+        std::is_arithmetic<TYPE>::value && 
+        std::is_arithmetic<RHS_TYPE>::value &&
+        std::is_same<TYPE, RHS_TYPE>::value == false
     )
     VectorN<TYPE,SIZE>& operator=(const VectorN<RHS_TYPE, SIZE>& vect)
     {
@@ -806,12 +799,9 @@ public:
      */
     template <typename RHS_TYPE>
     requires (
-        !std::is_arithmetic<TYPE>::value 
-        && 
-        !std::is_arithmetic<RHS_TYPE>::value 
-        &&
-        !std::is_same<TYPE, RHS_TYPE>::value
-        &&
+        std::is_arithmetic<TYPE>::value == false &&
+        std::is_arithmetic<RHS_TYPE>::value == false &&
+        std::is_same<TYPE, RHS_TYPE>::value == false &&
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
     VectorN& operator=(const VectorN<RHS_TYPE, SIZE>& vect)
@@ -831,8 +821,7 @@ public:
      */
     template <typename RHS_TYPE>
     requires (
-        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
-        ||
+        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
     VectorN<TYPE, SIZE>& operator+=(const VectorN<RHS_TYPE, SIZE>& vect)
@@ -848,8 +837,7 @@ public:
      */
     template <typename RHS_TYPE>
     requires (
-        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
-        ||
+        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
     VectorN<TYPE, SIZE>& operator-=(const VectorN<RHS_TYPE, SIZE>& vect)
