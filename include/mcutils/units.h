@@ -38,14 +38,15 @@ namespace units {
 	UNIT_ADD(inverted, per_radian         , per_radian         , per_rad  , compound_unit<inverse<angle::radian>>)
 	UNIT_ADD(inverted, per_degree         , per_degree         , per_deg  , compound_unit<inverse<angle::degree>>)
 
-	namespace inverted
-	{
+	namespace inverted {
+
 		using per_second = compound_unit<inverse<time::second>>;
 		using per_second_t = unit_t<per_second>;
+
 	} // namespace inverted
 
-	namespace literals
-	{
+	namespace literals {
+
 		inline constexpr inverted::per_second_t operator""_per_s(long double val)
 		{
 			return inverted::per_second_t(static_cast<double>(val));
@@ -55,6 +56,7 @@ namespace units {
 		{
 			return inverted::per_second_t(static_cast<double>(val));
 		}
+
 	} // namespace literals
 #   endif
 
@@ -124,11 +126,14 @@ namespace units {
 	//------------------------------
 #   if !defined(DISABLE_PREDEFINED_UNITS) || defined(ENABLE_PREDEFINED_AERODYNAMIC_DERIVATIVES_UNITS)
 	namespace aero_derivative {
+
 		using per_degree = compound_unit<inverse<angle::degree>>;
 		using per_degree_t = inverted::per_degree_t;
+		
 		using per_radian = compound_unit<inverse<angle::radian>>;
 		using per_radian_t = inverted::per_radian_t;
-	}
+
+	} // namespace aero_derivative
 #   endif
 
 	//------------------------------
