@@ -185,31 +185,31 @@ TEST_F(TestUnits, CanStripAngularDimension)
 
 TEST_F(TestUnits, CanCheckIfAngleStrippingIsNeeded)
 {
-    constexpr bool need_strip_1 = units::traits::need_angle_stripping<
+    constexpr bool need_strip_1 = units::traits::need_angle_stripping_t<
         units::angular_velocity::radians_per_second_t,
         units::velocity::meters_per_second_t
     >::value;
     EXPECT_TRUE(need_strip_1);
 
-    constexpr bool need_strip_2 = units::traits::need_angle_stripping<
+    constexpr bool need_strip_2 = units::traits::need_angle_stripping_t<
         units::velocity::meters_per_second_t,
         units::angular_velocity::radians_per_second_t
     >::value;
     EXPECT_TRUE(need_strip_2);
 
-    constexpr bool need_strip_3 = units::traits::need_angle_stripping<
+    constexpr bool need_strip_3 = units::traits::need_angle_stripping_t<
         units::velocity::meters_per_second_t,
         units::length::meter_t
     >::value;
     EXPECT_FALSE(need_strip_3);
 
-    constexpr bool need_strip_4 = units::traits::need_angle_stripping<
+    constexpr bool need_strip_4 = units::traits::need_angle_stripping_t<
         units::angular_acceleration::radians_per_second_squared_t,
         units::acceleration::meters_per_second_squared_t
     >::value;
     EXPECT_TRUE(need_strip_4);
 
-    constexpr bool need_strip_5 = units::traits::need_angle_stripping<
+    constexpr bool need_strip_5 = units::traits::need_angle_stripping_t<
         units::acceleration::meters_per_second_squared_t,
         units::angular_acceleration::radians_per_second_squared_t
     >::value;
