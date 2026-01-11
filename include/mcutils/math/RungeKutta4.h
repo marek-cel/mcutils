@@ -35,14 +35,15 @@ namespace mc {
  * - Baron B., Piatek L.: Metody numeryczne w C++ Builder, 2004, p.331. [in Polish]
  * - [Runge–Kutta methods - Wikipedia](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
  *
- * \tparam T type of the integrated value
+ * \tparam T_VALUE type of the integrated value
+ * \tparam T_STEP type of the integration step
  */
-template <typename T>
+template <typename T_VALUE, typename T_STEP>
 class RungeKutta4
 {
 public:
 
-    using DerivFun = std::function<T(const T&)>;
+    using DerivFun = std::function<T_VALUE(const T_VALUE&)>;
 
     /**
      * \brief Integrates using Runge-Kutta 4th order integration algorithm.
@@ -50,24 +51,24 @@ public:
      * \param yn current value to be integrated
      * \return integration result
      */
-    T integrate(double dx, const T& yn)
+    T_VALUE integrate(T_STEP dx, const T_VALUE& yn)
     {
-        T y0 = yn;
+        T_VALUE y0 = yn;
 
         // k1 - derivatives calculation
-        T k1 = _fun(y0);
+        T_VALUE k1 = _fun(y0);
 
         // k2 - derivatives calculation
         y0 = yn + k1 * (dx / 2.0);
-        T k2 = _fun(y0);
+        T_VALUE k2 = _fun(y0);
 
         // k3 - derivatives calculation
         y0 = yn + k2 * (dx / 2.0);
-        T k3 = _fun(y0);
+        T_VALUE k3 = _fun(y0);
 
         // k4 - derivatives calculation
         y0 = yn + k3 * dx;
-        T k4 = _fun(y0);
+        T_VALUE k4 = _fun(y0);
 
         // integration
         return yn + (k1 + k2 * 2.0 + k3 * 2.0 + k4) * (dx / 6.0);

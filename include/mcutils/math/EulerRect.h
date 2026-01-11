@@ -37,14 +37,15 @@ namespace mc {
  * - Matulewski J., et. al.: Grafika fizyka metody numeryczne, 2010, p.309. [in Polish]
  * - [Euler method - Wikipedia](https://en.wikipedia.org/wiki/Euler_method)
  *
- * \tparam T type of the integrated value
+ * \tparam T_VALUE type of the integrated value
+ * \tparam T_STEP type of the integration step
  */
-template <typename T>
+template <typename T_VALUE, typename T_STEP>
 class EulerRect
 {
 public:
 
-    using DerivFun = std::function<T(const T&)>;
+    using DerivFun = std::function<T_VALUE(const T_VALUE&)>;
 
     /**
      * \brief Integrates using Euler's rectangular integration algorithm.
@@ -52,7 +53,7 @@ public:
      * \param yn current value to be integrated
      * \return integration result
      */
-    T integrate(double dx, const T& yn)
+    T_VALUE integrate(T_STEP dx, const T_VALUE& yn)
     {
         // integration
         return yn + _fun(yn) * dx;

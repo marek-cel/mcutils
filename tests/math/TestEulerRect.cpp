@@ -17,7 +17,7 @@ protected:
 
 TEST_F(TestEulerRect, CanInstantiate)
 {
-    mc::EulerRect<double> er;
+    mc::EulerRect<double,double> er;
     EXPECT_FALSE(static_cast<bool>(er.fun()));
 }
 
@@ -50,7 +50,7 @@ TEST_F(TestEulerRect, CanInstantiate)
 
 TEST_F(TestEulerRect, CanSetDerivFun)
 {
-    mc::EulerRect<double> er;
+    mc::EulerRect<double,double> er;
     EXPECT_NO_THROW(er.setFun([](const double&)
     {
         return 1.0;

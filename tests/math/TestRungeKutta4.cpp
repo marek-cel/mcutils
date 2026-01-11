@@ -15,7 +15,7 @@ protected:
 
 TEST_F(TestRungeKutta4, CanInstantiate)
 {
-    mc::RungeKutta4<double> rk;
+    mc::RungeKutta4<double,double> rk;
     EXPECT_FALSE(static_cast<bool>(rk.fun()));
 }
 
@@ -48,7 +48,7 @@ TEST_F(TestRungeKutta4, CanInstantiate)
 
 TEST_F(TestRungeKutta4, CanSetDerivFun)
 {
-    mc::RungeKutta4<double> rk;
+    mc::RungeKutta4<double,double> rk;
     EXPECT_NO_THROW(rk.setFun([](const double&)
     {
         return 1.0;
