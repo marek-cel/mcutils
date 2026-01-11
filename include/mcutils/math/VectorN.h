@@ -79,7 +79,7 @@ public:
      */
     template <typename RHS_TYPE>
     requires (
-        std::is_arithmetic<TYPE>::value && 
+        std::is_arithmetic<TYPE>::value &&
         std::is_arithmetic<RHS_TYPE>::value && 
         std::is_same<TYPE, RHS_TYPE>::value == false
     )
