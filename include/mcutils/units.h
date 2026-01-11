@@ -187,7 +187,7 @@ namespace units {
 		};
 
 		template<typename LHS, typename RHS>
-		struct need_angle_stripping : std::false_type {};
+		struct need_angle_stripping_t : std::false_type {};
 
 		template<typename LHS, typename RHS>
 		requires (
@@ -198,7 +198,7 @@ namespace units {
 			units::traits::is_convertible_unit_t<RHS, units::time::second_t>::value == false &&
 			(traits::has_angle_dimension_t<LHS>::value != traits::has_angle_dimension_t<RHS>::value)
 		)
-		struct need_angle_stripping<LHS, RHS> : std::true_type {};
+		struct need_angle_stripping_t<LHS, RHS> : std::true_type {};
 
 	} // namespace traits
 
