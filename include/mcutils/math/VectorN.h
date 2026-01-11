@@ -34,7 +34,7 @@
 #include <utility>
 #include <vector>
 
-#include <mcutils/extra_units.h>
+#include <mcutils/units.h>
 #include <mcutils/misc/Check.h>
 #include <mcutils/misc/StringUtils.h>
 
@@ -478,6 +478,22 @@ public:
         return result;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * \brief Multiplication by a scalar operator.
      * 
@@ -499,50 +515,50 @@ public:
     /**
      * \brief Multiplication by a scalar operator.
      * 
-     * This template is enabled when TYPE is a unit and TYPE_RHS is an arithmetic type.
+     * This template is enabled when TYPE is a unit and TYPE_RHS is an arithmetic type
+     * or when TYPE is an arithmetic type and TYPE_RHS is a unit.
      * 
      * \tparam TYPE_RHS RHS operand type
      * \param value value to be multiplied by
      * \return product of the vector multiplied by the value
      */
     template <typename RHS_TYPE>
-    requires (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    requires (
+        (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
+        (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    )
     auto operator*(const RHS_TYPE& value) const
     {
-        VectorN<TYPE, SIZE> result;
-        multiplyVectorByValue(*this, value, &result);
-        return result;
+        if constexpr (units::traits::is_unit_t<TYPE>::value)
+        {
+            VectorN<TYPE, SIZE> result;
+            multiplyVectorByValue(*this, value, &result);
+            return result;
+        }
+        else
+        {
+            VectorN<RHS_TYPE, SIZE> result;
+            multiplyVectorByValue(*this, value, &result);
+            return result;
+        }
+
     }
 
     /**
      * \brief Multiplication by a scalar operator.
      * 
-     * This template is enabled when TYPE is an arithmetic type and TYPE_RHS is a unit.
+     * This template is enabled when both TYPE and TYPE_RHS are units and angle stripping is not needed.
      * 
      * \tparam TYPE_RHS RHS operand type
      * \param value value to be multiplied by
      * \return product of the vector multiplied by the value
      */
     template <typename RHS_TYPE>
-    requires (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
-    auto operator*(const RHS_TYPE& value) const
-    {
-        VectorN<RHS_TYPE, SIZE> result;
-        multiplyVectorByValue(*this, value, &result);
-        return result;
-    }
-
-    /**
-     * \brief Multiplication by a scalar operator.
-     * 
-     * This template is enabled when both TYPE and TYPE_RHS are units.
-     * 
-     * \tparam TYPE_RHS RHS operand type
-     * \param value value to be multiplied by
-     * \return product of the vector multiplied by the value
-     */
-    template <typename RHS_TYPE>
-    requires (units::traits::is_unit_t<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    requires (
+        units::traits::is_unit_t<TYPE>::value && 
+        units::traits::is_unit_t<RHS_TYPE>::value &&
+        units::traits::need_angle_stripping<TYPE, RHS_TYPE>::value == false
+    )
     auto operator*(const RHS_TYPE& value) const
     {
         VectorN<
@@ -557,6 +573,75 @@ public:
         multiplyVectorByValue(*this, value, &result);
         return result;
     }
+
+    // template <typename RHS_TYPE>
+    // requires (units::traits::need_angle_stripping<TYPE, RHS_TYPE>::value)
+    // auto operator*(const RHS_TYPE& value) const
+    // {
+	// 	if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
+	// 	{
+    //         // VectorN<typename units::detail::strip_angle_dimension<TYPE>::type, SIZE> temp;
+
+    //         // for (unsigned int i = 0; i < SIZE; ++i)
+    //         // {
+    //         //     temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
+    //         // }
+
+    //         VectorN<
+    //             units::unit_t<
+    //                 units::compound_unit<
+    //                     typename units::detail::strip_angle_dimension<TYPE>::type,
+    //                     typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
+    //                 >
+    //             >,
+    //             SIZE
+    //         > result;
+    //         // multiplyVectorByValue(temp, value, &result);
+    //         return result;
+	// 	}
+	// 	else
+	// 	{
+    //         // typename units::detail::strip_angle_dimension<RHS_TYPE>::type temp = 
+    //         //     units::detail::strip_angle_dimension<RHS_TYPE>::strip(value);
+
+    //         VectorN<
+    //             units::unit_t<
+    //                 units::compound_unit<
+    //                     typename units::traits::unit_t_traits<TYPE>::unit_type,
+    //                     typename units::detail::strip_angle_dimension<RHS_TYPE>::type
+    //                 >
+    //             >,
+    //             SIZE
+    //         > result;
+    //         // multiplyVectorByValue(temp, value, &result);
+    //         return result;
+	// 	}
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * \brief Dot product operator.

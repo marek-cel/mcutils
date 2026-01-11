@@ -186,6 +186,20 @@ namespace units {
 			static constexpr bool value = !std::is_same_v<typename base::radian_ratio, std::ratio<0>>;
 		};
 
+		template<typename LHS, typename RHS>
+		struct need_angle_stripping : std::false_type {};
+
+		template<typename LHS, typename RHS>
+		requires (
+			traits::is_unit_t<LHS>::value &&
+			traits::is_unit_t<RHS>::value &&
+			units::traits::is_convertible_unit_t<LHS, RHS>::value == false &&
+			units::traits::is_convertible_unit_t<LHS, units::time::second_t>::value == false &&
+			units::traits::is_convertible_unit_t<RHS, units::time::second_t>::value == false &&
+			(traits::has_angle_dimension_t<LHS>::value != traits::has_angle_dimension_t<RHS>::value)
+		)
+		struct need_angle_stripping<LHS, RHS> : std::true_type {};
+
 	} // namespace traits
 
 	namespace detail {
@@ -194,7 +208,7 @@ namespace units {
 		 * \brief Metafunction to strip the angle dimension from a unit_t type.
 		 */
 		template<typename T>
-		requires traits::is_unit_t<T>::value
+		requires traits::has_angle_dimension_t<T>::value
 		struct strip_angle_dimension
 		{
 			using si_base = typename T::unit_type::base_unit_type;
@@ -230,24 +244,6 @@ namespace units {
 		};
 
 	} // namespace detail
-
-	namespace traits {
-
-		template<typename LHS, typename RHS>
-		struct need_angle_stripping : std::false_type {};
-
-		template<typename LHS, typename RHS>
-		requires (
-			traits::is_unit_t<LHS>::value &&
-			traits::is_unit_t<RHS>::value &&
-			std::is_same_v<LHS, RHS> == false &&
-			units::traits::is_convertible_unit_t<LHS, units::time::second_t>::value == false &&
-			units::traits::is_convertible_unit_t<LHS, units::time::second_t>::value == false &&
-			(traits::has_angle_dimension_t<LHS>::value != traits::has_angle_dimension_t<RHS>::value)
-		)
-		struct need_angle_stripping<LHS, RHS> : std::true_type {};
-
-	} // namespace traits
 
 } // namespace units
 
