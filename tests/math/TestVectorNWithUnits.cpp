@@ -784,10 +784,10 @@ TEST_F(TestVectorNWithUnits, CanMultiplyByScalar)
     VectorN_CanMultiplyByScalar<units::length::meter_t>();
     VectorN_CanMultiplyByScalar<units::velocity::meters_per_second_t>();
     VectorN_CanMultiplyByScalar<units::acceleration::meters_per_second_squared_t>();
-
-    // angular velocity and angular acceleration excluded from this test
-    // because they are treated in a special way
-
+    // VectorN_CanMultiplyByScalar<units::angular_velocity::radians_per_second_t>();
+    // VectorN_CanMultiplyByScalar<units::angular_velocity::degrees_per_second_t>();
+    // VectorN_CanMultiplyByScalar<units::angular_acceleration::radians_per_second_squared_t>();
+    // VectorN_CanMultiplyByScalar<units::angular_acceleration::degrees_per_second_squared_t>();
     VectorN_CanMultiplyByScalar<units::force::newton_t>();
     VectorN_CanMultiplyByScalar<units::torque::newton_meter_t>();
 }
@@ -857,15 +857,15 @@ void VectorN_CanMultiplyByScalarAngularVel()
 
 TEST_F(TestVectorNWithUnits, CanMultiplyByScalarAngularVel)
 {
-    // VectorN_CanMultiplyByScalarAngularVel<units::length::meter_t>();
-    // VectorN_CanMultiplyByScalarAngularVel<units::velocity::meters_per_second_t>();
-    // VectorN_CanMultiplyByScalarAngularVel<units::acceleration::meters_per_second_squared_t>();
-    // VectorN_CanMultiplyByScalarAngularVel<units::angular_velocity::radians_per_second_t>();
-    // VectorN_CanMultiplyByScalarAngularVel<units::angular_velocity::degrees_per_second_t>();
-    // VectorN_CanMultiplyByScalarAngularVel<units::angular_acceleration::radians_per_second_squared_t>();
-    // VectorN_CanMultiplyByScalarAngularVel<units::angular_acceleration::degrees_per_second_squared_t>();
-    // VectorN_CanMultiplyByScalarAngularVel<units::force::newton_t>();
-    // VectorN_CanMultiplyByScalarAngularVel<units::torque::newton_meter_t>();
+    VectorN_CanMultiplyByScalarAngularVel<units::length::meter_t>();
+    VectorN_CanMultiplyByScalarAngularVel<units::velocity::meters_per_second_t>();
+    VectorN_CanMultiplyByScalarAngularVel<units::acceleration::meters_per_second_squared_t>();
+
+    // angular velocity and angular acceleration excluded from this test
+    // because they are treated in a special way
+
+    VectorN_CanMultiplyByScalarAngularVel<units::force::newton_t>();
+    VectorN_CanMultiplyByScalarAngularVel<units::torque::newton_meter_t>();
 }
 
 // template <typename T>

@@ -557,7 +557,7 @@ public:
     requires (
         units::traits::is_unit_t<TYPE>::value && 
         units::traits::is_unit_t<RHS_TYPE>::value &&
-        units::traits::need_angle_stripping<TYPE, RHS_TYPE>::value == false
+        units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value == false
     )
     auto operator*(const RHS_TYPE& value) const
     {
@@ -574,49 +574,49 @@ public:
         return result;
     }
 
-    // template <typename RHS_TYPE>
-    // requires (units::traits::need_angle_stripping<TYPE, RHS_TYPE>::value)
-    // auto operator*(const RHS_TYPE& value) const
-    // {
-	// 	if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
-	// 	{
-    //         // VectorN<typename units::detail::strip_angle_dimension<TYPE>::type, SIZE> temp;
+    template <typename RHS_TYPE>
+    requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
+    auto operator*(const RHS_TYPE& value) const
+    {
+		if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
+		{
+            VectorN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, SIZE> temp;
 
-    //         // for (unsigned int i = 0; i < SIZE; ++i)
-    //         // {
-    //         //     temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
-    //         // }
+            for (unsigned int i = 0; i < SIZE; ++i)
+            {
+                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
+            }
 
-    //         VectorN<
-    //             units::unit_t<
-    //                 units::compound_unit<
-    //                     typename units::detail::strip_angle_dimension<TYPE>::type,
-    //                     typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
-    //                 >
-    //             >,
-    //             SIZE
-    //         > result;
-    //         // multiplyVectorByValue(temp, value, &result);
-    //         return result;
-	// 	}
-	// 	else
-	// 	{
-    //         // typename units::detail::strip_angle_dimension<RHS_TYPE>::type temp = 
-    //         //     units::detail::strip_angle_dimension<RHS_TYPE>::strip(value);
+            VectorN<
+                units::unit_t<
+                    units::compound_unit<
+                        typename units::detail::strip_angle_dimension<TYPE>::stripped_unit,
+                        typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
+                    >
+                >,
+                SIZE
+            > result;
+            multiplyVectorByValue(temp, value, &result);
+            return result;
+		}
+		else
+		{
+            typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type temp = 
+                units::detail::strip_angle_dimension<RHS_TYPE>::strip(value);
 
-    //         VectorN<
-    //             units::unit_t<
-    //                 units::compound_unit<
-    //                     typename units::traits::unit_t_traits<TYPE>::unit_type,
-    //                     typename units::detail::strip_angle_dimension<RHS_TYPE>::type
-    //                 >
-    //             >,
-    //             SIZE
-    //         > result;
-    //         // multiplyVectorByValue(temp, value, &result);
-    //         return result;
-	// 	}
-    // }
+            VectorN<
+                units::unit_t<
+                    units::compound_unit<
+                        typename units::traits::unit_t_traits<TYPE>::unit_type,
+                        typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_unit
+                    >
+                >,
+                SIZE
+            > result;
+            multiplyVectorByValue(*this, temp, &result);
+            return result;
+		}
+    }
 
 
 

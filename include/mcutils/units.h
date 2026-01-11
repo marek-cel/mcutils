@@ -215,7 +215,7 @@ namespace units {
 			using si_unit = units::unit<std::ratio<1>, si_base>;
 			using si_type = units::unit_t<si_unit, typename T::underlying_type>;
 
-			using stripped_si_base = units::base_unit<
+			using stripped_base = units::base_unit<
 				typename si_base::meter_ratio,
 				typename si_base::kilogram_ratio,
 				typename si_base::second_ratio,
@@ -227,19 +227,18 @@ namespace units {
 				typename si_base::byte_ratio
 			>;
 			
-			using stripped_si_unit = unit<std::ratio<1>, stripped_si_base>;
-
-			using type = unit_t<stripped_si_unit, typename T::underlying_type>;
+			using stripped_unit = unit<std::ratio<1>, stripped_base>;
+			using stripped_type = unit_t<stripped_unit, typename T::underlying_type>;
 
 			/**
 			 * \brief Function to strip the angle dimension from a unit_t instance.
 			 * \param value The unit_t instance to strip.
 			 * \return A new unit_t instance without the angle dimension.
 			 */
-			static constexpr type strip(const T& value) noexcept
+			static constexpr stripped_type strip(const T& value) noexcept
 			{
 				si_type si_val = value;
-				return type(si_val());
+				return stripped_type(si_val());
 			}
 		};
 
