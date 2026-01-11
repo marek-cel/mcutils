@@ -802,16 +802,15 @@ void VectorN_CanMultiplyByScalarTime()
 
     units::time::second_t val = 2.0_s;
 
-    // mc::VectorN<
-    //     units::unit_t<
-    //     units::compound_unit<
-    //             typename units::traits::unit_t_traits<T>::unit_type,
-    //             units::time::second
-    //         >
-    //     >,
-    //     SIZE
-    // > vr = v * val;
-    auto vr = v * val;
+    mc::VectorN<
+        units::unit_t<
+        units::compound_unit<
+                typename units::traits::unit_t_traits<T>::unit_type,
+                units::time::second
+            >
+        >,
+        SIZE
+    > vr = v * val;
 
     EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
     EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
