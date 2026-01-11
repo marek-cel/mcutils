@@ -79,15 +79,13 @@ public:
      */
     template <typename RHS_TYPE>
     requires (
-        std::is_arithmetic<TYPE>::value 
-        && 
-        std::is_arithmetic<RHS_TYPE>::value 
-        && 
-        !std::is_same<TYPE, RHS_TYPE>::value
+        std::is_arithmetic<TYPE>::value && 
+        std::is_arithmetic<RHS_TYPE>::value && 
+        std::is_same<TYPE, RHS_TYPE>::value == false
     )
     VectorN(const VectorN<RHS_TYPE, SIZE>& vect)
     {
-        for (unsigned int i = 0; i < kSize; ++i)
+        for (unsigned int i = 0; i < SIZE; ++i)
         {
             _elements[i] = static_cast<TYPE>(vect(i));
         }
@@ -103,17 +101,14 @@ public:
      */
     template <typename RHS_TYPE>
     requires (
-        !std::is_arithmetic<TYPE>::value 
-        && 
-        !std::is_arithmetic<RHS_TYPE>::value 
-        &&
-        !std::is_same<TYPE, RHS_TYPE>::value
-        &&
+        std::is_arithmetic<TYPE>::value == false && 
+        std::is_arithmetic<RHS_TYPE>::value == false &&
+        std::is_same<TYPE, RHS_TYPE>::value == false &&
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
     VectorN(const VectorN<RHS_TYPE, SIZE>& vect)
     {
-        for (unsigned int i = 0; i < kSize; ++i)
+        for (unsigned int i = 0; i < SIZE; ++i)
         {
             _elements[i] = vect(i);
         }
@@ -129,14 +124,14 @@ public:
      */
     bool isValid() const
     {
-        return misc::isValid(_elements, kSize);
+        return misc::isValid(_elements, SIZE);
     }
 
     /** \return vector length squared */
     auto getLengthSq() const
     {
         auto length2 = _elements[0] * _elements[0];
-        for (unsigned int i = 1; i < kSize; ++i)
+        for (unsigned int i = 1; i < SIZE; ++i)
         {
             length2 += _elements[i] * _elements[i];
         }
@@ -152,7 +147,7 @@ public:
     /** \brief Returns normalized vector. */
     VectorN<double, SIZE> getNormalized() const
     {
-        VectorN<double, kSize> result;
+        VectorN<double, SIZE> result;
         calculateNormalized(*this, &result);
         return result;
     }
@@ -163,8 +158,8 @@ public:
      */
     std::vector<TYPE> getStdVector() const
     {
-        std::vector<TYPE> elements(kSize);
-        std::copy(_elements, _elements + kSize, elements.begin());
+        std::vector<TYPE> elements(SIZE);
+        std::copy(_elements, _elements + SIZE, elements.begin());
         return elements;
     }
 
@@ -174,7 +169,7 @@ public:
      */
     inline void setFromStdVector(const std::vector<TYPE>& elements)
     {
-        assert(elements.size() == kSize);
+        assert(elements.size() == SIZE);
         std::copy(elements.begin(), elements.end(), _elements);
     }
 
@@ -187,16 +182,16 @@ public:
      */
     void setFromString(const char* str)
     {
-        std::vector<TYPE> elements(kSize);
+        std::vector<TYPE> elements(SIZE);
 
-        for (unsigned int i = 0; i < kSize; ++i)
+        for (unsigned int i = 0; i < SIZE; ++i)
         {
             _elements[i] = TYPE{std::numeric_limits<double>::quiet_NaN()};
         }
 
         std::stringstream ss(misc::stripSpaces(str));
         bool valid = true;
-        for (unsigned int i = 0; i < kSize && valid; ++i)
+        for (unsigned int i = 0; i < SIZE && valid; ++i)
         {
             double temp = std::numeric_limits<double>::quiet_NaN();
             ss >> temp;
@@ -217,7 +212,7 @@ public:
      */
     void swapRows(unsigned int row1, unsigned int row2)
     {
-        if (row1 < kSize && row2 < kSize)
+        if (row1 < SIZE && row2 < SIZE)
         {
             std::swap(_elements[row1], _elements[row2]);
         }
@@ -230,7 +225,7 @@ public:
     std::string toString() const
     {
         std::stringstream ss;
-        for (unsigned int i = 0; i < kSize; ++i)
+        for (unsigned int i = 0; i < SIZE; ++i)
         {
             if (i != 0) ss << "\t";
             ss << _elements[i];
@@ -241,7 +236,7 @@ public:
     /** \brief Sets all vector elements to zero. */
     void zeroize()
     {
-        for (unsigned int i = 0; i < kSize; ++i)
+        for (unsigned int i = 0; i < SIZE; ++i)
         {
             _elements[i] = TYPE{0};
         }
@@ -254,13 +249,12 @@ public:
      */
     template <typename RHS_TYPE>
     requires (
-        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
-        ||
+        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
     void add(const VectorN<RHS_TYPE, SIZE>& vect)
     {
-        for (unsigned int i = 0; i < kSize; ++i)
+        for (unsigned int i = 0; i < SIZE; ++i)
         {
             _elements[i] += vect(i);
         }
@@ -269,7 +263,7 @@ public:
     /** \brief Negates (inverts) the vector. */
     void negate()
     {
-        for (unsigned int i = 0; i < kSize; ++i)
+        for (unsigned int i = 0; i < SIZE; ++i)
         {
             _elements[i] = -_elements[i];
         }
@@ -282,13 +276,12 @@ public:
      */
     template <typename RHS_TYPE>
     requires (
-        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
-        ||
+        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
     void subtract(const VectorN<RHS_TYPE, SIZE>& vect)
     {
-        for (unsigned int i = 0; i < kSize; ++i)
+        for (unsigned int i = 0; i < SIZE; ++i)
         {
             _elements[i] -= vect(i);
         }
@@ -300,18 +293,13 @@ public:
      */
     template <typename NEW_TYPE>
     requires (
-        !std::is_same<TYPE, NEW_TYPE>::value
-        &&
-        (
-            std::is_arithmetic<NEW_TYPE>::value
-            ||
-            units::traits::is_convertible_unit_t<NEW_TYPE, TYPE>::value
-        )
+        std::is_same<TYPE, NEW_TYPE>::value == false &&
+        (std::is_arithmetic<NEW_TYPE>::value || units::traits::is_convertible_unit_t<NEW_TYPE, TYPE>::value)
     )
     operator VectorN<NEW_TYPE, SIZE>() const
     {
         VectorN<NEW_TYPE, SIZE> result;
-        for (unsigned int i = 0; i < kSize; ++i)
+        for (unsigned int i = 0; i < SIZE; ++i)
         {
             result(i) = static_cast<NEW_TYPE>(_elements[i]);
         }
@@ -367,11 +355,9 @@ public:
      */
     template <typename RHS_TYPE>
     requires (
-        std::is_arithmetic<TYPE>::value 
-        && 
-        std::is_arithmetic<RHS_TYPE>::value 
-        && 
-        !std::is_same<TYPE, RHS_TYPE>::value
+        std::is_arithmetic<TYPE>::value  && 
+        std::is_arithmetic<RHS_TYPE>::value && 
+        std::is_same<TYPE, RHS_TYPE>::value == false
     )
     auto operator+(const VectorN<RHS_TYPE, SIZE>& vect) const
     {
@@ -391,17 +377,14 @@ public:
      */
     template <typename RHS_TYPE>
     requires (
-        !std::is_arithmetic<TYPE>::value 
-        && 
-        !std::is_arithmetic<RHS_TYPE>::value 
-        &&
-        !std::is_same<TYPE, RHS_TYPE>::value
-        &&
+        std::is_arithmetic<TYPE>::value == false && 
+        std::is_arithmetic<RHS_TYPE>::value == false &&
+        std::is_same<TYPE, RHS_TYPE>::value == false &&
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
     VectorN<TYPE, SIZE> operator+(const VectorN<RHS_TYPE, SIZE>& vect) const
     {
-        VectorN<TYPE, kSize> result(*this);
+        VectorN<TYPE, SIZE> result(*this);
         result.add(vect);
         return result;
     }
@@ -412,7 +395,7 @@ public:
      */
     VectorN<TYPE, SIZE> operator-() const
     {
-        VectorN<TYPE, kSize> result(*this);
+        VectorN<TYPE, SIZE> result(*this);
         result.negate();
         return result;
     }
@@ -473,7 +456,7 @@ public:
     )
     VectorN<TYPE, SIZE> operator-(const VectorN<RHS_TYPE, SIZE>& vect) const
     {
-        VectorN<TYPE, kSize> result(*this);
+        VectorN<TYPE, SIZE> result(*this);
         result.subtract(vect);
         return result;
     }
@@ -805,7 +788,7 @@ public:
     )
     VectorN<TYPE,SIZE>& operator=(const VectorN<RHS_TYPE, SIZE>& vect)
     {
-        for (unsigned int i = 0; i < kSize; ++i)
+        for (unsigned int i = 0; i < SIZE; ++i)
         {
             _elements[i] = static_cast<TYPE>(vect(i));
         }
@@ -833,7 +816,7 @@ public:
     )
     VectorN& operator=(const VectorN<RHS_TYPE, SIZE>& vect)
     {
-        for (unsigned int i = 0; i < kSize; ++i)
+        for (unsigned int i = 0; i < SIZE; ++i)
         {
             _elements[i] = vect(i);
         }
@@ -909,7 +892,7 @@ public:
     bool operator==(const VectorN<TYPE, SIZE>& vect) const
     {
         bool result = true;
-        for (unsigned int i = 0; i < kSize; ++i)
+        for (unsigned int i = 0; i < SIZE; ++i)
         {
             result = result && (_elements[i] == vect._elements[i]);
         }
@@ -928,7 +911,7 @@ public:
 
 protected:
 
-    TYPE _elements[kSize] = { TYPE{0} };    ///< vector elements
+    TYPE _elements[SIZE] = { TYPE{0} }; ///< vector elements
 
     /**
      * \brief Normalized vector calculation algorithm.
@@ -941,7 +924,7 @@ protected:
         if (length > 0.0)
         {
             double length_inv = 1.0 / length;
-            for (unsigned int i = 0; i < kSize; ++i)
+            for (unsigned int i = 0; i < SIZE; ++i)
             {
                 (*result)(i) = static_cast<double>(vect._elements[i]) * length_inv;
             }
