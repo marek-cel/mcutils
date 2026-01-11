@@ -574,6 +574,15 @@ public:
         return result;
     }
 
+    /**
+     * \brief Multiplication by a scalar operator.
+     * 
+     * This template is enabled when both TYPE and TYPE_RHS are units and angle stripping is needed.
+     * 
+     * \tparam TYPE_RHS RHS operand type
+     * \param value value to be multiplied by
+     * \return product of the vector multiplied by the value
+     */
     template <typename RHS_TYPE>
     requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
     auto operator*(const RHS_TYPE& value) const
