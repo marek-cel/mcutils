@@ -515,8 +515,8 @@ public:
     /**
      * \brief Multiplication by a scalar operator.
      * 
-     * This template is enabled when TYPE is a unit and TYPE_RHS is an arithmetic type
-     * or when TYPE is an arithmetic type and TYPE_RHS is a unit.
+     * This template is enabled when TYPE or TYPE_RHS is an arithmetic type
+     * while the other is a unit.
      * 
      * \tparam TYPE_RHS RHS operand type
      * \param value value to be multiplied by
@@ -627,31 +627,6 @@ public:
 		}
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * \brief Dot product operator.
      * 
@@ -673,50 +648,49 @@ public:
     /**
      * \brief Dot product operator.
      * 
-     * This template is enabled when TYPE is a unit and RHS_TYPE is an arithmetic type.
+     * This template is enabled when TYPE or TYPE_RHS is an arithmetic type
+     * while the other is a unit.
      * 
      * \tparam RHS_TYPE type of the other vector elements
      * \param vect other vector
      * \return dot product of the vectors
      */
     template <typename RHS_TYPE>
-    requires (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
-    TYPE operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
+    requires (
+        (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
+        (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    )
+    auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
     {
-        TYPE result;
-        calculateDotProduct(*this, vect, &result);
-        return result;
+        if constexpr (units::traits::is_unit_t<TYPE>::value)
+        {
+            TYPE result;
+            calculateDotProduct(*this, vect, &result);
+            return result;
+        }
+        else
+        {
+            RHS_TYPE result;
+            calculateDotProduct(*this, vect, &result);
+            return result;
+        }
     }
 
     /**
      * \brief Dot product operator.
      * 
-     * This template is enabled when TYPE is an arithmetic type and RHS_TYPE is a unit.
+     * This template is enabled when TYPE and RHS_TYPE are both units and angle stripping is not needed.
      * 
      * \tparam RHS_TYPE type of the other vector elements
      * \param vect other vector
      * \return dot product of the vectors
      */
     template <typename RHS_TYPE>
-    requires (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
-    RHS_TYPE operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
-    {
-        RHS_TYPE result;
-        calculateDotProduct(*this, vect, &result);
-        return result;
-    }
-
-    /**
-     * \brief Dot product operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are both units.
-     * 
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param vect other vector
-     * \return dot product of the vectors
-     */
-    template <typename RHS_TYPE>
-    requires (units::traits::is_unit_t<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    requires (
+        units::traits::is_unit_t<TYPE>::value && 
+        units::traits::is_unit_t<RHS_TYPE>::value &&
+        units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value == false
+    )
     auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
     {
         units::unit_t<
@@ -728,6 +702,32 @@ public:
         calculateDotProduct(*this, vect, &result);
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * \brief Division by a scalar operator.

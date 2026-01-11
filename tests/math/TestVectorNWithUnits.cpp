@@ -926,48 +926,48 @@ TEST_F(TestVectorNWithUnits, CanCalculateDotProduct)
     VectorN_CanCalculateDotProduct<units::torque::newton_meter_t>();
 }
 
-// template <typename T>
-// void VectorN_CanCalculateVectorDotProductAngularVel()
-// {
-//     mc::VectorN<T,SIZE> v1;
-//     v1(0) = T{1};
-//     v1(1) = T{2};
-//     v1(2) = T{3};
+template <typename T>
+void VectorN_CanCalculateVectorDotProductAngularVel()
+{
+    mc::VectorN<T,SIZE> v1;
+    v1(0) = T{1};
+    v1(1) = T{2};
+    v1(2) = T{3};
 
-//     mc::VectorN<units::angular_velocity::radians_per_second_t,SIZE> v2;
-//     v2(0) = 4.0_rad_per_s;
-//     v2(1) = 5.0_rad_per_s;
-//     v2(2) = 6.0_rad_per_s;
+    mc::VectorN<units::angular_velocity::radians_per_second_t,SIZE> v2;
+    v2(0) = 4.0_rad_per_s;
+    v2(1) = 5.0_rad_per_s;
+    v2(2) = 6.0_rad_per_s;
 
-//     using ResultType = typename units::unit_t<
-//         units::compound_unit<
-//             typename units::traits::unit_t_traits<T>::unit_type,
-//             typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
-//         >
-//     >;
+    using ResultType = typename units::unit_t<
+        units::compound_unit<
+            typename units::traits::unit_t_traits<T>::unit_type,
+            typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
+        >
+    >;
 
-//     ResultType s12 = v1 * v2;
-//     ResultType s21 = v2 * v1;
+    ResultType s12 = v1 * v2;
+    ResultType s21 = v2 * v1;
 
-//     // expected values calculated with wxMaxima
-//     // tests/mcsim/utils/math/python/test_vector3_dot_product.py
-//     EXPECT_NEAR(s12(), 32.0, TOLERANCE);
-//     EXPECT_NEAR(s21(), 32.0, TOLERANCE);
-// }
+    // expected values calculated with wxMaxima
+    // tests/mcsim/utils/math/python/test_vector3_dot_product.py
+    EXPECT_NEAR(s12(), 32.0, TOLERANCE);
+    EXPECT_NEAR(s21(), 32.0, TOLERANCE);
+}
 
 
-// TEST_F(TestVectorNWithUnits, CanCalculateVectorDotProductAngularVel)
-// {
-//     VectorN_CanCalculateVectorDotProductAngularVel<units::length::meter_t>();
-//     VectorN_CanCalculateVectorDotProductAngularVel<units::velocity::meters_per_second_t>();
-//     VectorN_CanCalculateVectorDotProductAngularVel<units::acceleration::meters_per_second_squared_t>();
-//     VectorN_CanCalculateVectorDotProductAngularVel<units::angular_velocity::radians_per_second_t>();
-//     VectorN_CanCalculateVectorDotProductAngularVel<units::angular_velocity::degrees_per_second_t>();
-//     VectorN_CanCalculateVectorDotProductAngularVel<units::angular_acceleration::radians_per_second_squared_t>();
-//     VectorN_CanCalculateVectorDotProductAngularVel<units::angular_acceleration::degrees_per_second_squared_t>();
-//     VectorN_CanCalculateVectorDotProductAngularVel<units::force::newton_t>();
-//     VectorN_CanCalculateVectorDotProductAngularVel<units::torque::newton_meter_t>();
-// }
+TEST_F(TestVectorNWithUnits, CanCalculateVectorDotProductAngularVel)
+{
+    // VectorN_CanCalculateVectorDotProductAngularVel<units::length::meter_t>();
+    // VectorN_CanCalculateVectorDotProductAngularVel<units::velocity::meters_per_second_t>();
+    // VectorN_CanCalculateVectorDotProductAngularVel<units::acceleration::meters_per_second_squared_t>();
+    // VectorN_CanCalculateVectorDotProductAngularVel<units::angular_velocity::radians_per_second_t>();
+    // VectorN_CanCalculateVectorDotProductAngularVel<units::angular_velocity::degrees_per_second_t>();
+    // VectorN_CanCalculateVectorDotProductAngularVel<units::angular_acceleration::radians_per_second_squared_t>();
+    // VectorN_CanCalculateVectorDotProductAngularVel<units::angular_acceleration::degrees_per_second_squared_t>();
+    // VectorN_CanCalculateVectorDotProductAngularVel<units::force::newton_t>();
+    // VectorN_CanCalculateVectorDotProductAngularVel<units::torque::newton_meter_t>();
+}
 
 // template <typename T>
 // void VectorN_CanCalculateVectorDotProductAngularAcc()
