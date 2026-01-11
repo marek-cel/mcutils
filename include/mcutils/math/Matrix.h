@@ -23,7 +23,7 @@
 #define MCUTILS_MATH_MATRIX_H_
 
 #include <mcutils/mcutils_api.h>
-#include <mcutils/extra_units.h>
+#include <mcutils/units.h>
 #include <mcutils/math/MatrixMxN.h>
 // #include <mcutils/math/MatrixNxN.h>
 // #include <mcutils/math/Matrix3x3.h>

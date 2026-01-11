@@ -22,7 +22,7 @@
 
 #include <mcutils/physics/UnitsUtils.h>
 
-#include <mcutils/extra_units.h>
+#include <mcutils/units.h>
 #include <mcutils/misc/StringUtils.h>
 
 using namespace units::literals;

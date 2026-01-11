@@ -855,18 +855,18 @@ void VectorN_CanMultiplyByScalarAngularVel()
     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
 }
 
-// TEST_F(TestVectorNWithUnits, CanMultiplyByScalarAngularVel)
-// {
-//     VectorN_CanMultiplyByScalarAngularVel<units::length::meter_t>();
-//     VectorN_CanMultiplyByScalarAngularVel<units::velocity::meters_per_second_t>();
-//     VectorN_CanMultiplyByScalarAngularVel<units::acceleration::meters_per_second_squared_t>();
-//     VectorN_CanMultiplyByScalarAngularVel<units::angular_velocity::radians_per_second_t>();
-//     VectorN_CanMultiplyByScalarAngularVel<units::angular_velocity::degrees_per_second_t>();
-//     VectorN_CanMultiplyByScalarAngularVel<units::angular_acceleration::radians_per_second_squared_t>();
-//     VectorN_CanMultiplyByScalarAngularVel<units::angular_acceleration::degrees_per_second_squared_t>();
-//     VectorN_CanMultiplyByScalarAngularVel<units::force::newton_t>();
-//     VectorN_CanMultiplyByScalarAngularVel<units::torque::newton_meter_t>();
-// }
+TEST_F(TestVectorNWithUnits, CanMultiplyByScalarAngularVel)
+{
+    // VectorN_CanMultiplyByScalarAngularVel<units::length::meter_t>();
+    // VectorN_CanMultiplyByScalarAngularVel<units::velocity::meters_per_second_t>();
+    // VectorN_CanMultiplyByScalarAngularVel<units::acceleration::meters_per_second_squared_t>();
+    // VectorN_CanMultiplyByScalarAngularVel<units::angular_velocity::radians_per_second_t>();
+    // VectorN_CanMultiplyByScalarAngularVel<units::angular_velocity::degrees_per_second_t>();
+    // VectorN_CanMultiplyByScalarAngularVel<units::angular_acceleration::radians_per_second_squared_t>();
+    // VectorN_CanMultiplyByScalarAngularVel<units::angular_acceleration::degrees_per_second_squared_t>();
+    // VectorN_CanMultiplyByScalarAngularVel<units::force::newton_t>();
+    // VectorN_CanMultiplyByScalarAngularVel<units::torque::newton_meter_t>();
+}
 
 // template <typename T>
 // void VectorN_CanMultiplyByScalarAngularAcc()

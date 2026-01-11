@@ -24,7 +24,7 @@
 
 #include <units.h>
 
-#include <mcutils/extra_units.h>
+#include <mcutils/units.h>
 #include <mcutils/geo/Ellipsoid.h>
 
 using namespace units::literals;
