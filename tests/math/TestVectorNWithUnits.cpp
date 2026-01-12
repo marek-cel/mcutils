@@ -791,7 +791,7 @@ TEST_F(TestVectorNWithUnits, CanMultiplyByScalar)
 }
 
 template <typename T>
-void VectorN_CanMultiplyByScalarTime()
+void VectorN_CanMultiplyByTimeScalar()
 {
     mc::VectorN<T,SIZE> v;
     v(0) = T{1};
@@ -815,21 +815,21 @@ void VectorN_CanMultiplyByScalarTime()
     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
 }
 
-TEST_F(TestVectorNWithUnits, CanMultiplyByScalarTime)
+TEST_F(TestVectorNWithUnits, CanMultiplyByTimeScalar)
 {
-    VectorN_CanMultiplyByScalarTime<units::length::meter_t>();
-    VectorN_CanMultiplyByScalarTime<units::velocity::meters_per_second_t>();
-    VectorN_CanMultiplyByScalarTime<units::acceleration::meters_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarTime<units::angular_velocity::radians_per_second_t>();
-    VectorN_CanMultiplyByScalarTime<units::angular_velocity::degrees_per_second_t>();
-    VectorN_CanMultiplyByScalarTime<units::angular_acceleration::radians_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarTime<units::angular_acceleration::degrees_per_second_squared_t>();
-    VectorN_CanMultiplyByScalarTime<units::force::newton_t>();
-    VectorN_CanMultiplyByScalarTime<units::torque::newton_meter_t>();
+    VectorN_CanMultiplyByTimeScalar<units::length::meter_t>();
+    VectorN_CanMultiplyByTimeScalar<units::velocity::meters_per_second_t>();
+    VectorN_CanMultiplyByTimeScalar<units::acceleration::meters_per_second_squared_t>();
+    VectorN_CanMultiplyByTimeScalar<units::angular_velocity::radians_per_second_t>();
+    VectorN_CanMultiplyByTimeScalar<units::angular_velocity::degrees_per_second_t>();
+    VectorN_CanMultiplyByTimeScalar<units::angular_acceleration::radians_per_second_squared_t>();
+    VectorN_CanMultiplyByTimeScalar<units::angular_acceleration::degrees_per_second_squared_t>();
+    VectorN_CanMultiplyByTimeScalar<units::force::newton_t>();
+    VectorN_CanMultiplyByTimeScalar<units::torque::newton_meter_t>();
 }
 
 template <typename T>
-void VectorN_CanMultiplyByScalarAngularVel()
+void VectorN_CanMultiplyByAngularVelScalar()
 {
     mc::VectorN<T,SIZE> v;
     v(0) = T{1};
@@ -853,15 +853,15 @@ void VectorN_CanMultiplyByScalarAngularVel()
     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
 }
 
-TEST_F(TestVectorNWithUnits, CanMultiplyByScalarAngularVel)
+TEST_F(TestVectorNWithUnits, CanMultiplyByAngularVelScalar)
 {
-    VectorN_CanMultiplyByScalarAngularVel<units::length::meter_t>();
-    VectorN_CanMultiplyByScalarAngularVel<units::velocity::meters_per_second_t>();
-    VectorN_CanMultiplyByScalarAngularVel<units::acceleration::meters_per_second_squared_t>();
+    VectorN_CanMultiplyByAngularVelScalar<units::length::meter_t>();
+    VectorN_CanMultiplyByAngularVelScalar<units::velocity::meters_per_second_t>();
+    VectorN_CanMultiplyByAngularVelScalar<units::acceleration::meters_per_second_squared_t>();
     // angular velocity and angular acceleration excluded from this test
     // because they are treated in a special way
-    VectorN_CanMultiplyByScalarAngularVel<units::force::newton_t>();
-    VectorN_CanMultiplyByScalarAngularVel<units::torque::newton_meter_t>();
+    VectorN_CanMultiplyByAngularVelScalar<units::force::newton_t>();
+    VectorN_CanMultiplyByAngularVelScalar<units::torque::newton_meter_t>();
 }
 
 TEST_F(TestVectorNWithUnits, CanMultiplyAngularVelVectorByScalar)
@@ -881,7 +881,7 @@ TEST_F(TestVectorNWithUnits, CanMultiplyAngularVelVectorByScalar)
 }
 
 template <typename T>
-void VectorN_CanMultiplyByScalarAngularAcc()
+void VectorN_CanMultiplyByAngularAccScalar()
 {
     mc::VectorN<T,SIZE> v;
     v(0) = T{1};
@@ -905,15 +905,15 @@ void VectorN_CanMultiplyByScalarAngularAcc()
     EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
 }
 
-TEST_F(TestVectorNWithUnits, CanMultiplyByScalarAngularAcc)
+TEST_F(TestVectorNWithUnits, CanMultiplyByAngularAccScalar)
 {
-    VectorN_CanMultiplyByScalarAngularAcc<units::length::meter_t>();
-    VectorN_CanMultiplyByScalarAngularAcc<units::velocity::meters_per_second_t>();
-    VectorN_CanMultiplyByScalarAngularAcc<units::acceleration::meters_per_second_squared_t>();
+    VectorN_CanMultiplyByAngularAccScalar<units::length::meter_t>();
+    VectorN_CanMultiplyByAngularAccScalar<units::velocity::meters_per_second_t>();
+    VectorN_CanMultiplyByAngularAccScalar<units::acceleration::meters_per_second_squared_t>();
     // angular velocity and angular acceleration excluded from this test
     // because they are treated in a special way
-    VectorN_CanMultiplyByScalarAngularAcc<units::force::newton_t>();
-    VectorN_CanMultiplyByScalarAngularAcc<units::torque::newton_meter_t>();
+    VectorN_CanMultiplyByAngularAccScalar<units::force::newton_t>();
+    VectorN_CanMultiplyByAngularAccScalar<units::torque::newton_meter_t>();
 }
 
 TEST_F(TestVectorNWithUnits, CanMultiplyAngularAccVectorByScalar)
@@ -959,7 +959,7 @@ TEST_F(TestVectorNWithUnits, CanCalculateDotProduct)
 }
 
 template <typename T>
-void VectorN_CanCalculateVectorDotProductAngularVel()
+void VectorN_CanCalculateVectorDotProductWithAngularVelVector()
 {
     mc::VectorN<T,SIZE> v1;
     v1(0) = T{1};
@@ -988,19 +988,19 @@ void VectorN_CanCalculateVectorDotProductAngularVel()
 }
 
 
-TEST_F(TestVectorNWithUnits, CanCalculateVectorDotProductAngularVel)
+TEST_F(TestVectorNWithUnits, CanCalculateVectorDotProductWithAngularVelVector)
 {
-    VectorN_CanCalculateVectorDotProductAngularVel<units::length::meter_t>();
-    VectorN_CanCalculateVectorDotProductAngularVel<units::velocity::meters_per_second_t>();
-    VectorN_CanCalculateVectorDotProductAngularVel<units::acceleration::meters_per_second_squared_t>();
+    VectorN_CanCalculateVectorDotProductWithAngularVelVector<units::length::meter_t>();
+    VectorN_CanCalculateVectorDotProductWithAngularVelVector<units::velocity::meters_per_second_t>();
+    VectorN_CanCalculateVectorDotProductWithAngularVelVector<units::acceleration::meters_per_second_squared_t>();
     // angular velocity and angular acceleration excluded from this test
     // because they are treated in a special way
-    VectorN_CanCalculateVectorDotProductAngularVel<units::force::newton_t>();
-    VectorN_CanCalculateVectorDotProductAngularVel<units::torque::newton_meter_t>();
+    VectorN_CanCalculateVectorDotProductWithAngularVelVector<units::force::newton_t>();
+    VectorN_CanCalculateVectorDotProductWithAngularVelVector<units::torque::newton_meter_t>();
 }
 
 template <typename T>
-void VectorN_CanCalculateVectorDotProductAngularAcc()
+void VectorN_CanCalculateVectorDotProductWithAngularAccVector()
 {
     mc::VectorN<T,SIZE> v1;
     v1(0) = T{1};
@@ -1028,15 +1028,15 @@ void VectorN_CanCalculateVectorDotProductAngularAcc()
     EXPECT_NEAR(s21(), 32.0, TOLERANCE);
 }
 
-TEST_F(TestVectorNWithUnits, CanCalculateVectorDotProductAngularAcc)
+TEST_F(TestVectorNWithUnits, CanCalculateVectorDotProductWithAngularAccVector)
 {
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::length::meter_t>();
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::velocity::meters_per_second_t>();
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::acceleration::meters_per_second_squared_t>();
+    VectorN_CanCalculateVectorDotProductWithAngularAccVector<units::length::meter_t>();
+    VectorN_CanCalculateVectorDotProductWithAngularAccVector<units::velocity::meters_per_second_t>();
+    VectorN_CanCalculateVectorDotProductWithAngularAccVector<units::acceleration::meters_per_second_squared_t>();
     // angular velocity and angular acceleration excluded from this test
     // because they are treated in a special way
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::force::newton_t>();
-    VectorN_CanCalculateVectorDotProductAngularAcc<units::torque::newton_meter_t>();
+    VectorN_CanCalculateVectorDotProductWithAngularAccVector<units::force::newton_t>();
+    VectorN_CanCalculateVectorDotProductWithAngularAccVector<units::torque::newton_meter_t>();
 }
 
 // template <typename T>
