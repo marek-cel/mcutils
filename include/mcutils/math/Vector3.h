@@ -64,6 +64,43 @@ public:
         set(x, y, z);
     }
 
+    /**
+     * \brief Constructor.
+     * \param x value of the first element
+     * \param y value of the second element
+     * \param z value of the third element
+     */
+    template <typename TYPE2>
+    requires (
+        std::is_arithmetic<TYPE>::value &&
+        std::is_arithmetic<TYPE2>::value && 
+        std::is_same<TYPE, TYPE2>::value == false
+    )
+    Vector3(TYPE2 x, TYPE2 y, TYPE2 z)
+    {
+        set(static_cast<TYPE>(x), static_cast<TYPE>(y), static_cast<TYPE>(z));
+    }
+
+    /**
+     * \brief Constructor.
+     * \param x value of the first element
+     * \param y value of the second element
+     * \param z value of the third element
+     */
+    template <typename TYPE_X, typename TYPE_Y, typename TYPE_Z>
+    requires (
+        std::is_arithmetic<TYPE_X>::value == false &&
+        std::is_arithmetic<TYPE_Y>::value == false &&
+        std::is_arithmetic<TYPE_Z>::value == false &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_X>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_Y>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_Z>::value
+    )
+    Vector3(TYPE_X x, TYPE_Y y, TYPE_Z z)
+    {
+        set(x, y, z);
+    }
+
     /** \return length of projection of vector on XY-plane */
     inline TYPE getLengthXY() const { return sqrt(x()*x() + y()*y()); }
 
@@ -81,18 +118,38 @@ public:
         return result;
     }
 
-    /** \brief Converts the vector to a dimensionless vector. */
-    inline Vector3<double> getDimensionless() const
+    /**
+     * \brief Sets vector values.
+     * \param x value of the first element
+     * \param y value of the second element
+     * \param z value of the third element
+     */
+    void set(TYPE x, TYPE y, TYPE z)
     {
-        Vector3<double> result;
-        result.x() = static_cast<double>(this->_elements[0]);
-        result.y() = static_cast<double>(this->_elements[1]);
-        result.z() = static_cast<double>(this->_elements[2]);
-        return result;
+        this->_elements[0] = x;
+        this->_elements[1] = y;
+        this->_elements[2] = z;
     }
 
-    /** \brief Sets vector values. */
-    void set(TYPE x, TYPE y, TYPE z)
+    /**
+     * \brief Sets vector values.
+     * \param x value of the first element
+     * \param y value of the second element
+     * \param z value of the third element
+     * \tparam TYPE_X type of the first element
+     * \tparam TYPE_Y type of the second element
+     * \tparam TYPE_Z type of the third element
+     */
+    template <typename TYPE_X, typename TYPE_Y, typename TYPE_Z>
+    requires (
+        std::is_arithmetic<TYPE_X>::value == false &&
+        std::is_arithmetic<TYPE_Y>::value == false &&
+        std::is_arithmetic<TYPE_Z>::value == false &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_X>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_Y>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_Z>::value
+    )
+    void set(TYPE_X x, TYPE_Y y, TYPE_Z z)
     {
         this->_elements[0] = x;
         this->_elements[1] = y;
