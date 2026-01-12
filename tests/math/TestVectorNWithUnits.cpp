@@ -864,6 +864,22 @@ TEST_F(TestVectorNWithUnits, CanMultiplyByScalarAngularVel)
     VectorN_CanMultiplyByScalarAngularVel<units::torque::newton_meter_t>();
 }
 
+TEST_F(TestVectorNWithUnits, CanMultiplyAngularVelVectorByScalar)
+{
+    mc::VectorN<units::angular_velocity::radians_per_second_t,SIZE> v;
+    v(0) = 1.0_rad_per_s;
+    v(1) = 2.0_rad_per_s;
+    v(2) = 3.0_rad_per_s;
+
+    units::length::meter_t val = 2.0_m;
+
+    mc::VectorN<units::velocity::meters_per_second_t, SIZE> vr = v * val;
+
+    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
+}
+
 template <typename T>
 void VectorN_CanMultiplyByScalarAngularAcc()
 {
@@ -898,6 +914,22 @@ TEST_F(TestVectorNWithUnits, CanMultiplyByScalarAngularAcc)
     // because they are treated in a special way
     VectorN_CanMultiplyByScalarAngularAcc<units::force::newton_t>();
     VectorN_CanMultiplyByScalarAngularAcc<units::torque::newton_meter_t>();
+}
+
+TEST_F(TestVectorNWithUnits, CanMultiplyAngularAccVectorByScalar)
+{
+    mc::VectorN<units::angular_acceleration::radians_per_second_squared_t,SIZE> v;
+    v(0) = 1.0_rad_per_s_sq;
+    v(1) = 2.0_rad_per_s_sq;
+    v(2) = 3.0_rad_per_s_sq;
+
+    units::length::meter_t val = 2.0_m;
+
+    mc::VectorN<units::acceleration::meters_per_second_squared_t, SIZE> vr = v * val;
+
+    EXPECT_NEAR(vr(0)(), 2.0, TOLERANCE);
+    EXPECT_NEAR(vr(1)(), 4.0, TOLERANCE);
+    EXPECT_NEAR(vr(2)(), 6.0, TOLERANCE);
 }
 
 template <typename T>
