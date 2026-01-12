@@ -681,6 +681,57 @@ public:
         return result;
     }
 
+    /**
+     * \brief Dot product operator.
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are both units and angle stripping is needed.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
+     * \param vect other vector
+     * \return dot product of the vectors
+     */
+    template <typename RHS_TYPE>
+    requires units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value
+    auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
+    {
+		if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
+		{
+            VectorN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, SIZE> temp;
+
+            for (unsigned int i = 0; i < SIZE; ++i)
+            {
+                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
+            }
+
+            units::unit_t<
+                units::compound_unit<
+                    typename units::detail::strip_angle_dimension<TYPE>::stripped_unit,
+                    typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
+                >
+            > result;
+            calculateDotProduct(temp, vect, &result);
+            return result;
+		}
+		else
+		{
+            VectorN<typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type, SIZE> temp;
+
+            for (unsigned int i = 0; i < SIZE; ++i)
+            {
+                temp(i) = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect(i));
+            }
+
+            units::unit_t<
+                units::compound_unit<
+                    typename units::traits::unit_t_traits<TYPE>::unit_type,
+                    typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_unit
+                >
+            > result;
+            calculateDotProduct(*this, temp, &result);
+            return result;
+		}
+    }
+
 
 
 
