@@ -20,7 +20,6 @@ add_subdirectory(xml)
 set(SOURCES
     main.cpp
     CsvFileReader.cpp
-    TestUnits.cpp
     XcosBinFileReader.cpp
 )
 
