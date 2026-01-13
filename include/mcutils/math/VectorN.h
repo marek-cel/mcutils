@@ -242,48 +242,12 @@ public:
         }
     }
 
-    /**
-     * \brief Adds the vectors.
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param vect vector to be added
-     */
-    template <typename RHS_TYPE>
-    requires (
-        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
-        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
-    )
-    void add(const VectorN<RHS_TYPE, SIZE>& vect)
-    {
-        for (unsigned int i = 0; i < SIZE; ++i)
-        {
-            _elements[i] += vect(i);
-        }
-    }
-
     /** \brief Negates (inverts) the vector. */
     void negate()
     {
         for (unsigned int i = 0; i < SIZE; ++i)
         {
             _elements[i] = -_elements[i];
-        }
-    }
-
-    /**
-     * \brief Subtracts the vectors.
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param vect vector to be subtracted
-     */
-    template <typename RHS_TYPE>
-    requires (
-        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
-        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
-    )
-    void subtract(const VectorN<RHS_TYPE, SIZE>& vect)
-    {
-        for (unsigned int i = 0; i < SIZE; ++i)
-        {
-            _elements[i] -= vect(i);
         }
     }
 
@@ -339,8 +303,8 @@ public:
      */
     VectorN<TYPE, SIZE> operator+(const VectorN<TYPE, SIZE>& vect) const
     {
-        VectorN<TYPE, SIZE> result(*this);
-        result.add(vect);
+        VectorN<TYPE, SIZE> result;
+        addVectors(*this, vect, &result);
         return result;
     }
 
@@ -361,8 +325,8 @@ public:
     )
     auto operator+(const VectorN<RHS_TYPE, SIZE>& vect) const
     {
-        VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result(*this);
-        result.add(vect);
+        VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result;
+        addVectors(*this, vect, &result);
         return result;
     }
 
@@ -384,8 +348,8 @@ public:
     )
     VectorN<TYPE, SIZE> operator+(const VectorN<RHS_TYPE, SIZE>& vect) const
     {
-        VectorN<TYPE, SIZE> result(*this);
-        result.add(vect);
+        VectorN<TYPE, SIZE> result;
+        addVectors(*this, vect, &result);
         return result;
     }
 
@@ -407,18 +371,18 @@ public:
      */
     VectorN<TYPE, SIZE> operator-(const VectorN<TYPE, SIZE>& vect) const
     {
-        VectorN<TYPE, SIZE> result(*this);
-        result.subtract(vect);
+        VectorN<TYPE, SIZE> result;
+        substractVectors(*this, vect, &result);
         return result;
     }
 
     /**
-     * \brief Addition operator.
+     * \brief Substraction operator.
      * 
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
-     * \param vect vector to be added
-     * \return sum of the vectors
+     * \param vect vector to be subtracted
+     * \return difference of the vectors
      */
     template <typename RHS_TYPE>
     requires (
@@ -428,19 +392,19 @@ public:
     )
     auto operator-(const VectorN<RHS_TYPE, SIZE>& vect) const
     {
-        VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result(*this);
-        result.subtract(vect);
+        VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result;
+        substractVectors(*this, vect, &result);
         return result;
     }
 
 
     /**
-     * \brief Addition operator.
+     * \brief Substraction operator.
      * 
      * This template is enabled when TYPE and RHS_TYPE are convertible units.
      * 
-     * \param vect vector to be added
-     * \return sum of the vectors
+     * \param vect vector to be subtracted
+     * \return difference of the vectors
      */
     template <typename RHS_TYPE>
     requires (
@@ -451,8 +415,8 @@ public:
     )
     VectorN<TYPE, SIZE> operator-(const VectorN<RHS_TYPE, SIZE>& vect) const
     {
-        VectorN<TYPE, SIZE> result(*this);
-        result.subtract(vect);
+        VectorN<TYPE, SIZE> result;
+        substractVectors(*this, vect, &result);
         return result;
     }
 
@@ -470,7 +434,7 @@ public:
     auto operator*(const RHS_TYPE& value) const
     {
         VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result;
-        multiplyVectorByValue(*this, value, &result);
+        multiplyVectorByScalar(*this, value, &result);
         return result;
     }
 
@@ -494,13 +458,13 @@ public:
         if constexpr (units::traits::is_unit_t<TYPE>::value)
         {
             VectorN<TYPE, SIZE> result;
-            multiplyVectorByValue(*this, value, &result);
+            multiplyVectorByScalar(*this, value, &result);
             return result;
         }
         else
         {
             VectorN<RHS_TYPE, SIZE> result;
-            multiplyVectorByValue(*this, value, &result);
+            multiplyVectorByScalar(*this, value, &result);
             return result;
         }
 
@@ -532,7 +496,7 @@ public:
             >,
             SIZE
         > result;
-        multiplyVectorByValue(*this, value, &result);
+        multiplyVectorByScalar(*this, value, &result);
         return result;
     }
 
@@ -567,7 +531,7 @@ public:
                 >,
                 SIZE
             > result;
-            multiplyVectorByValue(temp, value, &result);
+            multiplyVectorByScalar(temp, value, &result);
             return result;
 		}
 		else
@@ -584,7 +548,7 @@ public:
                 >,
                 SIZE
             > result;
-            multiplyVectorByValue(*this, temp, &result);
+            multiplyVectorByScalar(*this, temp, &result);
             return result;
 		}
     }
@@ -730,7 +694,7 @@ public:
     auto operator/(const RHS_TYPE& value) const
     {
         VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result;
-        multiplyVectorByValue(*this, 1.0 / value, &result);
+        multiplyVectorByScalar(*this, 1.0 / value, &result);
         return result;
     }
 
@@ -754,7 +718,7 @@ public:
         if constexpr (units::traits::is_unit_t<TYPE>::value)
         {
             VectorN<TYPE, SIZE> result;
-            multiplyVectorByValue(*this, 1.0 / value, &result);
+            multiplyVectorByScalar(*this, 1.0 / value, &result);
             return result;
         }
         else
@@ -765,7 +729,7 @@ public:
                 >,
                 SIZE
             > result;
-            multiplyVectorByValue(*this, 1.0 / value, &result);
+            multiplyVectorByScalar(*this, 1.0 / value, &result);
             return result;
         }
     }
@@ -792,7 +756,7 @@ public:
             >,
             SIZE
         > result;
-        multiplyVectorByValue(*this, 1.0 / value, &result);
+        multiplyVectorByScalar(*this, 1.0 / value, &result);
         return result;
     }
 
@@ -857,7 +821,7 @@ public:
     )
     VectorN<TYPE, SIZE>& operator+=(const VectorN<RHS_TYPE, SIZE>& vect)
     {
-        add(vect);
+        addVectors(*this, vect, this);
         return *this;
     }
 
@@ -873,7 +837,7 @@ public:
     )
     VectorN<TYPE, SIZE>& operator-=(const VectorN<RHS_TYPE, SIZE>& vect)
     {
-        subtract(vect);
+        substractVectors(*this, vect, this);
         return *this;
     }
 
@@ -951,21 +915,6 @@ protected:
     }
 
     /**
-     * \brief Multiplication a vector by a scalar algorithm.
-     * \param vect input vector
-     * \param value value to multiply the vector by
-     * \param result output vector
-     */
-    template <typename TYPE1, typename TYPE2, typename TYPE3>
-    void multiplyVectorByValue(const VectorN<TYPE1, SIZE>& vect, const TYPE2& value, VectorN<TYPE3, SIZE>* result) const
-    {
-        for (unsigned int i = 0; i < SIZE; ++i)
-        {
-            (*result)(i) = vect(i) * value;
-        }
-    }
-
-    /**
      * \brief Dot product calculation algorithm.
      * \param vect1 first vector
      * \param vect2 second vector
@@ -981,6 +930,78 @@ protected:
         }
     }
 };
+
+/**
+ * \brief Adds two vectors.
+ * \tparam LHS_TYPE type of the left-hand side vector elements
+ * \tparam RHS_TYPE type of the other vector elements
+ * \param lhs left-hand-side vector
+ * \param rhs right-hand-side vector
+ * \param result output vector
+ */
+template <typename LHS_TYPE, typename RHS_TYPE, typename RESULT_TYPE, unsigned int SIZE>
+requires (
+    (std::is_arithmetic<LHS_TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
+    units::traits::is_convertible_unit_t<LHS_TYPE, RHS_TYPE>::value
+)
+void addVectors(
+    const VectorN<LHS_TYPE, SIZE>& lhs, 
+    const VectorN<RHS_TYPE, SIZE>& rhs, 
+    VectorN<RESULT_TYPE, SIZE>* result
+)
+{
+    for (unsigned int i = 0; i < SIZE; ++i)
+    {
+        (*result)(i) = lhs(i) + rhs(i);
+    }
+}
+
+/**
+ * \brief Subtracts two vectors.
+ * \tparam LHS_TYPE type of the left-hand side vector elements
+ * \tparam RHS_TYPE type of the other vector elements
+ * \param lhs left-hand-side vector
+ * \param rhs right-hand-side vector
+ * \param result output vector
+ */
+template <typename LHS_TYPE, typename RHS_TYPE, typename RESULT_TYPE, unsigned int SIZE>
+requires (
+    (std::is_arithmetic<LHS_TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
+    units::traits::is_convertible_unit_t<LHS_TYPE, RHS_TYPE>::value
+)
+void substractVectors(
+    const VectorN<LHS_TYPE, SIZE>& lhs, 
+    const VectorN<RHS_TYPE, SIZE>& rhs, 
+    VectorN<RESULT_TYPE, SIZE>* result
+)
+{
+    for (unsigned int i = 0; i < SIZE; ++i)
+    {
+        (*result)(i) = lhs(i) - rhs(i);
+    }
+}
+
+/**
+ * \brief Multiplies a vector by a scalar.
+ * \tparam VECTOR_TYPE type of the vector elements
+ * \tparam SCALAR_TYPE type of the scalar
+ * \tparam RESULT_TYPE type of the result vector elements
+ * \param vect vector
+ * \param value scalar to multiply the vector by
+ * \param result output vector
+ */
+template <typename VECTOR_TYPE, typename SCALAR_TYPE, typename RESULT_TYPE, unsigned int SIZE>
+void multiplyVectorByScalar(
+    const VectorN<VECTOR_TYPE, SIZE>& vect, 
+    const SCALAR_TYPE& value, 
+    VectorN<RESULT_TYPE, SIZE>* result
+)
+{
+    for (unsigned int i = 0; i < SIZE; ++i)
+    {
+        (*result)(i) = vect(i) * value;
+    }
+}
 
 /**
  * \brief Multiplication operator.
