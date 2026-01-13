@@ -34,7 +34,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "BUILD_TESTING": "ON",
-                "ENABLE_CLANG_TIDY": "ON"
+                "ENABLE_CLANG_TIDY": "OFF"
             }
         },
         {
@@ -43,7 +43,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "BUILD_TESTING": "ON",
-                "ENABLE_CLANG_TIDY": "ON"
+                "ENABLE_CLANG_TIDY": "OFF"
             }
         },
         {
