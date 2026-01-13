@@ -55,9 +55,9 @@ public:
 
     /**
      * \brief Constructor.
-     * \param x value of the first element
-     * \param y value of the second element
-     * \param z value of the third element
+     * \param x value of the x element
+     * \param y value of the y element
+     * \param z value of the z element
      */
     explicit Vector3(TYPE x = TYPE{0}, TYPE y = TYPE{0}, TYPE z = TYPE{0})
     {
@@ -66,9 +66,9 @@ public:
 
     /**
      * \brief Constructor.
-     * \param x value of the first element
-     * \param y value of the second element
-     * \param z value of the third element
+     * \param x value of the x element
+     * \param y value of the y element
+     * \param z value of the z element
      */
     template <typename TYPE2>
     requires (
@@ -83,9 +83,12 @@ public:
 
     /**
      * \brief Constructor.
-     * \param x value of the first element
-     * \param y value of the second element
-     * \param z value of the third element
+     * \param x value of the x element
+     * \param y value of the y element
+     * \param z value of the z element
+     * \tparam TYPE_X type of the x element
+     * \tparam TYPE_Y type of the y element
+     * \tparam TYPE_Z type of the z element
      */
     template <typename TYPE_X, typename TYPE_Y, typename TYPE_Z>
     requires (
@@ -99,6 +102,22 @@ public:
     Vector3(TYPE_X x, TYPE_Y y, TYPE_Z z)
     {
         set(x, y, z);
+    }
+
+    /**
+     * \brief Converting constructor.
+     * \param vect other vector
+     * \tparam TYPE2 type of the other vector elements
+     */
+    template <typename TYPE2>
+    requires (
+        std::is_arithmetic<TYPE2>::value == false &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE2>::value &&
+        std::is_same<TYPE, TYPE2>::value == false
+    )
+    Vector3(const Vector3<TYPE>& vect)
+    {
+        set(vect.x(), vect.y(), vect.z());
     }
 
     /** \return length of projection of vector on XY-plane */
@@ -120,9 +139,9 @@ public:
 
     /**
      * \brief Sets vector values.
-     * \param x value of the first element
-     * \param y value of the second element
-     * \param z value of the third element
+     * \param x value of the x element
+     * \param y value of the y element
+     * \param z value of the z element
      */
     void set(TYPE x, TYPE y, TYPE z)
     {
@@ -133,18 +152,18 @@ public:
 
     /**
      * \brief Sets vector values.
-     * \param x value of the first element
-     * \param y value of the second element
-     * \param z value of the third element
-     * \tparam TYPE_X type of the first element
-     * \tparam TYPE_Y type of the second element
-     * \tparam TYPE_Z type of the third element
+     * \param x value of the x element
+     * \param y value of the y element
+     * \param z value of the z element
+     * \tparam TYPE_X type of the x element
+     * \tparam TYPE_Y type of the y element
+     * \tparam TYPE_Z type of the z element
      */
     template <typename TYPE_X, typename TYPE_Y, typename TYPE_Z>
     requires (
-        std::is_arithmetic<TYPE_X>::value == false &&
-        std::is_arithmetic<TYPE_Y>::value == false &&
-        std::is_arithmetic<TYPE_Z>::value == false &&
+        traits::is_unit_t<TYPE_X>::value &&
+        traits::is_unit_t<TYPE_Y>::value &&
+        traits::is_unit_t<TYPE_Z>::value &&
         units::traits::is_convertible_unit_t<TYPE, TYPE_X>::value &&
         units::traits::is_convertible_unit_t<TYPE, TYPE_Y>::value &&
         units::traits::is_convertible_unit_t<TYPE, TYPE_Z>::value
@@ -195,8 +214,57 @@ public:
         return result;
     }
 
-    /** \brief Addition operator. */
+    /** 
+     * \brief Addition operator. 
+     * \param vect vector to be added
+     * \return sum of the two vectors
+     */
     Vector3<TYPE> operator+(const Vector3<TYPE>& vect) const
+    {
+        Vector3<TYPE> result(*this);
+        result.add(vect);
+        return result;
+    }
+
+    /** 
+     * \brief Addition operator. 
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
+     * \param vect vector to be added
+     * \return sum of the two vectors
+     */
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value  && 
+        std::is_arithmetic<RHS_TYPE>::value && 
+        std::is_same<TYPE, RHS_TYPE>::value == false
+    )
+    auto operator+(const Vector3<RHS_TYPE>& vect) const
+    {
+        Vector3<TYPE> result(*this);
+        result.add(vect);
+        return result;
+    }
+
+    /** 
+     * \brief Addition operator. 
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are convertible units.
+     * 
+     * \tparam RHS_TYPE type of the other vector elements
+     * \param vect vector to be added
+     * \return sum of the two vectors
+     */
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value == false && 
+        std::is_arithmetic<RHS_TYPE>::value == false &&
+        std::is_same<TYPE, RHS_TYPE>::value == false &&
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    Vector3<TYPE> operator+(const Vector3<RHS_TYPE>& vect) const
     {
         Vector3<TYPE> result(*this);
         result.add(vect);
@@ -211,7 +279,11 @@ public:
         return result;
     }
 
-    /** \brief Subtraction operator. */
+    /** 
+     * \brief Subtraction operator. 
+     * \param vect vector to be subtracted
+     * \return difference of the vectors
+     */
     Vector3<TYPE> operator-(const Vector3<TYPE>& vect) const
     {
         Vector3<TYPE> result(*this);
