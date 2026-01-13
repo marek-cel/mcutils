@@ -17,8 +17,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat 'cmake . --preset=windows-release-conf -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake -B build'
-                bat 'cmake --build --preset=windows-release-build'
+                bat 'cmake . --preset=windows-msvc2022-release-conf -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%/scripts/buildsystems/vcpkg.cmake -B build'
+                bat 'cmake --build --preset=windows-msvc2022-release-build'
             }
         }
         stage('Test') {
