@@ -141,20 +141,6 @@ TEST_F(TestVector3, CanSetData)
     EXPECT_DOUBLE_EQ(v.z(), 3.0);
 }
 
-TEST_F(TestVector3, CanGetDimensionless)
-{
-    mc::Vector3d v1;
-    v1(0) = 1.0;
-    v1(1) = 2.0;
-    v1(2) = 3.0;
-
-    mc::Vector3d v2;
-    v2 = v1.getDimensionless();
-    EXPECT_DOUBLE_EQ(v2(0), 1.0);
-    EXPECT_DOUBLE_EQ(v2(1), 2.0);
-    EXPECT_DOUBLE_EQ(v2(2), 3.0);
-}
-
 TEST_F(TestVector3, CanAccessElementsViaFunctionsXYZ)
 {
     mc::Vector3d v;

@@ -34,6 +34,8 @@ set(SOURCES
     TestSegPlaneIsect.cpp
     TestTable.cpp
     TestTable2.cpp
+    TestVector3.cpp
+    TestVector3WithUnits.cpp
     TestVectorN.cpp
     TestVectorNWithUnits.cpp
 )
