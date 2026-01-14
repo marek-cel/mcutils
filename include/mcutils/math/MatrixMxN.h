@@ -27,6 +27,7 @@
 #endif
 
 #include <algorithm>
+#include <array>
 #include <cassert>
 #include <limits>
 #include <sstream>
@@ -101,6 +102,26 @@ public:
     }
 
     /**
+     * \brief Gets a std::array of matrix elements.
+     * 
+     * Elements index should match following scheme:
+     * i = i_row * n_col + i_col
+     * where:
+     * i - array index,
+     * i_row - row index,
+     * i_col - column index,
+     * n_col - number of columns
+     * 
+     * \return std::array<TYPE, ROWS * COLS> of matrix elements
+     */
+    std::array<TYPE, ROWS * COLS> getStdArray() const
+    {
+        std::array<TYPE, kSize> elements;
+        std::copy(_elements, _elements + kSize, elements.begin());
+        return elements;
+    }
+
+    /**
      * \brief Gets a std::vector of matrix elements.
      *
      * Elements index should match following scheme:
@@ -118,6 +139,24 @@ public:
         std::vector<TYPE> elements(kSize);
         std::copy(_elements, _elements + kSize, elements.begin());
         return elements;
+    }
+
+    /**
+     * \brief Sets matrix elements from a std::array.
+     *
+     * Elements index should match following scheme:
+     * i = i_row * n_col + i_col
+     * where:
+     * i - array index,
+     * i_row - row index,
+     * i_col - column index,
+     * n_col - number of columns
+     *
+     * \param elements input std::array of matrix elements
+     */
+    inline void setFromStdArray(const std::array<TYPE, kSize>& elements)
+    {
+        std::copy(elements.begin(), elements.end(), _elements);
     }
 
     /**
@@ -204,6 +243,15 @@ public:
         return ss.str();
     }
 
+    /** \brief Negates matrix. */
+    void negate()
+    {
+        for (unsigned int i = 0; i < kSize; ++i)
+        {
+            _elements[i] = -_elements[i];
+        }
+    }
+
     /** \brief Sets all matrix elements to zero. */
     void zeroize()
     {
@@ -247,6 +295,19 @@ public:
     }
 
     /**
+     * \brief Items accessor.
+     * 
+     * Please notice that this operator is NOT bounds-checked.
+     * 
+     * \param index element index
+     * \return matrix element at given index
+     */
+    inline TYPE operator()(unsigned int index) const
+    {
+        return _elements[index];
+    }
+
+    /**
      * \brief Elements accessor.
      *
      * Please notice that this operator is NOT bound-checked.
@@ -257,6 +318,19 @@ public:
     inline TYPE& operator()(unsigned int row, unsigned int col)
     {
         return _elements[row * kCols + col];
+    }
+
+    /**
+     * \brief Items accessor.
+     * 
+     * Please notice that this operator is NOT bounds-checked.
+     * 
+     * \param index element index
+     * \return matrix element at given index
+     */
+    inline TYPE& operator()(unsigned int index)
+    {
+        return _elements[index];
     }
 
     /**
@@ -823,24 +897,6 @@ protected:
 
     TYPE _elements[kSize] = { TYPE{0} };    ///< matrix elements
 
-    /** \brief Negates matrix. */
-    void negate()
-    {
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            _elements[i] = -_elements[i];
-        }
-    }
-
-    /** \brief Subtracts matrix. */
-    void subtract(const MatrixMxN<TYPE, ROWS, COLS>& matrix)
-    {
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            _elements[i] -= matrix._elements[i];
-        }
-    }
-
     /** \brief Multiplication a matrix by a value algorithm. */
     template <typename TYPE1, typename TYPE2, typename TYPE3>
     void multiplyMatrixByValue(const MatrixMxN<TYPE1, ROWS, COLS>& matrix, const TYPE2& value,
@@ -900,7 +956,17 @@ protected:
     }
 };
 
-/** \brief Adds matrix. */
+/** 
+ * \brief Adds two matrices.
+ * \tparam LHS_TYPE type of the left-hand side matrix elements
+ * \tparam RHS_TYPE type of the right-hand side matrix elements
+ * \tparam RESULT_TYPE type of the result matrix elements
+ * \tparam ROWS number of matrix rows
+ * \tparam COLS number of matrix columns
+ * \param lhs left-hand side matrix
+ * \param rhs right-hand side matrix
+ * \param result pointer to the result matrix
+ */
 template <typename LHS_TYPE, typename RHS_TYPE, typename RESULT_TYPE, unsigned int ROWS, unsigned int COLS>
 requires (
     (std::is_arithmetic<LHS_TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
@@ -912,7 +978,38 @@ void addMatrices(
     MatrixMxN<RESULT_TYPE, ROWS, COLS>* result
 )
 {
-    // TODO
+    for (unsigned int i = 0; i < ROWS * COLS; ++i)
+    {
+        (*result)(i) = lhs(i) + rhs(i);
+    }
+}
+
+/** 
+ * \brief Subtracts two matrices.
+ * \tparam LHS_TYPE type of the left-hand side matrix elements
+ * \tparam RHS_TYPE type of the right-hand side matrix elements
+ * \tparam RESULT_TYPE type of the result matrix elements
+ * \tparam ROWS number of matrix rows
+ * \tparam COLS number of matrix columns
+ * \param lhs left-hand side matrix
+ * \param rhs right-hand side matrix
+ * \param result pointer to the result matrix
+ */
+template <typename LHS_TYPE, typename RHS_TYPE, typename RESULT_TYPE, unsigned int ROWS, unsigned int COLS>
+requires (
+    (std::is_arithmetic<LHS_TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
+    units::traits::is_convertible_unit_t<LHS_TYPE, RHS_TYPE>::value
+)
+void subtractMatrices(
+    const MatrixMxN<LHS_TYPE, ROWS, COLS>& lhs,
+    const MatrixMxN<RHS_TYPE, ROWS, COLS>& rhs,
+    MatrixMxN<RESULT_TYPE, ROWS, COLS>* result
+)
+{
+    for (unsigned int i = 0; i < ROWS * COLS; ++i)
+    {
+        (*result)(i) = lhs(i) - rhs(i);
+    }
 }
 
 /** \brief Multiplication operator. */

@@ -96,6 +96,26 @@ TEST_F(TestMatrixMxN, CanGetTransposed)
     EXPECT_DOUBLE_EQ(mt(1,2), 6.0);
 }
 
+TEST_F(TestMatrixMxN, CanGetStdArray)
+{
+    std::array<TYPE, ROWS * COLS> x
+    {
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    };
+    std::array<TYPE, ROWS * COLS> xx;
+
+    mc::MatrixMxN<TYPE,ROWS,COLS> m;
+    m.setFromStdArray(x);
+    xx = m.getStdArray();
+
+    for ( int i = 0; i < ROWS * COLS; ++i )
+    {
+        EXPECT_DOUBLE_EQ(xx[i], x[i]) << "Error at index " << i;
+    }
+}
+
 TEST_F(TestMatrixMxN, CanGetStdVector)
 {
     std::vector<TYPE> x
@@ -109,6 +129,26 @@ TEST_F(TestMatrixMxN, CanGetStdVector)
     mc::MatrixMxN<TYPE,ROWS,COLS> m;
     m.setFromStdVector(x);
     xx = m.getStdVector();
+
+    for ( int i = 0; i < ROWS * COLS; ++i )
+    {
+        EXPECT_DOUBLE_EQ(xx[i], x[i]) << "Error at index " << i;
+    }
+}
+
+TEST_F(TestMatrixMxN, CanSetFromStdArray)
+{
+    std::array<TYPE, ROWS * COLS> x
+    {
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    };
+    std::array<TYPE, ROWS * COLS> xx;
+
+    mc::MatrixMxN<TYPE,ROWS,COLS> m;
+    m.setFromStdArray(x);
+    xx = m.getStdArray();
 
     for ( int i = 0; i < ROWS * COLS; ++i )
     {
