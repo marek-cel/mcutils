@@ -125,40 +125,87 @@ public:
     inline double& ey()       { return _ey; }
     inline double& ez()       { return _ez; }
 
-    /** \brief Addition operator. */
+    /** 
+     * \brief Addition operator. 
+     * \param quat quaternion to add
+     * \return resulting quaternion
+     */
     Quaternion operator+(const Quaternion& quat) const;
 
-    /** \brief Negation operator. */
+    /** 
+     * \brief Negation operator.
+     * \return resulting quaternion
+     */
     Quaternion operator-() const;
 
-    /** \brief Subtraction operator. */
+    /** 
+     * \brief Subtraction operator.
+     * \param quat quaternion to subtract
+     * \return resulting quaternion
+     */
     Quaternion operator-(const Quaternion& quat) const;
 
-    /** \brief Multiplication operator (by number). */
+    /** 
+     * \brief Multiplication operator (by number).
+     * \param val number to multiply by
+     * \return resulting quaternion
+     */
     Quaternion operator*(double val) const;
 
-    /** \brief Multiplication operator (by quaternion). */
+    /** 
+     * \brief Multiplication operator (by quaternion).
+     * \param quat quaternion to multiply by
+     * \return resulting quaternion
+     */
     Quaternion operator*(const Quaternion& quat) const;
 
-    /** \brief Division operator (by number). */
+    /** 
+     * \brief Division operator (by number).
+     * \param val number to divide by
+     * \return resulting quaternion
+     */
     Quaternion operator/(double val) const;
 
-    /** \brief Unary addition operator. */
+    /** 
+     * \brief Unary addition operator.
+     * \param quat quaternion to add
+     * \return resulting quaternion
+     */
     Quaternion& operator+=(const Quaternion& quat);
 
-    /** \brief Unary subtraction operator. */
+    /** 
+     * \brief Unary subtraction operator.
+     * \param quat quaternion to subtract
+     * \return resulting quaternion
+     */
     Quaternion& operator-=(const Quaternion& quat);
 
-    /** \brief Unary multiplication operator (by number). */
+    /** 
+     * \brief Unary multiplication operator (by number).
+     * \param val number to multiply by
+     * \return resulting quaternion
+     */
     Quaternion& operator*=(double val);
 
-    /** \brief Unary division operator (by number). */
+    /** 
+     * \brief Unary division operator (by number).
+     * \param val number to divide by
+     * \return resulting quaternion
+     */
     Quaternion& operator/=(double val);
 
-    /** \brief Equality operator. */
+    /** 
+     * \brief Equality operator.
+     * \param quat quaternion to compare with
+     * \return true if quaternions are equal, false otherwise
+     */
     bool operator==(const Quaternion& quat) const;
 
-    /** \brief Inequality operator. */
+    /** 
+     * \brief Inequality operator.
+     * \param quat quaternion to compare with
+     * \return true if quaternions are not equal, false otherwise
+     */
     bool operator!=(const Quaternion& quat) const;
 
 private:
@@ -169,7 +216,12 @@ private:
     double _ez = 0.0;   ///< quaternion ez (z) component
 };
 
-/** \brief Multiplication operator (by number). */
+/** 
+ * \brief Multiplication operator (by number).
+ * \param val number to multiply by
+ * \param quat quaternion to multiply
+ * \return resulting quaternion
+ */
 inline Quaternion operator*(double val, const Quaternion& quat)
 {
     return quat * val;
