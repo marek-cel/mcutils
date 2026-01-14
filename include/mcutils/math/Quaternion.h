@@ -70,7 +70,7 @@ public:
      * \param angl [rad] angle of rotation
      * \param vect [-] vector of rotation axis
      */
-    // Quaternion(units::angle::radian_t angl, const Vector3d& vect);
+    Quaternion(units::angle::radian_t angl, const Vector3d& vect);
 
     /** \return TRUE if all items are valid */
     bool isValid() const;
@@ -102,7 +102,7 @@ public:
      * \param lambda free parameter (usually set to a small multiple of the integration time step)
      * \return quaternion derivative
      */
-    // Quaternion getDerivative(const Vector3_rad_per_s& omega, double lambda = 0.0) const;
+    Quaternion getDerivative(const Vector3_rad_per_s& omega, double lambda = 0.0) const;
 
     /** \brief Returns inverted quaternion. */
     Quaternion getInverted() const;
