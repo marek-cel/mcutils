@@ -29,6 +29,7 @@ set(SOURCES
     TestAngles.cpp
     TestDegMinSec.cpp
     TestEulerRect.cpp
+    TestMatrixMxN.cpp
     TestQuaternion.cpp
     TestRungeKutta4.cpp
     TestSegPlaneIsect.cpp

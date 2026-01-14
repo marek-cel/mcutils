@@ -335,20 +335,20 @@ public:
 
     /**
      * \brief Addition operator.
-     * \param matrix right-hand side matrix
+     * \param matrix matrix to be added
      * \return sum of the matrices
      */
     MatrixMxN<TYPE, ROWS, COLS> operator+(const MatrixMxN<TYPE, ROWS, COLS>& matrix) const
     {
-        MatrixMxN<TYPE, kRows, kCols> result(*this);
-        result.add(matrix);
+        MatrixMxN<TYPE, kRows, kCols> result;
+        addMatrices(*this, matrix, &result);
         return result;
     }
 
     /**
      * \brief Addition operator.
      * \tparam RHS_TYPE type of the right-hand side matrix elements
-     * \param matrix right-hand side matrix
+     * \param matrix matrix to be added
      * \return sum of the matrices
      */
     template <typename RHS_TYPE>
@@ -357,11 +357,11 @@ public:
         std::is_arithmetic<RHS_TYPE>::value && 
         std::is_same<TYPE, RHS_TYPE>::value == false
     )
-    MatrixMxN<TYPE, ROWS, COLS> operator+(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix) const
+    auto operator+(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix) const
     {
-        // MatrixMxN<TYPE, kRows, kCols> result(*this);
-        // result.add(matrix);
-        // return result;
+        MatrixMxN<std::common_type_t<TYPE, RHS_TYPE>, kRows, kCols> result(*this);
+        addMatrices(*this, matrix, &result);
+        return result;
     }
 
     /** \brief Negation operator. */
@@ -375,43 +375,26 @@ public:
     /** \brief Subtraction operator. */
     MatrixMxN<TYPE, ROWS, COLS> operator-(const MatrixMxN<TYPE, ROWS, COLS>& matrix) const
     {
-        MatrixMxN<TYPE, kRows, kCols> result(*this);
-        result.subtract(matrix);
+        MatrixMxN<TYPE, kRows, kCols> result;
+        subtractMatrices(*this, matrix, &result);
         return result;
     }
 
     /**
      * \brief Multiplication by a scalar operator.
      *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     * So operators for angular velocity and angular acceleration are defined
-     * as specializations of this template.
-     *
-     * This template is enabled when TYPE and TYPE2 are both units, but TYPE2 is not
-     * angular velocity or angular acceleration.
+     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
+     * 
+     * \tparam TYPE_RHS right-hand side operand type
+     * \param val value to be multiplied by
+     * \return product of the matrix multiplied by the value
      */
-    template <class TYPE2, typename std::enable_if<
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
-        &&
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    auto operator*(TYPE2 val) const
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator*(const RHS_TYPE& val) const
     {
-        MatrixMxN<
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<TYPE2>::unit_type
-                >
-            >,
-            ROWS, COLS
-        > result;
-        multiplyMatrixByValue(*this, val, &result);
+        MatrixMxN<std::common_type_t<TYPE, RHS_TYPE>,ROWS, COLS> result;
+        multiplyMatrixByScalar(*this, val, &result);
         return result;
     }
 
@@ -453,7 +436,7 @@ public:
             >,
             ROWS, COLS
         > result;
-        multiplyMatrixByValue(*this, temp, &result);
+        multiplyMatrixByScalar(*this, temp, &result);
         return result;
     }
 
@@ -495,7 +478,7 @@ public:
             >,
             ROWS, COLS
         > result;
-        multiplyMatrixByValue(*this, temp, &result);
+        multiplyMatrixByScalar(*this, temp, &result);
         return result;
     }
 
@@ -512,7 +495,7 @@ public:
     MatrixMxN<TYPE2, ROWS, COLS> operator*(TYPE2 value) const
     {
         MatrixMxN<TYPE2, ROWS, COLS> result;
-        multiplyMatrixByValue(*this, value, &result);
+        multiplyMatrixByScalar(*this, value, &result);
         return result;
     }
 
@@ -524,7 +507,7 @@ public:
     MatrixMxN<TYPE, ROWS, COLS> operator*(double val) const
     {
         MatrixMxN<TYPE, ROWS, COLS> result;
-        multiplyMatrixByValue(*this, val, &result);
+        multiplyMatrixByScalar(*this, val, &result);
         return result;
     }
 
@@ -808,7 +791,7 @@ public:
             >,
             ROWS, COLS
         > result;
-        multiplyMatrixByValue(*this, 1.0 / value, &result);
+        multiplyMatrixByScalar(*this, 1.0 / value, &result);
         return result;
     }
 
@@ -832,7 +815,7 @@ public:
             >,
             ROWS, COLS
         > result;
-        multiplyMatrixByValue(*this, 1.0 / value, &result);
+        multiplyMatrixByScalar(*this, 1.0 / value, &result);
         return result;
     }
 
@@ -844,21 +827,21 @@ public:
     MatrixMxN<TYPE, ROWS, COLS> operator/(double value) const
     {
         MatrixMxN<TYPE, ROWS, COLS> result;
-        multiplyMatrixByValue(*this, 1.0 / value, &result);
+        multiplyMatrixByScalar(*this, 1.0 / value, &result);
         return result;
     }
 
     /** \brief Unary addition operator. */
     MatrixMxN<TYPE, ROWS, COLS>& operator+=(const MatrixMxN<TYPE, ROWS, COLS>& matrix)
     {
-        add(matrix);
+        addMatrices(*this, matrix, this);
         return *this;
     }
 
     /** \brief Unary subtraction operator. */
     MatrixMxN<TYPE, ROWS, COLS>& operator-=(const MatrixMxN<TYPE, ROWS, COLS>& matrix)
     {
-        subtract(matrix);
+        subtractMatrices(*this, matrix, this);
         return *this;
     }
 
@@ -896,20 +879,6 @@ public:
 protected:
 
     TYPE _elements[kSize] = { TYPE{0} };    ///< matrix elements
-
-    /** \brief Multiplication a matrix by a value algorithm. */
-    template <typename TYPE1, typename TYPE2, typename TYPE3>
-    void multiplyMatrixByValue(const MatrixMxN<TYPE1, ROWS, COLS>& matrix, const TYPE2& value,
-                               MatrixMxN<TYPE3, ROWS, COLS>* result) const
-    {
-        for (unsigned int r = 0; r < ROWS; ++r)
-        {
-            for (unsigned int c = 0; c < COLS; ++c)
-            {
-                (*result)(r, c) = matrix(r, c) * value;
-            }
-        }
-    }
 
     /** \brief Multiplication a matrix by a matrix algorithm. */
     template <typename TYPE1, typename TYPE2, typename TYPE3, unsigned int M, unsigned int N, unsigned int P>
@@ -965,7 +934,7 @@ protected:
  * \tparam COLS number of matrix columns
  * \param lhs left-hand side matrix
  * \param rhs right-hand side matrix
- * \param result pointer to the result matrix
+ * \param result output result matrix
  */
 template <typename LHS_TYPE, typename RHS_TYPE, typename RESULT_TYPE, unsigned int ROWS, unsigned int COLS>
 requires (
@@ -993,7 +962,7 @@ void addMatrices(
  * \tparam COLS number of matrix columns
  * \param lhs left-hand side matrix
  * \param rhs right-hand side matrix
- * \param result pointer to the result matrix
+ * \param result output result matrix
  */
 template <typename LHS_TYPE, typename RHS_TYPE, typename RESULT_TYPE, unsigned int ROWS, unsigned int COLS>
 requires (
@@ -1009,6 +978,32 @@ void subtractMatrices(
     for (unsigned int i = 0; i < ROWS * COLS; ++i)
     {
         (*result)(i) = lhs(i) - rhs(i);
+    }
+}
+
+/** 
+ * \brief Multiplication a matrix by a value.
+ * \tparam LHS_TYPE type of the left-hand side matrix elements
+ * \tparam RHS_TYPE type of the right-hand side matrix elements
+ * \tparam RESULT_TYPE type of the result matrix elements
+ * \tparam ROWS number of matrix rows
+ * \tparam COLS number of matrix columns
+ * \param matrix matrix
+ * \param val value to multiply the matrix by
+ * \param result output result matrix
+ */
+template <typename LHS_TYPE, typename RHS_TYPE, typename RESULT_TYPE, unsigned int ROWS, unsigned int COLS>
+void multiplyMatrixByScalar(
+    const MatrixMxN<LHS_TYPE, ROWS, COLS>& matrix, 
+    const RHS_TYPE& val,
+    MatrixMxN<RESULT_TYPE, ROWS, COLS>* result)
+{
+    for (unsigned int r = 0; r < ROWS; ++r)
+    {
+        for (unsigned int c = 0; c < COLS; ++c)
+        {
+            (*result)(r, c) = matrix(r, c) * val;
+        }
     }
 }
 
