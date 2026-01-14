@@ -254,6 +254,7 @@ public:
     /**
      * \brief Casting operator.
      * Converts the vector to another type.
+     * \tparam NEW_TYPE new vector element type
      */
     template <typename NEW_TYPE>
     requires (
@@ -505,6 +506,9 @@ public:
      * 
      * This template is enabled when both TYPE and TYPE_RHS are units and angle stripping is needed.
      * 
+     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+     * this makes radians a pure number without physical dimension.
+     * 
      * \tparam TYPE_RHS RHS operand type
      * \param val value to be multiplied by
      * \return product of the vector multiplied by the value
@@ -632,6 +636,9 @@ public:
      * \brief Dot product operator.
      * 
      * This template is enabled when TYPE and RHS_TYPE are both units and angle stripping is needed.
+     * 
+     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+     * this makes radians a pure number without physical dimension.
      * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param vect right-hand side vector
