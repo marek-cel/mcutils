@@ -27,6 +27,7 @@
 #endif
 
 #include <algorithm>
+#include <array>
 #include <cassert>
 #include <limits>
 #include <sstream>
@@ -153,6 +154,17 @@ public:
     }
 
     /**
+     * \brief Gets std::array of vector elements.
+     * \return std::array<TYPE, SIZE> of vector elements
+     */
+    std::array<TYPE, SIZE> getStdArray() const
+    {
+        std::array<TYPE, SIZE> elements;
+        std::copy(_elements, _elements + SIZE, elements.begin());
+        return elements;
+    }
+
+    /**
      * \brief Gets std::vector of vector elements.
      * \return std::vector<TYPE> of vector elements
      */
@@ -161,6 +173,15 @@ public:
         std::vector<TYPE> elements(SIZE);
         std::copy(_elements, _elements + SIZE, elements.begin());
         return elements;
+    }
+
+    /**
+     * \brief Sets vector elements from std::array.
+     * \param elements input std::array of vector elements
+     */
+    inline void setFromStdArray(const std::array<TYPE, SIZE>& elements)
+    {
+        std::copy(elements.begin(), elements.end(), _elements);
     }
 
     /**
@@ -233,21 +254,21 @@ public:
         return ss.str();
     }
 
-    /** \brief Sets all vector elements to zero. */
-    void zeroize()
-    {
-        for (unsigned int i = 0; i < SIZE; ++i)
-        {
-            _elements[i] = TYPE{0};
-        }
-    }
-
     /** \brief Negates (inverts) the vector. */
     void negate()
     {
         for (unsigned int i = 0; i < SIZE; ++i)
         {
             _elements[i] = -_elements[i];
+        }
+    }
+
+    /** \brief Sets all vector elements to zero. */
+    void zeroize()
+    {
+        for (unsigned int i = 0; i < SIZE; ++i)
+        {
+            _elements[i] = TYPE{0};
         }
     }
 

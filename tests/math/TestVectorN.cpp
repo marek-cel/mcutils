@@ -90,6 +90,20 @@ TEST_F(TestVectorN, CanGetNormalized)
     EXPECT_DOUBLE_EQ(vn.getLength(), 1.0);
 }
 
+TEST_F(TestVectorN, CanGetStdArray)
+{
+    mc::VectorN<double,SIZE> v;
+    std::array<double, SIZE> x { 1.0, 2.0, 3.0 };
+    v.setFromStdArray(x);
+    std::array<double, SIZE> result;
+    result = v.getStdArray();
+
+    for ( int i = 0; i < SIZE; ++i )
+    {
+        EXPECT_DOUBLE_EQ(result[i], x[i]) << "Error at index " << i;
+    }
+}
+
 TEST_F(TestVectorN, CanGetStdVector)
 {
     mc::VectorN<double,SIZE> v;
@@ -101,6 +115,18 @@ TEST_F(TestVectorN, CanGetStdVector)
     for ( int i = 0; i < SIZE; ++i )
     {
         EXPECT_DOUBLE_EQ(result[i], x[i]) << "Error at index " << i;
+    }
+}
+
+TEST_F(TestVectorN, CanSetFromStdArray)
+{
+    mc::VectorN<double,SIZE> v;
+    std::array<double, SIZE> x { 1.0, 2.0, 3.0 };
+    v.setFromStdArray(x);
+
+    for ( int i = 0; i < SIZE; ++i )
+    {
+        EXPECT_DOUBLE_EQ(v(i), x[i]) << "Error at index " << i;
     }
 }
 

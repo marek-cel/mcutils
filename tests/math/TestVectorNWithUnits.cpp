@@ -211,6 +211,35 @@ TEST_F(TestVectorNWithUnits, CanGetNormalized)
 }
 
 template <typename T>
+void VectorN_CanGetStdArray()
+{
+    mc::VectorN<T,SIZE> v;
+    v(0) = T{1};
+    v(1) = T{2};
+    v(2) = T{3};
+
+    std::array<T, SIZE> result;
+    result = v.getStdArray();
+
+    EXPECT_NEAR(result[0](), 1.0, TOLERANCE);
+    EXPECT_NEAR(result[1](), 2.0, TOLERANCE);
+    EXPECT_NEAR(result[2](), 3.0, TOLERANCE);
+}
+
+TEST_F(TestVectorNWithUnits, CanGetStdArray)
+{
+    VectorN_CanGetStdArray<units::length::meter_t>();
+    VectorN_CanGetStdArray<units::velocity::meters_per_second_t>();
+    VectorN_CanGetStdArray<units::acceleration::meters_per_second_squared_t>();
+    VectorN_CanGetStdArray<units::angular_velocity::radians_per_second_t>();
+    VectorN_CanGetStdArray<units::angular_velocity::degrees_per_second_t>();
+    VectorN_CanGetStdArray<units::angular_acceleration::radians_per_second_squared_t>();
+    VectorN_CanGetStdArray<units::angular_acceleration::degrees_per_second_squared_t>();
+    VectorN_CanGetStdArray<units::force::newton_t>();
+    VectorN_CanGetStdArray<units::torque::newton_meter_t>();
+}
+
+template <typename T>
 void VectorN_CanGetStdVector()
 {
     mc::VectorN<T,SIZE> v;
@@ -237,6 +266,31 @@ TEST_F(TestVectorNWithUnits, CanGetStdVector)
     VectorN_CanGetStdVector<units::angular_acceleration::degrees_per_second_squared_t>();
     VectorN_CanGetStdVector<units::force::newton_t>();
     VectorN_CanGetStdVector<units::torque::newton_meter_t>();
+}
+
+template <typename T>
+void VectorN_CanSetFromStdArray()
+{
+    std::array<T, SIZE> x { T{1}, T{2}, T{3} };
+    mc::VectorN<T,SIZE> v;
+    v.setFromStdArray(x);
+
+    EXPECT_NEAR(v(0)(), 1.0, TOLERANCE);
+    EXPECT_NEAR(v(1)(), 2.0, TOLERANCE);
+    EXPECT_NEAR(v(2)(), 3.0, TOLERANCE);
+}
+
+TEST_F(TestVectorNWithUnits, CanSetFromStdArray)
+{
+    VectorN_CanSetFromStdArray<units::length::meter_t>();
+    VectorN_CanSetFromStdArray<units::velocity::meters_per_second_t>();
+    VectorN_CanSetFromStdArray<units::acceleration::meters_per_second_squared_t>();
+    VectorN_CanSetFromStdArray<units::angular_velocity::radians_per_second_t>();
+    VectorN_CanSetFromStdArray<units::angular_velocity::degrees_per_second_t>();
+    VectorN_CanSetFromStdArray<units::angular_acceleration::radians_per_second_squared_t>();
+    VectorN_CanSetFromStdArray<units::angular_acceleration::degrees_per_second_squared_t>();
+    VectorN_CanSetFromStdArray<units::force::newton_t>();
+    VectorN_CanSetFromStdArray<units::torque::newton_meter_t>();
 }
 
 template <typename T>
