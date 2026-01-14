@@ -24,8 +24,14 @@
 
 namespace mc {
 
+template class MCUTILS_API VectorN<float, 3>;
+template class MCUTILS_API Vector3<float>;
+
 template class MCUTILS_API VectorN<double, 3>;
 template class MCUTILS_API Vector3<double>;
+
+template class MCUTILS_API VectorN<float, 4>;
+template class MCUTILS_API VectorN<float, 6>;
 
 template class MCUTILS_API VectorN<double, 4>;
 template class MCUTILS_API VectorN<double, 6>;

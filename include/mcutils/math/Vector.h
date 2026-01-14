@@ -32,12 +32,22 @@ namespace mc {
 
 // dimensionless
 
+using Vector3f = Vector3<float>;
+extern template class MCUTILS_API VectorN<float, 3>;
+extern template class MCUTILS_API Vector3<float>;
+
 using Vector3d = Vector3<double>;
 extern template class MCUTILS_API VectorN<double, 3>;
 extern template class MCUTILS_API Vector3<double>;
 
+using Vector4f = VectorN<float, 4>;
+extern template class MCUTILS_API VectorN<float, 4>;
+
 using Vector4d = VectorN<double, 4>;
 extern template class MCUTILS_API VectorN<double, 4>;
+
+using Vector6f = VectorN<float, 6>;
+extern template class MCUTILS_API VectorN<float, 6>;
 
 using Vector6d = VectorN<double, 6>;
 extern template class MCUTILS_API VectorN<double, 6>;
