@@ -217,7 +217,7 @@ public:
 
     /** 
      * \brief Addition operator. 
-     * \param vect right-hand side vector
+     * \param vect vector to be added
      * \return sum of the two vectors
      */
     Vector3<TYPE> operator+(const Vector3<TYPE>& vect) const
@@ -233,7 +233,7 @@ public:
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
-     * \param vect right-hand side vector
+     * \param vect vector to be added
      * \return sum of the two vectors
      */
     template <typename RHS_TYPE>
@@ -255,7 +255,7 @@ public:
      * This template is enabled when TYPE and RHS_TYPE are convertible units.
      * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
-     * \param vect right-hand side vector
+     * \param vect vector to be added
      * \return sum of the two vectors
      */
     template <typename RHS_TYPE>
@@ -282,7 +282,7 @@ public:
 
     /** 
      * \brief Subtraction operator. 
-     * \param vect right-hand side vector
+     * \param vect vector to be subtracted
      * \return difference of the vectors
      */
     Vector3<TYPE> operator-(const Vector3<TYPE>& vect) const
@@ -297,7 +297,7 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
-     * \param vect right-hand side vector
+     * \param vect vector to be subtracted
      * \return difference of the vectors
      */
     template <typename RHS_TYPE>
@@ -318,7 +318,7 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are convertible units.
      * 
-     * \param vect right-hand side vector
+     * \param vect vector to be subtracted
      * \return difference of the vectors
      */
     template <typename RHS_TYPE>
@@ -341,7 +341,7 @@ public:
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
      * \tparam TYPE_RHS RHS operand type
-     * \param val right-hand side value
+     * \param val value to be multiplied by
      * \return product of the vector multiplied by the value
      */
     template <typename RHS_TYPE>
@@ -360,7 +360,7 @@ public:
      * while the other is a unit.
      * 
      * \tparam TYPE_RHS RHS operand type
-     * \param val right-hand side value
+     * \param val value to be multiplied by
      * \return product of the vector multiplied by the value
      */
     template <typename RHS_TYPE>
@@ -391,7 +391,7 @@ public:
      * This template is enabled when both TYPE and TYPE_RHS are units and angle stripping is not needed.
      * 
      * \tparam TYPE_RHS RHS operand type
-     * \param val right-hand side value
+     * \param val value to be multiplied by
      * \return product of the vector multiplied by the value
      */
     template <typename RHS_TYPE>
@@ -423,7 +423,7 @@ public:
      * this makes radians a pure number without physical dimension.
      * 
      * \tparam TYPE_RHS RHS operand type
-     * \param val right-hand side value
+     * \param val value to be multiplied by
      * \return product of the vector multiplied by the value
      */
     template <typename RHS_TYPE>
@@ -598,7 +598,7 @@ public:
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
-     * \param val right-hand side value
+     * \param val value to be divided by
      * \return vector divided by the value
      */
     template <typename RHS_TYPE>
@@ -617,7 +617,7 @@ public:
      * while the other is a unit.
      * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
-     * \param val right-hand side value
+     * \param val value to be divided by
      * \return vector divided by the value
      */
     template <typename RHS_TYPE>
@@ -651,7 +651,7 @@ public:
      * This template is enabled when TYPE and RHS_TYPE are both units.
      * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
-     * \param val right-hand side value
+     * \param val value to be divided by
      * \return vector divided by the value
      */
     template <typename RHS_TYPE>
@@ -839,7 +839,7 @@ public:
     /**
      * \brief Unary multiplication operator.
      * \tparam RHS_TYPE type of the right-hand side vector elements
-     * \param val value to multiply the vector by
+     * \param val value to be multiplied by
      * \return reference to the updated vector
      */
     template <typename RHS_TYPE>
@@ -852,7 +852,7 @@ public:
 
     /**
      * \brief Unary division operator.
-     * \param val value to divide the vector by
+     * \param val value to be divided by
      * \return reference to the updated vector
      */
     template <typename RHS_TYPE>

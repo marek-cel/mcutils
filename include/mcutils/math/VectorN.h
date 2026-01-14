@@ -214,7 +214,7 @@ public:
         bool valid = true;
         for (unsigned int i = 0; i < SIZE && valid; ++i)
         {
-            double temp = std::numeric_limits<double>::quiet_NaN();
+            float temp = std::numeric_limits<float>::quiet_NaN();
             ss >> temp;
             valid &= misc::isValid(temp);
             elements[i] = TYPE{temp};
@@ -320,7 +320,7 @@ public:
 
     /**
      * \brief Addition operator.
-     * \param vect right-hand side vector
+     * \param vect vector to be added
      * \return sum of the vectors
      */
     VectorN<TYPE, SIZE> operator+(const VectorN<TYPE, SIZE>& vect) const
@@ -336,7 +336,7 @@ public:
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
-     * \param vect right-hand side vector
+     * \param vect vector to be added
      * \return sum of the vectors
      */
     template <typename RHS_TYPE>
@@ -358,7 +358,7 @@ public:
      * This template is enabled when TYPE and RHS_TYPE are convertible units.
      * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
-     * \param vect right-hand side vector
+     * \param vect vector to be added
      * \return sum of the vectors
      */
     template <typename RHS_TYPE>
@@ -388,7 +388,7 @@ public:
 
     /**
      * \brief Subtraction operator.
-     * \param vect right-hand side vector
+     * \param vect vector to be subtracted
      * \return difference of the vectors
      */
     VectorN<TYPE, SIZE> operator-(const VectorN<TYPE, SIZE>& vect) const
@@ -403,7 +403,7 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
-     * \param vect right-hand side vector
+     * \param vect vector to be subtracted
      * \return difference of the vectors
      */
     template <typename RHS_TYPE>
@@ -425,7 +425,7 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are convertible units.
      * 
-     * \param vect right-hand side vector
+     * \param vect vector to be subtracted
      * \return difference of the vectors
      */
     template <typename RHS_TYPE>
@@ -447,7 +447,7 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
-     * \tparam TYPE_RHS RHS operand type
+     * \tparam TYPE_RHS right-hand side operand type
      * \param val value to be multiplied by
      * \return product of the vector multiplied by the value
      */
@@ -466,7 +466,7 @@ public:
      * This template is enabled when TYPE or TYPE_RHS is an arithmetic type
      * while the other is a unit.
      * 
-     * \tparam TYPE_RHS RHS operand type
+     * \tparam TYPE_RHS right-hand side operand type
      * \param val value to be multiplied by
      * \return product of the vector multiplied by the value
      */
@@ -497,7 +497,7 @@ public:
      * 
      * This template is enabled when both TYPE and TYPE_RHS are units and angle stripping is not needed.
      * 
-     * \tparam TYPE_RHS RHS operand type
+     * \tparam TYPE_RHS right-hand side operand type
      * \param val value to be multiplied by
      * \return product of the vector multiplied by the value
      */
@@ -530,7 +530,7 @@ public:
      * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
      * this makes radians a pure number without physical dimension.
      * 
-     * \tparam TYPE_RHS RHS operand type
+     * \tparam TYPE_RHS right-hand side operand type
      * \param val value to be multiplied by
      * \return product of the vector multiplied by the value
      */
@@ -873,7 +873,7 @@ public:
     /**
      * \brief Unary multiplication operator.
      * \tparam RHS_TYPE type of the right-hand side vector elements
-     * \param val value to multiply the vector by
+     * \param val value to be multiplied by
      * \return reference to the updated vector
      */
     template <typename RHS_TYPE>
@@ -886,7 +886,7 @@ public:
 
     /**
      * \brief Unary division operator.
-     * \param val value to divide the vector by
+     * \param val value to be divided by
      * \return reference to the updated vector
      */
     template <typename RHS_TYPE>
@@ -899,7 +899,7 @@ public:
 
     /**
      * \brief Equality operator.
-     * \param vect right-hand side vector
+     * \param vect vector to be compared with
      * \return true if the vectors are equal, false otherwise
      */
     bool operator==(const VectorN<TYPE, SIZE>& vect) const
@@ -914,7 +914,7 @@ public:
 
     /**
      * \brief Inequality operator.
-     * \param vect right-hand side vector
+     * \param vect vector to be compared with
      * \return true if the vectors are not equal, false otherwise
      */
     bool operator!=(const VectorN<TYPE, SIZE>& vect) const
@@ -960,7 +960,7 @@ void addVectors(
  * \tparam RESULT_TYPE type of the result vector elements
  * \param lhs left-hand-side vector
  * \param rhs right-hand-side vector
- * \param result output vector
+ * \param result output result vector
  */
 template <typename LHS_TYPE, typename RHS_TYPE, typename RESULT_TYPE, unsigned int SIZE>
 requires (
@@ -985,8 +985,8 @@ void substractVectors(
  * \tparam SCALAR_TYPE type of the scalar
  * \tparam RESULT_TYPE type of the result vector elements
  * \param vect vector
- * \param val scalar to multiply the vector by
- * \param result output vector
+ * \param val scalar to multiply by
+ * \param result output result vector
  */
 template <typename VECTOR_TYPE, typename SCALAR_TYPE, typename RESULT_TYPE, unsigned int SIZE>
 void multiplyVectorByScalar(
@@ -1053,8 +1053,8 @@ void calculateNormalized(const VectorN<TYPE, SIZE>& vect, VectorN<double, SIZE>*
  * \tparam LHS_TYPE type of the left-hand side scalar
  * \tparam RHS_TYPE type of the right-hand side vector elements
  * \tparam SIZE size of the vector
- * \param val scalar value
- * \param vect vector
+ * \param val value to be multiplied by
+ * \param vect vector to be multiplied
  * \return product of the vector multiplied by the value
  */
 template <typename LHS_TYPE, typename RHS_TYPE, unsigned int SIZE>
