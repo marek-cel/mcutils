@@ -74,7 +74,7 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
-     * \tparam RHS_TYPE type of the other vector elements
+     * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param other other vector
      */
     template <typename RHS_TYPE>
@@ -96,7 +96,7 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are convertible units.
      * 
-     * \tparam RHS_TYPE type of the other vector elements
+     * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param other other vector
      */
     template <typename RHS_TYPE>
@@ -298,13 +298,13 @@ public:
 
     /**
      * \brief Addition operator.
-     * \param vect vector to be added
+     * \param rhs right-hand side vector
      * \return sum of the vectors
      */
-    VectorN<TYPE, SIZE> operator+(const VectorN<TYPE, SIZE>& vect) const
+    VectorN<TYPE, SIZE> operator+(const VectorN<TYPE, SIZE>& rhs) const
     {
         VectorN<TYPE, SIZE> result;
-        addVectors(*this, vect, &result);
+        addVectors(*this, rhs, &result);
         return result;
     }
 
@@ -313,8 +313,8 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param vect vector to be added
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs right-hand side vector
      * \return sum of the vectors
      */
     template <typename RHS_TYPE>
@@ -323,10 +323,10 @@ public:
         std::is_arithmetic<RHS_TYPE>::value && 
         std::is_same<TYPE, RHS_TYPE>::value == false
     )
-    auto operator+(const VectorN<RHS_TYPE, SIZE>& vect) const
+    auto operator+(const VectorN<RHS_TYPE, SIZE>& rhs) const
     {
         VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result;
-        addVectors(*this, vect, &result);
+        addVectors(*this, rhs, &result);
         return result;
     }
 
@@ -335,8 +335,8 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are convertible units.
      * 
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param vect vector to be added
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs right-hand side vector
      * \return sum of the vectors
      */
     template <typename RHS_TYPE>
@@ -346,10 +346,10 @@ public:
         std::is_same<TYPE, RHS_TYPE>::value == false &&
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
-    VectorN<TYPE, SIZE> operator+(const VectorN<RHS_TYPE, SIZE>& vect) const
+    VectorN<TYPE, SIZE> operator+(const VectorN<RHS_TYPE, SIZE>& rhs) const
     {
         VectorN<TYPE, SIZE> result;
-        addVectors(*this, vect, &result);
+        addVectors(*this, rhs, &result);
         return result;
     }
 
@@ -366,13 +366,13 @@ public:
 
     /**
      * \brief Subtraction operator.
-     * \param vect vector to be subtracted
+     * \param rhs right-hand side vector
      * \return difference of the vectors
      */
-    VectorN<TYPE, SIZE> operator-(const VectorN<TYPE, SIZE>& vect) const
+    VectorN<TYPE, SIZE> operator-(const VectorN<TYPE, SIZE>& rhs) const
     {
         VectorN<TYPE, SIZE> result;
-        substractVectors(*this, vect, &result);
+        substractVectors(*this, rhs, &result);
         return result;
     }
 
@@ -381,7 +381,7 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
-     * \param vect vector to be subtracted
+     * \param rhs right-hand side vector
      * \return difference of the vectors
      */
     template <typename RHS_TYPE>
@@ -390,10 +390,10 @@ public:
         std::is_arithmetic<RHS_TYPE>::value && 
         std::is_same<TYPE, RHS_TYPE>::value == false
     )
-    auto operator-(const VectorN<RHS_TYPE, SIZE>& vect) const
+    auto operator-(const VectorN<RHS_TYPE, SIZE>& rhs) const
     {
         VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result;
-        substractVectors(*this, vect, &result);
+        substractVectors(*this, rhs, &result);
         return result;
     }
 
@@ -403,7 +403,7 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are convertible units.
      * 
-     * \param vect vector to be subtracted
+     * \param rhs right-hand side vector
      * \return difference of the vectors
      */
     template <typename RHS_TYPE>
@@ -413,10 +413,10 @@ public:
         std::is_same<TYPE, RHS_TYPE>::value == false &&
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
-    VectorN<TYPE, SIZE> operator-(const VectorN<RHS_TYPE, SIZE>& vect) const
+    VectorN<TYPE, SIZE> operator-(const VectorN<RHS_TYPE, SIZE>& rhs) const
     {
         VectorN<TYPE, SIZE> result;
-        substractVectors(*this, vect, &result);
+        substractVectors(*this, rhs, &result);
         return result;
     }
 
@@ -426,15 +426,15 @@ public:
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
      * \tparam TYPE_RHS RHS operand type
-     * \param value value to be multiplied by
+     * \param rhs value to be multiplied by
      * \return product of the vector multiplied by the value
      */
     template <typename RHS_TYPE>
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
-    auto operator*(const RHS_TYPE& value) const
+    auto operator*(const RHS_TYPE& rhs) const
     {
         VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result;
-        multiplyVectorByScalar(*this, value, &result);
+        multiplyVectorByScalar(*this, rhs, &result);
         return result;
     }
 
@@ -445,7 +445,7 @@ public:
      * while the other is a unit.
      * 
      * \tparam TYPE_RHS RHS operand type
-     * \param value value to be multiplied by
+     * \param rhs value to be multiplied by
      * \return product of the vector multiplied by the value
      */
     template <typename RHS_TYPE>
@@ -453,18 +453,18 @@ public:
         (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
         (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
     )
-    auto operator*(const RHS_TYPE& value) const
+    auto operator*(const RHS_TYPE& rhs) const
     {
         if constexpr (units::traits::is_unit_t<TYPE>::value)
         {
             VectorN<TYPE, SIZE> result;
-            multiplyVectorByScalar(*this, value, &result);
+            multiplyVectorByScalar(*this, rhs, &result);
             return result;
         }
         else
         {
             VectorN<RHS_TYPE, SIZE> result;
-            multiplyVectorByScalar(*this, value, &result);
+            multiplyVectorByScalar(*this, rhs, &result);
             return result;
         }
 
@@ -476,7 +476,7 @@ public:
      * This template is enabled when both TYPE and TYPE_RHS are units and angle stripping is not needed.
      * 
      * \tparam TYPE_RHS RHS operand type
-     * \param value value to be multiplied by
+     * \param rhs value to be multiplied by
      * \return product of the vector multiplied by the value
      */
     template <typename RHS_TYPE>
@@ -485,7 +485,7 @@ public:
         units::traits::is_unit_t<RHS_TYPE>::value &&
         units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value == false
     )
-    auto operator*(const RHS_TYPE& value) const
+    auto operator*(const RHS_TYPE& rhs) const
     {
         VectorN<
             units::unit_t<
@@ -496,7 +496,7 @@ public:
             >,
             SIZE
         > result;
-        multiplyVectorByScalar(*this, value, &result);
+        multiplyVectorByScalar(*this, rhs, &result);
         return result;
     }
 
@@ -506,17 +506,16 @@ public:
      * This template is enabled when both TYPE and TYPE_RHS are units and angle stripping is needed.
      * 
      * \tparam TYPE_RHS RHS operand type
-     * \param value value to be multiplied by
+     * \param rhs value to be multiplied by
      * \return product of the vector multiplied by the value
      */
     template <typename RHS_TYPE>
     requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
-    auto operator*(const RHS_TYPE& value) const
+    auto operator*(const RHS_TYPE& rhs) const
     {
 		if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
 		{
             VectorN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, SIZE> temp;
-
             for (unsigned int i = 0; i < SIZE; ++i)
             {
                 temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
@@ -531,13 +530,13 @@ public:
                 >,
                 SIZE
             > result;
-            multiplyVectorByScalar(temp, value, &result);
+            multiplyVectorByScalar(temp, rhs, &result);
             return result;
 		}
 		else
 		{
             typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type temp = 
-                units::detail::strip_angle_dimension<RHS_TYPE>::strip(value);
+                units::detail::strip_angle_dimension<RHS_TYPE>::strip(rhs);
 
             VectorN<
                 units::unit_t<
@@ -558,16 +557,16 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param vect other vector
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs right-hand side vector
      * \return dot product of the vectors
      */
     template <typename RHS_TYPE>
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
-    auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
+    auto operator*(const VectorN<RHS_TYPE,SIZE>& rhs) const
     {
         std::common_type_t<TYPE, RHS_TYPE> result;
-        calculateDotProduct(*this, vect, &result);
+        calculateDotProduct(*this, rhs, &result);
         return result;
     }
 
@@ -577,8 +576,8 @@ public:
      * This template is enabled when TYPE or TYPE_RHS is an arithmetic type
      * while the other is a unit.
      * 
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param vect other vector
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs right-hand side vector
      * \return dot product of the vectors
      */
     template <typename RHS_TYPE>
@@ -586,18 +585,18 @@ public:
         (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
         (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
     )
-    auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
+    auto operator*(const VectorN<RHS_TYPE,SIZE>& rhs) const
     {
         if constexpr (units::traits::is_unit_t<TYPE>::value)
         {
             TYPE result;
-            calculateDotProduct(*this, vect, &result);
+            calculateDotProduct(*this, rhs, &result);
             return result;
         }
         else
         {
             RHS_TYPE result;
-            calculateDotProduct(*this, vect, &result);
+            calculateDotProduct(*this, rhs, &result);
             return result;
         }
     }
@@ -607,8 +606,8 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both units and angle stripping is not needed.
      * 
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param vect other vector
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs right-hand side vector
      * \return dot product of the vectors
      */
     template <typename RHS_TYPE>
@@ -617,7 +616,7 @@ public:
         units::traits::is_unit_t<RHS_TYPE>::value &&
         units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value == false
     )
-    auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
+    auto operator*(const VectorN<RHS_TYPE,SIZE>& rhs) const
     {
         units::unit_t<
             units::compound_unit<
@@ -625,7 +624,7 @@ public:
                 typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
             >
         > result;
-        calculateDotProduct(*this, vect, &result);
+        calculateDotProduct(*this, rhs, &result);
         return result;
     }
 
@@ -634,18 +633,17 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both units and angle stripping is needed.
      * 
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param vect other vector
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs right-hand side vector
      * \return dot product of the vectors
      */
     template <typename RHS_TYPE>
     requires units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value
-    auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
+    auto operator*(const VectorN<RHS_TYPE,SIZE>& rhs) const
     {
 		if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
 		{
             VectorN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, SIZE> temp;
-
             for (unsigned int i = 0; i < SIZE; ++i)
             {
                 temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
@@ -657,16 +655,15 @@ public:
                     typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
                 >
             > result;
-            calculateDotProduct(temp, vect, &result);
+            calculateDotProduct(temp, rhs, &result);
             return result;
 		}
 		else
 		{
             VectorN<typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type, SIZE> temp;
-
             for (unsigned int i = 0; i < SIZE; ++i)
             {
-                temp(i) = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect(i));
+                temp(i) = units::detail::strip_angle_dimension<RHS_TYPE>::strip(rhs(i));
             }
 
             units::unit_t<
@@ -685,16 +682,16 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param value value to be divided by
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs value to be divided by
      * \return vector divided by the value
      */
     template <typename RHS_TYPE>
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
-    auto operator/(const RHS_TYPE& value) const
+    auto operator/(const RHS_TYPE& rhs) const
     {
         VectorN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result;
-        multiplyVectorByScalar(*this, 1.0 / value, &result);
+        multiplyVectorByScalar(*this, 1.0 / rhs, &result);
         return result;
     }
 
@@ -704,8 +701,8 @@ public:
      * This template is enabled when TYPE or TYPE_RHS is an arithmetic type
      * while the other is a unit.
      * 
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param value value to be divided by
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs value to be divided by
      * \return vector divided by the value
      */
     template <typename RHS_TYPE>
@@ -713,12 +710,12 @@ public:
         (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value) ||
         (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
     )
-    auto operator/(const RHS_TYPE& value) const
+    auto operator/(const RHS_TYPE& rhs) const
     {
         if constexpr (units::traits::is_unit_t<TYPE>::value)
         {
             VectorN<TYPE, SIZE> result;
-            multiplyVectorByScalar(*this, 1.0 / value, &result);
+            multiplyVectorByScalar(*this, 1.0 / rhs, &result);
             return result;
         }
         else
@@ -729,7 +726,7 @@ public:
                 >,
                 SIZE
             > result;
-            multiplyVectorByScalar(*this, 1.0 / value, &result);
+            multiplyVectorByScalar(*this, 1.0 / rhs, &result);
             return result;
         }
     }
@@ -739,13 +736,13 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both units.
      * 
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param value value to be divided by
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs value to be divided by
      * \return vector divided by the value
      */
     template <typename RHS_TYPE>
     requires (units::traits::is_unit_t<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
-    auto operator/(const RHS_TYPE& value) const
+    auto operator/(const RHS_TYPE& rhs) const
     {
         VectorN<
             units::unit_t<
@@ -756,7 +753,7 @@ public:
             >,
             SIZE
         > result;
-        multiplyVectorByScalar(*this, 1.0 / value, &result);
+        multiplyVectorByScalar(*this, 1.0 / rhs, &result);
         return result;
     }
 
@@ -765,8 +762,9 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param other other vector
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs right-hand side vector
+     * \return reference to the updated vector
      */
     template <typename RHS_TYPE>
     requires (
@@ -774,11 +772,11 @@ public:
         std::is_arithmetic<RHS_TYPE>::value &&
         std::is_same<TYPE, RHS_TYPE>::value == false
     )
-    VectorN<TYPE,SIZE>& operator=(const VectorN<RHS_TYPE, SIZE>& vect)
+    VectorN<TYPE,SIZE>& operator=(const VectorN<RHS_TYPE, SIZE>& rhs)
     {
         for (unsigned int i = 0; i < SIZE; ++i)
         {
-            _elements[i] = static_cast<TYPE>(vect(i));
+            _elements[i] = static_cast<TYPE>(rhs(i));
         }
 
         return *this;
@@ -789,8 +787,9 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are convertible units.
      * 
-     * \tparam RHS_TYPE type of the other vector elements
-     * \param other other vector
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs right-hand side vector
+     * \return reference to the updated vector
      */
     template <typename RHS_TYPE>
     requires (
@@ -799,11 +798,11 @@ public:
         std::is_same<TYPE, RHS_TYPE>::value == false &&
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
-    VectorN& operator=(const VectorN<RHS_TYPE, SIZE>& vect)
+    VectorN& operator=(const VectorN<RHS_TYPE, SIZE>& rhs)
     {
         for (unsigned int i = 0; i < SIZE; ++i)
         {
-            _elements[i] = vect(i);
+            _elements[i] = rhs(i);
         }
 
         return *this;
@@ -811,7 +810,8 @@ public:
 
     /**
      * \brief Unary addition operator.
-     * \param vect vector to be added
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs vector to be added
      * \return reference to the updated vector
      */
     template <typename RHS_TYPE>
@@ -819,15 +819,16 @@ public:
         (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
-    VectorN<TYPE, SIZE>& operator+=(const VectorN<RHS_TYPE, SIZE>& vect)
+    VectorN<TYPE, SIZE>& operator+=(const VectorN<RHS_TYPE, SIZE>& rhs)
     {
-        addVectors(*this, vect, this);
+        addVectors(*this, rhs, this);
         return *this;
     }
 
     /**
      * \brief Unary subtraction operator.
-     * \param vect vector to be subtracted
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs vector to be subtracted
      * \return reference to the updated vector
      */
     template <typename RHS_TYPE>
@@ -835,106 +836,74 @@ public:
         (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
-    VectorN<TYPE, SIZE>& operator-=(const VectorN<RHS_TYPE, SIZE>& vect)
+    VectorN<TYPE, SIZE>& operator-=(const VectorN<RHS_TYPE, SIZE>& rhs)
     {
-        substractVectors(*this, vect, this);
+        substractVectors(*this, rhs, this);
         return *this;
     }
 
     /**
      * \brief Unary multiplication operator.
-     * \param value [-] value to multiply the vector by
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param rhs value to multiply the vector by
      * \return reference to the updated vector
      */
     template <typename RHS_TYPE>
     requires std::is_arithmetic<RHS_TYPE>::value
-    VectorN<TYPE, SIZE>& operator*=(RHS_TYPE value)
+    VectorN<TYPE, SIZE>& operator*=(RHS_TYPE rhs)
     {
-        *this = (*this) * value;
+        *this = (*this) * rhs;
         return *this;
     }
 
     /**
      * \brief Unary division operator.
-     * \param value [-] value to divide the vector by
+     * \param rhs value to divide the vector by
      * \return reference to the updated vector
      */
     template <typename RHS_TYPE>
     requires std::is_arithmetic<RHS_TYPE>::value
-    VectorN<TYPE, SIZE>& operator/=(RHS_TYPE value)
+    VectorN<TYPE, SIZE>& operator/=(RHS_TYPE rhs)
     {
-        *this = (*this) / value;
+        *this = (*this) / rhs;
         return *this;
     }
 
     /**
      * \brief Equality operator.
-     * \param vect Vector to compare
+     * \param rhs right-hand side vector
      * \return true if the vectors are equal, false otherwise
      */
-    bool operator==(const VectorN<TYPE, SIZE>& vect) const
+    bool operator==(const VectorN<TYPE, SIZE>& rhs) const
     {
         bool result = true;
         for (unsigned int i = 0; i < SIZE; ++i)
         {
-            result = result && (_elements[i] == vect._elements[i]);
+            result = result && (_elements[i] == rhs._elements[i]);
         }
         return result;
     }
 
     /**
      * \brief Inequality operator.
-     * \param vect Vector to compare
+     * \param rhs right-hand side vector
      * \return true if the vectors are not equal, false otherwise
      */
-    bool operator!=(const VectorN<TYPE, SIZE>& vect) const
+    bool operator!=(const VectorN<TYPE, SIZE>& rhs) const
     {
-        return !(*this == vect);
+        return !(*this == rhs);
     }
 
 protected:
 
     TYPE _elements[SIZE] = { TYPE{0} }; ///< vector elements
-
-    /**
-     * \brief Normalized vector calculation algorithm.
-     * \param vect input vector
-     * \param result output vector
-     */
-    void calculateNormalized(const VectorN<TYPE, SIZE>& vect, VectorN<double, SIZE>* result) const
-    {
-        double length = static_cast<double>(vect.getLength());
-        if (length > 0.0)
-        {
-            double length_inv = 1.0 / length;
-            for (unsigned int i = 0; i < SIZE; ++i)
-            {
-                (*result)(i) = static_cast<double>(vect._elements[i]) * length_inv;
-            }
-        }
-    }
-
-    /**
-     * \brief Dot product calculation algorithm.
-     * \param vect1 first vector
-     * \param vect2 second vector
-     * \param result output result
-     */
-    template <typename TYPE1, typename TYPE2, typename TYPE3>
-    void calculateDotProduct(const VectorN<TYPE1, SIZE>& vect1, const VectorN<TYPE2, SIZE>& vect2, TYPE3* result) const
-    {
-        *result = TYPE3{0};
-        for (unsigned int i = 0; i < SIZE; ++i)
-        {
-            *result += vect1(i) * vect2(i);
-        }
-    }
 };
 
 /**
  * \brief Adds two vectors.
  * \tparam LHS_TYPE type of the left-hand side vector elements
- * \tparam RHS_TYPE type of the other vector elements
+ * \tparam RHS_TYPE type of the right-hand side vector elements
+ * \tparam RESULT_TYPE type of the result vector elements
  * \param lhs left-hand-side vector
  * \param rhs right-hand-side vector
  * \param result output vector
@@ -959,7 +928,8 @@ void addVectors(
 /**
  * \brief Subtracts two vectors.
  * \tparam LHS_TYPE type of the left-hand side vector elements
- * \tparam RHS_TYPE type of the other vector elements
+ * \tparam RHS_TYPE type of the right-hand side vector elements
+ * \tparam RESULT_TYPE type of the result vector elements
  * \param lhs left-hand-side vector
  * \param rhs right-hand-side vector
  * \param result output vector
@@ -1004,11 +974,66 @@ void multiplyVectorByScalar(
 }
 
 /**
+ * \brief Dot product calculation algorithm.
+ * \tparam LHS_TYPE type of the left-hand side vector elements
+ * \tparam RHS_TYPE type of the right-hand side vector elements
+ * \tparam RESULT_TYPE type of the result
+ * \param lhs left-hand-side vector
+ * \param rhs right-hand-side vector
+ * \param result output result
+ */
+template <typename LHS_TYPE, typename RHS_TYPE, typename RESULT_TYPE, unsigned int SIZE>
+void calculateDotProduct(
+    const VectorN<LHS_TYPE, SIZE>& lhs, 
+    const VectorN<RHS_TYPE, SIZE>& rhs, 
+    RESULT_TYPE* result
+)
+{
+    *result = RESULT_TYPE{0};
+    for (unsigned int i = 0; i < SIZE; ++i)
+    {
+        *result += lhs(i) * rhs(i);
+    }
+}
+
+/**
+ * \brief Normalized vector calculation algorithm.
+ * \tparam TYPE type of the vector elements
+ * \tparam SIZE size of the vector
+ * \param vect input vector
+ * \param result output vector
+ */
+template <typename TYPE, unsigned int SIZE>
+void calculateNormalized(const VectorN<TYPE, SIZE>& vect, VectorN<double, SIZE>* result)
+{
+    double length = static_cast<double>(vect.getLength());
+    if (length > 0.0)
+    {
+        double length_inv = 1.0 / length;
+        for (unsigned int i = 0; i < SIZE; ++i)
+        {
+            (*result)(i) = static_cast<double>(vect(i)) * length_inv;
+        }
+    }
+}
+
+/**
  * \brief Multiplication operator.
  *
  * This is an operator for multiplying a scalar by a vector, which is commutative.
+ * 
+ * \tparam LHS_TYPE type of the left-hand side scalar
+ * \tparam RHS_TYPE type of the right-hand side vector elements
+ * \tparam SIZE size of the vector
+ * \param value scalar value
+ * \param vect vector
+ * \return product of the vector multiplied by the value
  */
 template <typename LHS_TYPE, typename RHS_TYPE, unsigned int SIZE>
+requires (
+    std::is_arithmetic<LHS_TYPE>::value ||
+    units::traits::is_unit_t<LHS_TYPE>::value
+)
 auto operator*(LHS_TYPE value, const VectorN<RHS_TYPE, SIZE>& vect)
 {
     return vect * value;
