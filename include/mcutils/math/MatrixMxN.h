@@ -75,13 +75,13 @@ public:
 
     /**
      * \brief Fills all matrix elements with the given value.
-     * \param value given value to fill all matrix elements
+     * \param val given value to fill all matrix elements
      */
-    void fill(TYPE value)
+    void fill(TYPE val)
     {
         for (unsigned int i = 0; i < kSize; ++i)
         {
-            _elements[i] = value;
+            _elements[i] = val;
         }
     }
 
@@ -210,36 +210,23 @@ public:
         fill(TYPE{0});
     }
 
-    /** \brief Converts the matrix to a dimensionless matrix. */
-    inline MatrixMxN<double, ROWS, COLS> getDimensionless() const
+    /**
+     * \brief Casting operator.
+     *  Converts the matrix to another type.
+     */
+    template <class NEW_TYPE>
+    requires (
+        std::is_same<TYPE, NEW_TYPE>::value == false &&
+        (std::is_arithmetic<NEW_TYPE>::value || units::traits::is_convertible_unit_t<NEW_TYPE, TYPE>::value)
+    )
+    operator MatrixMxN<NEW_TYPE, ROWS, COLS>() const
     {
-        MatrixMxN<double, kRows, kCols> result;
+        MatrixMxN<NEW_TYPE, kRows, kCols> result;
         for (unsigned int r = 0; r < kRows; ++r)
         {
             for (unsigned int c = 0; c < kCols; ++c)
             {
-                result(r, c) = static_cast<double>(this->_elements[r * this->kCols + c]);
-            }
-        }
-        return result;
-    }
-
-    /** \brief Casting operator. */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value
-        &&
-        units::traits::is_convertible_unit_t<TYPE, TYPE2>::value, int>::type = 0
-    >
-    operator MatrixMxN<TYPE2, ROWS, COLS>() const
-    {
-        MatrixMxN<TYPE2, kRows, kCols> result;
-        for (unsigned int r = 0; r < kRows; ++r)
-        {
-            for (unsigned int c = 0; c < kCols; ++c)
-            {
-                result(r, c) = _elements[r * kCols + c];
+                result(r, c) = static_cast<NEW_TYPE>(_elements[r * kCols + c]);;
             }
         }
         return result;
@@ -272,12 +259,35 @@ public:
         return _elements[row * kCols + col];
     }
 
-    /** \brief Addition operator. */
+    /**
+     * \brief Addition operator.
+     * \param matrix right-hand side matrix
+     * \return sum of the matrices
+     */
     MatrixMxN<TYPE, ROWS, COLS> operator+(const MatrixMxN<TYPE, ROWS, COLS>& matrix) const
     {
         MatrixMxN<TYPE, kRows, kCols> result(*this);
         result.add(matrix);
         return result;
+    }
+
+    /**
+     * \brief Addition operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param matrix right-hand side matrix
+     * \return sum of the matrices
+     */
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value  && 
+        std::is_arithmetic<RHS_TYPE>::value && 
+        std::is_same<TYPE, RHS_TYPE>::value == false
+    )
+    MatrixMxN<TYPE, ROWS, COLS> operator+(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix) const
+    {
+        // MatrixMxN<TYPE, kRows, kCols> result(*this);
+        // result.add(matrix);
+        // return result;
     }
 
     /** \brief Negation operator. */
@@ -316,7 +326,7 @@ public:
         &&
         units::traits::is_unit_t<TYPE2>::value, int>::type = 0
     >
-    auto operator*(TYPE2 value) const
+    auto operator*(TYPE2 val) const
     {
         MatrixMxN<
             units::unit_t<
@@ -327,7 +337,7 @@ public:
             >,
             ROWS, COLS
         > result;
-        multiplyMatrixByValue(*this, value, &result);
+        multiplyMatrixByValue(*this, val, &result);
         return result;
     }
 
@@ -345,7 +355,7 @@ public:
      * L = I * omega
      *
      * \tparam TYPE2 RHS operand type
-     * \param value value to be multiplied by
+     * \param val value to be multiplied by
      * \return product of the matrix multiplied by the value
      */
     template <class TYPE2, typename std::enable_if<
@@ -355,9 +365,9 @@ public:
             TYPE2, units::angular_velocity::radians_per_second_t
         >::value, int>::type = 0
     >
-    auto operator*(TYPE2 value) const
+    auto operator*(TYPE2 val) const
     {
-        units::angular_velocity::radians_per_second_t temp_rad_per_s = value;
+        units::angular_velocity::radians_per_second_t temp_rad_per_s = val;
         units::inverted::per_second_t temp = units::inverted::per_second_t{ temp_rad_per_s() };
 
         MatrixMxN<
@@ -437,10 +447,10 @@ public:
      *
      * This is a specialization for the case when the value is dimensionless.
      */
-    MatrixMxN<TYPE, ROWS, COLS> operator*(double value) const
+    MatrixMxN<TYPE, ROWS, COLS> operator*(double val) const
     {
         MatrixMxN<TYPE, ROWS, COLS> result;
-        multiplyMatrixByValue(*this, value, &result);
+        multiplyMatrixByValue(*this, val, &result);
         return result;
     }
 
@@ -813,15 +823,6 @@ protected:
 
     TYPE _elements[kSize] = { TYPE{0} };    ///< matrix elements
 
-    /** \brief Adds matrix. */
-    void add(const MatrixMxN<TYPE, ROWS, COLS>& matrix)
-    {
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            _elements[i] += matrix._elements[i];
-        }
-    }
-
     /** \brief Negates matrix. */
     void negate()
     {
@@ -898,6 +899,21 @@ protected:
         }
     }
 };
+
+/** \brief Adds matrix. */
+template <typename LHS_TYPE, typename RHS_TYPE, typename RESULT_TYPE, unsigned int ROWS, unsigned int COLS>
+requires (
+    (std::is_arithmetic<LHS_TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
+    units::traits::is_convertible_unit_t<LHS_TYPE, RHS_TYPE>::value
+)
+void addMatrices(
+    const MatrixMxN<LHS_TYPE, ROWS, COLS>& lhs,
+    const MatrixMxN<RHS_TYPE, ROWS, COLS>& rhs,
+    MatrixMxN<RESULT_TYPE, ROWS, COLS>* result
+)
+{
+    // TODO
+}
 
 /** \brief Multiplication operator. */
 template <typename TYPE1, class TYPE2, unsigned int ROWS, unsigned int COLS, typename std::enable_if<
