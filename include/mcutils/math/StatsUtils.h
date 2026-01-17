@@ -23,11 +23,11 @@
 #define MCUTILS_MATH_STATSUTILS_H_
 
 #include <cmath>
+#include <vector>
 
 #include <mcutils/math/MathUtils.h>
 
 namespace mc {
-namespace math {
 
 /**
  * \brief Estimates standard deviation based on a sample.
@@ -41,10 +41,11 @@ namespace math {
  * \param n number of samples
  * \return standard deviation
  */
-inline double standardDeviation(double sum, double sum_sq, int n)
+template <typename T, typename T_SQ>
+inline T standardDeviation(T sum, T_SQ sum_sq, int n)
 {
     double coef = 1.0 / (static_cast<double>(n) - 1.0);
-    double s2 = sum_sq * coef - math::pow<2>(sum) * coef / static_cast<double>(n);
+    auto s2 = sum_sq * coef - npow<2>(sum) * coef / static_cast<double>(n);
     return sqrt(s2);
 }
 
@@ -58,10 +59,11 @@ inline double standardDeviation(double sum, double sum_sq, int n)
  * \param x samples
  * \return standard deviation
  */
-inline double standardDeviation(const std::vector<double>& x)
+template <typename T>
+inline T standardDeviation(const std::vector<T>& x)
 {
-    double sum = 0.0;
-    double sum_sq = 0.0;
+    T sum = T{0};
+    auto sum_sq{0};
     for (const auto& xx : x)
     {
         sum += xx;
@@ -70,7 +72,6 @@ inline double standardDeviation(const std::vector<double>& x)
     return standardDeviation(sum, sum_sq, x.size());
 }
 
-} // namespace math
 } // namespace mc
 
 #endif // MCUTILS_MATH_STATSUTILS_H_
