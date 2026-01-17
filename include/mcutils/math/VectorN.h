@@ -538,8 +538,8 @@ public:
     requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
     auto operator*(const RHS_TYPE& val) const
     {
-		if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
-		{
+        if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
+        {
             VectorN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, SIZE> temp;
             for (unsigned int i = 0; i < SIZE; ++i)
             {
