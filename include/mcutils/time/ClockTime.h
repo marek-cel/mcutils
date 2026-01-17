@@ -25,7 +25,6 @@
 #include <ctime>
 
 namespace mc {
-namespace time {
 
 /**
  * \brief Returns the current clock time.
@@ -44,7 +43,6 @@ inline double getClockTime()
 #   endif
 }
 
-} // namespace time
 } // namespace mc
 
 #endif // MCUTILS_TIME_CLOCKTIME_H_

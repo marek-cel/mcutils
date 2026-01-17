@@ -23,7 +23,7 @@ TEST_F(TestClockTime, CanGetClockTime)
     double expectedValue = static_cast<double>(clock()) / static_cast<double>(CLOCKS_PER_SEC);
 #   endif
 
-    double outputValue = mc::time::getClockTime();
+    double outputValue = mc::getClockTime();
 
     EXPECT_NEAR(expectedValue, outputValue, 1.0e-6);
 }

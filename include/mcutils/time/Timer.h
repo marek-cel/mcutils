@@ -38,7 +38,7 @@ public:
      * \brief Start the timer.
      * \param interval timer interval expressed in seconds.
      */
-    void Start(double interval)
+    void start(double interval)
     {
         _interval = std::chrono::nanoseconds(static_cast<int>(interval * 1.0e9));
         _last_time = std::chrono::steady_clock::now();
@@ -48,7 +48,7 @@ public:
      * \brief Wait for the timeout.
      * \return elapsed time since the last timeout expressed in seconds.
      */
-    double WaitForTimeout()
+    double waitForTimeout()
     {
         std::chrono::time_point<std::chrono::steady_clock> now = std::chrono::steady_clock::now();
         std::chrono::nanoseconds elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(now - _last_time);
