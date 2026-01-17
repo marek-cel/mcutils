@@ -662,6 +662,30 @@ TEST_F(TestMatrixMxN, CanDivideByNumber)
     }
 }
 
+TEST_F(TestMatrixMxN, CanAssignDifferentType)
+{
+    std::vector<float> x
+    {
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    };
+
+    mc::MatrixMxN<TYPE,ROWS,COLS> m1;
+    mc::MatrixMxN<float,ROWS,COLS> m2;
+    m2.setFromStdVector(x);
+    m1 = m2;
+
+    for ( int r = 0; r < ROWS; ++r )
+    {
+        for ( int c = 0; c < COLS; ++c )
+        {
+            double ref_value = x[r*COLS + c];
+            EXPECT_DOUBLE_EQ(m1(r,c), ref_value) << "Error at row " << r << " and col " << c;
+        }
+    }
+}
+
 TEST_F(TestMatrixMxN, CanUnaryAdd)
 {
     constexpr double val = 2.0;

@@ -815,6 +815,39 @@ public:
         return result;
     }
 
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value && 
+        std::is_arithmetic<RHS_TYPE>::value &&
+        std::is_same<TYPE, RHS_TYPE>::value == false
+    )
+    MatrixMxN<TYPE, ROWS, COLS>& operator=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix)
+    {
+        for (unsigned int i = 0; i < this->kSize; ++i)
+        {
+            _elements[i] = static_cast<TYPE>(matrix(i));
+        }
+
+        return *this;
+    }
+
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value == false &&
+        std::is_arithmetic<RHS_TYPE>::value == false &&
+        std::is_same<TYPE, RHS_TYPE>::value == false &&
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    MatrixMxN<TYPE, ROWS, COLS>& operator=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix)
+    {
+        for (unsigned int i = 0; i < this->kSize; ++i)
+        {
+            _elements[i] = matrix(i);
+        }
+
+        return *this;
+    }
+
     /** \brief Unary addition operator. */
     MatrixMxN<TYPE, ROWS, COLS>& operator+=(const MatrixMxN<TYPE, ROWS, COLS>& matrix)
     {
