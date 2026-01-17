@@ -701,10 +701,10 @@ public:
         }
         else
         {
-            VectorN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, ROWS> temp;
+            VectorN<typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type, ROWS> temp;
             for (unsigned int i = 0; i < ROWS; ++i)
             {
-                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
+                temp(i) = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect(i));
             }
 
             VectorN<
@@ -716,7 +716,7 @@ public:
                 >,
                 ROWS
             > result;
-            multiplyMatrixByVector(temp, vect, &result);
+            multiplyMatrixByVector(*this, temp, &result);
             return result;
         }
     }
