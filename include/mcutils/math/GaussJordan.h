@@ -28,7 +28,6 @@
 #include <mcutils/math/Vector.h>
 
 namespace mc {
-namespace math {
 
 /**
  * \brief Solves system of linear equations using Gauss-Jordan method.
@@ -107,7 +106,6 @@ Result solveGaussJordan(const MatrixNxN<TYPE, SIZE>& mtr, const VectorN<TYPE, SI
     return Result::Success;
 }
 
-} // namespace math
 } // namespace mc
 
 #endif // MCUTILS_MATH_GAUSSJORDAN_H_
