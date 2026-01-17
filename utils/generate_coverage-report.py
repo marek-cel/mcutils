@@ -6,6 +6,7 @@ import clean
 import misc
 
 build_dir = "./build"
+base_dir = "./"
 
 coverage_file_full = "coverage_full.info"
 coverage_file = "coverage.info"
@@ -23,8 +24,7 @@ def executeAllSteps():
 def captureCoverage():
     cmd = [
         "lcov", "--capture",
-        "--base-directory", "./src",
-        "--base-directory", "./include",
+        "--base-directory", base_dir,
         "--no-external",
         "--ignore-errors", "mismatch",
         "--ignore-errors" ,"empty",
