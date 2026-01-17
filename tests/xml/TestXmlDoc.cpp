@@ -35,9 +35,21 @@ TEST_F(TestXmlDoc, CanInstantiate)
     mc::XmlDoc doc;
 }
 
-TEST_F(TestXmlDoc, CanInstantiateAndOpenFile)
+TEST_F(TestXmlDoc, CanInstantiateAndOpenFileFromCharArray)
 {
     mc::XmlDoc doc("../tests/xml/data/test_xml_sample_data.xml");
+    EXPECT_TRUE(doc.isOpen());
+}
+
+TEST_F(TestXmlDoc, CanInstantiateAndOpenFileFromString)
+{
+    mc::XmlDoc doc(std::string("../tests/xml/data/test_xml_sample_data.xml"));
+    EXPECT_TRUE(doc.isOpen());
+}
+
+TEST_F(TestXmlDoc, CanInstantiateAndOpenFileFromPath)
+{
+    mc::XmlDoc doc(std::filesystem::path("../tests/xml/data/test_xml_sample_data.xml"));
     EXPECT_TRUE(doc.isOpen());
 }
 

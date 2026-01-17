@@ -21,12 +21,16 @@ TEST_F(TestUnitsUtils, ConvertToMeters)
     EXPECT_DOUBLE_EQ( mc::convertToMeters("km"  , 1.0)() , 1000.0   );
     EXPECT_DOUBLE_EQ( mc::convertToMeters("mi"  , 1.0)() , 1609.344 );
     EXPECT_DOUBLE_EQ( mc::convertToMeters("nmi" , 1.0)() , 1852.0   );
+
+    EXPECT_TRUE(std::isnan(mc::convertToMeters("unknown_unit", 1.0)()));
 }
 
 TEST_F(TestUnitsUtils, ConvertToRadians)
 {
     EXPECT_DOUBLE_EQ( mc::convertToRadians("rad", 1.0)() , 1.0          );
     EXPECT_DOUBLE_EQ( mc::convertToRadians("deg", 1.0)() , M_PI / 180.0 );
+
+    EXPECT_TRUE(std::isnan(mc::convertToRadians("unknown_unit", 1.0)()));
 }
 
 TEST_F(TestUnitsUtils, ConvertToMetersPerSecond)
@@ -37,6 +41,8 @@ TEST_F(TestUnitsUtils, ConvertToMetersPerSecond)
     EXPECT_NEAR( mc::convertToMPS("kts" , 1.0)() , 0.51444 , 1.0e-5 );
     EXPECT_NEAR( mc::convertToMPS("mph" , 1.0)() , 0.44704 , 1.0e-5 );
     EXPECT_NEAR( mc::convertToMPS("fpm" , 1.0)() , 0.00508 , 1.0e-5 );
+
+    EXPECT_TRUE(std::isnan(mc::convertToMPS("unknown_unit", 1.0)()));
 }
 
 TEST_F(TestUnitsUtils, ConvertToKilograms)
@@ -46,4 +52,6 @@ TEST_F(TestUnitsUtils, ConvertToKilograms)
     EXPECT_DOUBLE_EQ( mc::convertToKilograms("lb"  , 1.0)() , 0.45359237 );
     EXPECT_DOUBLE_EQ( mc::convertToKilograms("slug", 1.0)() , 14.5939029 );
     EXPECT_DOUBLE_EQ( mc::convertToKilograms("t"   , 1.0)() , 1000.0     );
+
+    EXPECT_TRUE(std::isnan(mc::convertToKilograms("unknown_unit", 1.0)()));
 }

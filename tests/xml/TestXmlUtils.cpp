@@ -166,61 +166,61 @@ TEST_F(TestXmlUtils, CanReadAngles)
     EXPECT_DOUBLE_EQ(result_deg.psi()(), 3.0 * M_PI / 180.0);
 }
 
-// TEST_F(TestXmlUtils, CanReadVector3d)
-// {
-//     std::string file = "../tests/xml/data/test_xml_sample_data_values.xml";
-//     mc::XmlDoc doc(file.c_str());
-//     mc::XmlNode root = doc.getRootNode();
-//     mc::XmlNode node = root.getFirstChildElement("test_vector3d");
+TEST_F(TestXmlUtils, CanReadVector3d)
+{
+    std::string file = "../tests/xml/data/test_xml_sample_data_values.xml";
+    mc::XmlDoc doc(file.c_str());
+    mc::XmlNode root = doc.getRootNode();
+    mc::XmlNode node = root.getFirstChildElement("test_vector3d");
 
-//     mc::Vector3d result = mc::readVector3d(node);
+    mc::Vector3d result = mc::readVector3d(node);
 
-//     EXPECT_DOUBLE_EQ(result.x(), 1.0);
-//     EXPECT_DOUBLE_EQ(result.y(), 2.0);
-//     EXPECT_DOUBLE_EQ(result.z(), 3.0);
-// }
+    EXPECT_DOUBLE_EQ(result.x(), 1.0);
+    EXPECT_DOUBLE_EQ(result.y(), 2.0);
+    EXPECT_DOUBLE_EQ(result.z(), 3.0);
+}
 
-// TEST_F(TestXmlUtils, CanReadVector3_m)
-// {
-//     std::string file = "../tests/xml/data/test_xml_sample_data_values.xml";
-//     mc::XmlDoc doc(file.c_str());
-//     mc::XmlNode root = doc.getRootNode();
-//     mc::XmlNode node    = root.getFirstChildElement("test_length_vector3");
-//     mc::XmlNode node_m  = root.getFirstChildElement("test_length_vector3_m");
-//     mc::XmlNode node_cm = root.getFirstChildElement("test_length_vector3_cm");
-//     mc::XmlNode node_mm = root.getFirstChildElement("test_length_vector3_mm");
-//     mc::XmlNode node_ft = root.getFirstChildElement("test_length_vector3_ft");
-//     mc::XmlNode node_in = root.getFirstChildElement("test_length_vector3_in");
+TEST_F(TestXmlUtils, CanReadVector3_m)
+{
+    std::string file = "../tests/xml/data/test_xml_sample_data_values.xml";
+    mc::XmlDoc doc(file.c_str());
+    mc::XmlNode root = doc.getRootNode();
+    mc::XmlNode node    = root.getFirstChildElement("test_length_vector3");
+    mc::XmlNode node_m  = root.getFirstChildElement("test_length_vector3_m");
+    mc::XmlNode node_cm = root.getFirstChildElement("test_length_vector3_cm");
+    mc::XmlNode node_mm = root.getFirstChildElement("test_length_vector3_mm");
+    mc::XmlNode node_ft = root.getFirstChildElement("test_length_vector3_ft");
+    mc::XmlNode node_in = root.getFirstChildElement("test_length_vector3_in");
 
-//     mc::Vector3_m result    = mc::readVector3_m(node);
-//     mc::Vector3_m result_m  = mc::readVector3_m(node_m);
-//     mc::Vector3_m result_cm = mc::readVector3_m(node_cm);
-//     mc::Vector3_m result_mm = mc::readVector3_m(node_mm);
-//     mc::Vector3_m result_ft = mc::readVector3_m(node_ft);
-//     mc::Vector3_m result_in = mc::readVector3_m(node_in);
+    mc::Vector3_m result    = mc::readVector3_m(node);
+    mc::Vector3_m result_m  = mc::readVector3_m(node_m);
+    mc::Vector3_m result_cm = mc::readVector3_m(node_cm);
+    mc::Vector3_m result_mm = mc::readVector3_m(node_mm);
+    mc::Vector3_m result_ft = mc::readVector3_m(node_ft);
+    mc::Vector3_m result_in = mc::readVector3_m(node_in);
 
-//     EXPECT_DOUBLE_EQ(result.x()(), 1.0);
-//     EXPECT_DOUBLE_EQ(result.y()(), 2.0);
-//     EXPECT_DOUBLE_EQ(result.z()(), 3.0);
+    EXPECT_DOUBLE_EQ(result.x()(), 1.0);
+    EXPECT_DOUBLE_EQ(result.y()(), 2.0);
+    EXPECT_DOUBLE_EQ(result.z()(), 3.0);
 
-//     EXPECT_DOUBLE_EQ(result_m.x()(), 1.0);
-//     EXPECT_DOUBLE_EQ(result_m.y()(), 2.0);
-//     EXPECT_DOUBLE_EQ(result_m.z()(), 3.0);
+    EXPECT_DOUBLE_EQ(result_m.x()(), 1.0);
+    EXPECT_DOUBLE_EQ(result_m.y()(), 2.0);
+    EXPECT_DOUBLE_EQ(result_m.z()(), 3.0);
 
-//     EXPECT_DOUBLE_EQ(result_cm.x()(), 0.01);
-//     EXPECT_DOUBLE_EQ(result_cm.y()(), 0.02);
-//     EXPECT_DOUBLE_EQ(result_cm.z()(), 0.03);
+    EXPECT_DOUBLE_EQ(result_cm.x()(), 0.01);
+    EXPECT_DOUBLE_EQ(result_cm.y()(), 0.02);
+    EXPECT_DOUBLE_EQ(result_cm.z()(), 0.03);
 
-//     EXPECT_DOUBLE_EQ(result_mm.x()(), 0.001);
-//     EXPECT_DOUBLE_EQ(result_mm.y()(), 0.002);
-//     EXPECT_DOUBLE_EQ(result_mm.z()(), 0.003);
+    EXPECT_DOUBLE_EQ(result_mm.x()(), 0.001);
+    EXPECT_DOUBLE_EQ(result_mm.y()(), 0.002);
+    EXPECT_DOUBLE_EQ(result_mm.z()(), 0.003);
 
-//     EXPECT_DOUBLE_EQ(result_ft.x()(), 0.3048);
-//     EXPECT_DOUBLE_EQ(result_ft.y()(), 0.6096);
-//     EXPECT_DOUBLE_EQ(result_ft.z()(), 0.9144);
+    EXPECT_DOUBLE_EQ(result_ft.x()(), 0.3048);
+    EXPECT_DOUBLE_EQ(result_ft.y()(), 0.6096);
+    EXPECT_DOUBLE_EQ(result_ft.z()(), 0.9144);
 
-//     EXPECT_DOUBLE_EQ(result_in.x()(), 0.0254);
-//     EXPECT_DOUBLE_EQ(result_in.y()(), 0.0508);
-//     EXPECT_DOUBLE_EQ(result_in.z()(), 0.0762);
-// }
+    EXPECT_DOUBLE_EQ(result_in.x()(), 0.0254);
+    EXPECT_DOUBLE_EQ(result_in.y()(), 0.0508);
+    EXPECT_DOUBLE_EQ(result_in.z()(), 0.0762);
+}
 

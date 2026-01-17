@@ -369,6 +369,17 @@ TEST_F(TestQuaternion, CanAdd)
     EXPECT_DOUBLE_EQ(q2.ez(), 12.0);
 }
 
+TEST_F(TestQuaternion, CanNegate)
+{
+    mc::Quaternion q0(1.0, 2.0, 3.0, 4.0);
+    mc::Quaternion q1 = -q1;
+
+    EXPECT_DOUBLE_EQ(q1.e0(), -1.0);
+    EXPECT_DOUBLE_EQ(q1.ex(), -2.0);
+    EXPECT_DOUBLE_EQ(q1.ey(), -3.0);
+    EXPECT_DOUBLE_EQ(q1.ez(), -4.0);
+}
+
 TEST_F(TestQuaternion, CanSubstract)
 {
     mc::Quaternion q0(4.0, 3.0, 2.0, 1.0);
