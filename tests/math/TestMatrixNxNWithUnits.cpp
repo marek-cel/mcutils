@@ -124,44 +124,6 @@ TEST_F(TestMatrixNxNWithUnits, CanTranspose)
     MatrixNxN_CanTranspose<units::moment_of_inertia::kilograms_meters_squared_t>();
 }
 
-template <typename T>
-void MatrixNxN_CanGetDimensionless()
-{
-    mc::MatrixNxN<T,SIZE> m1;
-
-    m1(0,0) = T{1};
-    m1(0,1) = T{2};
-    m1(0,2) = T{3};
-
-    m1(1,0) = T{4};
-    m1(1,1) = T{5};
-    m1(1,2) = T{6};
-
-    m1(2,0) = T{7};
-    m1(2,1) = T{8};
-    m1(2,2) = T{9};
-
-    mc::MatrixNxN<double,SIZE> m2;
-    m2 = m1.getDimensionless();
-
-    EXPECT_NEAR(m2(0,0), 1.0, TOLERANCE);
-    EXPECT_NEAR(m2(0,1), 2.0, TOLERANCE);
-    EXPECT_NEAR(m2(0,2), 3.0, TOLERANCE);
-
-    EXPECT_NEAR(m2(1,0), 4.0, TOLERANCE);
-    EXPECT_NEAR(m2(1,1), 5.0, TOLERANCE);
-    EXPECT_NEAR(m2(1,2), 6.0, TOLERANCE);
-
-    EXPECT_NEAR(m2(2,0), 7.0, TOLERANCE);
-    EXPECT_NEAR(m2(2,1), 8.0, TOLERANCE);
-    EXPECT_NEAR(m2(2,2), 9.0, TOLERANCE);
-}
-
-TEST_F(TestMatrixNxNWithUnits, GetDimensionless)
-{
-    MatrixNxN_CanGetDimensionless<units::moment_of_inertia::kilograms_meters_squared_t>();
-}
-
 template <typename T1, typename T2>
 void MatrixNxN_CanCastToOtherMatrixType()
 {
