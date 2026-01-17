@@ -102,7 +102,7 @@ public:
      */
     MatrixNxN<TYPE, SIZE> operator+(const MatrixNxN<TYPE, SIZE>& mat) const
     {
-        MatrixNxN<TYPE, SIZE> result(*this);
+        MatrixNxN<TYPE, SIZE> result;
         addMatrices(*this, mat, &result);
         return result;
     }
@@ -121,7 +121,7 @@ public:
     )
     auto operator+(const MatrixNxN<RHS_TYPE, SIZE>& mat) const
     {
-        MatrixNxN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result(*this);
+        MatrixNxN<std::common_type_t<TYPE, RHS_TYPE>, SIZE> result;
         addMatrices(*this, mat, &result);
         return result;
     }
@@ -141,7 +141,7 @@ public:
     )
     auto operator+(const MatrixNxN<RHS_TYPE, SIZE>& mat) const
     {
-        MatrixNxN<TYPE, SIZE> result(*this);
+        MatrixNxN<TYPE, SIZE> result;
         addMatrices(*this, mat, &result);
         return result;
     }
@@ -164,7 +164,7 @@ public:
      */
     MatrixNxN<TYPE, SIZE> operator-(const MatrixNxN<TYPE, SIZE>& mat) const
     {
-        MatrixNxN<TYPE, SIZE> result(*this);
+        MatrixNxN<TYPE, SIZE> result;
         subtractMatrices(*this, mat, &result);
         return result;
     }

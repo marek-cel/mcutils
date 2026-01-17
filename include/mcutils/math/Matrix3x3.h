@@ -258,7 +258,7 @@ public:
      */
     Matrix3x3<TYPE> operator+(const Matrix3x3<TYPE>& mat) const
     {
-        Matrix3x3<TYPE> result(*this);
+        Matrix3x3<TYPE> result;
         addMatrices(*this, mat, &result);
         return result;
     }
@@ -277,7 +277,7 @@ public:
     )
     auto operator+(const Matrix3x3<RHS_TYPE>& mat) const
     {
-        Matrix3x3<std::common_type_t<TYPE, RHS_TYPE>> result(*this);
+        Matrix3x3<std::common_type_t<TYPE, RHS_TYPE>> result;
         addMatrices(*this, mat, &result);
         return result;
     }
@@ -297,7 +297,7 @@ public:
     )
     auto operator+(const Matrix3x3<RHS_TYPE>& mat) const
     {
-        Matrix3x3<TYPE> result(*this);
+        Matrix3x3<TYPE> result;
         addMatrices(*this, mat, &result);
         return result;
     }
@@ -320,7 +320,7 @@ public:
      */
     Matrix3x3<TYPE> operator-(const Matrix3x3<TYPE>& mat) const
     {
-        Matrix3x3<TYPE> result(*this);
+        Matrix3x3<TYPE> result;
         subtractMatrices(*this, mat, &result);
         return result;
     }

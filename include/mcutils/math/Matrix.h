@@ -27,7 +27,7 @@
 #include <mcutils/math/MatrixMxN.h>
 #include <mcutils/math/MatrixNxN.h>
 #include <mcutils/math/Matrix3x3.h>
-// #include <mcutils/math/RotMatrix.h>
+#include <mcutils/math/RotMatrix.h>
 
 namespace mc {
 

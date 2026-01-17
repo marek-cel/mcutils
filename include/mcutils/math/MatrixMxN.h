@@ -384,7 +384,7 @@ public:
     )
     auto operator+(const MatrixMxN<RHS_TYPE, ROWS, COLS>& mat) const
     {
-        MatrixMxN<std::common_type_t<TYPE, RHS_TYPE>, kRows, kCols> result(*this);
+        MatrixMxN<std::common_type_t<TYPE, RHS_TYPE>, kRows, kCols> result;
         addMatrices(*this, mat, &result);
         return result;
     }
@@ -404,7 +404,7 @@ public:
     )
     auto operator+(const MatrixMxN<RHS_TYPE, ROWS, COLS>& mat) const
     {
-        MatrixMxN<TYPE, kRows, kCols> result(*this);
+        MatrixMxN<TYPE, kRows, kCols> result;
         addMatrices(*this, mat, &result);
         return result;
     }

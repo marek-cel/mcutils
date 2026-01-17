@@ -55,70 +55,145 @@ public:
     /** \brief Creates identity matrix. */
     static RotMatrix getIdentityMatrix();
 
-    /** \brief Constructor. */
+    /** 
+     * \brief Constructor. 
+     * \param xx element
+     * \param xy element
+     * \param xz element
+     * \param yx element
+     * \param yy element
+     * \param yz element
+     * \param zx element
+     * \param zy element
+     * \param zz element
+     */
     RotMatrix(double xx = 1.0, double xy = 0.0, double xz = 0.0,
               double yx = 0.0, double yy = 1.0, double yz = 0.0,
               double zx = 0.0, double zy = 0.0, double zz = 1.0);
 
-    /** \brief Creates passive (alias) rotation matrix. */
+    /** 
+     * \brief Creates passive (alias) rotation matrix. 
+     * \param angl Bryant angles of rotation
+     */
     explicit RotMatrix(const Angles& angl);
 
-    /** \brief Creates passive (alias) rotation matrix. */
-    explicit RotMatrix(const Quaternion& qtrn);
+    /** 
+     * \brief Creates passive (alias) rotation matrix. 
+     * \param quat Quaternion of rotation
+     */
+    explicit RotMatrix(const Quaternion& quat);
 
-    /** \brief Returns Bryant angles of rotation matrix. */
+    /** 
+     * \brief Returns Bryant angles of rotation matrix.
+     * \return angles of rotation
+     */
     Angles getAngles() const;
 
-    /** \brief Returns quaternion of rotation matrix. */
+    /** 
+     * \brief Returns quaternion of rotation matrix.
+     * \return quaternion of rotation
+     */
     Quaternion getQuaternion() const;
 
-    /** \brief Returns transposed matrix. */
+    /** 
+     * \brief Returns transposed matrix.
+     * \return transposed matrix
+     */
     RotMatrix getTransposed() const;
 
-    /** \brief Addition operator. */
-    RotMatrix operator+(const RotMatrix& matrix) const;
+    /** 
+     * \brief Addition operator. 
+     * \param mat matrix to be added
+     * \return resulting matrix
+     */
+    RotMatrix operator+(const RotMatrix& mat) const;
 
-    /** \brief Negation operator. */
+    /** 
+     * \brief Negation operator.
+     * \return negated matrix
+     */
     RotMatrix operator-() const;
 
-    /** \brief Subtraction operator. */
-    RotMatrix operator-(const RotMatrix& matrix) const;
+    /** 
+     * \brief Subtraction operator. 
+     * \param mat matrix to be subtracted
+     * \return resulting matrix
+     */
+    RotMatrix operator-(const RotMatrix& mat) const;
 
-    /** \brief Multiplication operator (by number). */
-    RotMatrix operator*(double value) const;
+    /** 
+     * \brief Multiplication operator (by number). 
+     * \param val number to multiply by
+     * \return resulting matrix
+     */
+    RotMatrix operator*(double val) const;
 
-    /** \brief Multiplication operator (by matrix). */
-    RotMatrix operator*(const RotMatrix& matrix) const;
+    /** 
+     * \brief Multiplication operator (by matrix). 
+     * \param mat matrix to multiply by
+     * \return resulting matrix
+     */
+    RotMatrix operator*(const RotMatrix& mat) const;
 
-    /** \brief Multiplication operator (by vector). */
+    /** 
+     * \brief Multiplication operator (by vector). 
+     * \tparam TYPE vector element type
+     * \param vect vector to multiply by
+     * \return resulting vector
+     */
     template <typename TYPE>
     Vector3<TYPE> operator*(const Vector3<TYPE>& vect) const
     {
         Vector3<TYPE> result;
-        this->multiplyMatrixByVector(*this, vect, &result);
+        multiplyMatrixByVector(*this, vect, &result);
         return result;
     }
 
-    /** \brief Division operator (by number). */
-    RotMatrix operator/(double value) const;
+    /** 
+     * \brief Division operator. 
+     * \param value number to divide by
+     * \return resulting matrix
+     */
+    RotMatrix operator/(double val) const;
 
-    /** \brief Unary addition operator. */
-    RotMatrix& operator+=(const RotMatrix& matrix);
+    /** 
+     * \brief Unary addition operator.
+     * \param mat matrix to be added
+     * \return reference to this matrix
+     */
+    RotMatrix& operator+=(const RotMatrix& mat);
 
-    /** \brief Unary subtraction operator. */
-    RotMatrix& operator-=(const RotMatrix& matrix);
+    /** 
+     * \brief Unary subtraction operator.
+     * \param mat matrix to be subtracted
+     * \return reference to this matrix
+     */
+    RotMatrix& operator-=(const RotMatrix& mat);
 
-    /** \brief Unary multiplication operator (by number). */
-    RotMatrix& operator*=(double value);
+    /** 
+     * \brief Unary multiplication operator.
+     * \param val number to multiply by
+     * \return reference to this matrix
+     */
+    RotMatrix& operator*=(double val);
 
-    /** \brief Unary division operator (by number). */
-    RotMatrix& operator/=(double value);
+    /** 
+     * \brief Unary division operator.
+     * \param val number to divide by
+     * \return reference to this matrix
+     */
+    RotMatrix& operator/=(double val);
 };
 
-/** \brief Multiplication operator (by number). */
-inline RotMatrix operator*(double value, const RotMatrix& matrix)
+/** 
+ * \brief Multiplication operator.
+ * \param val number to multiply by
+ * \param mat matrix to multiply
+ * \return resulting matrix
+ */
+inline RotMatrix operator*(double val, const RotMatrix& mat)
 {
-    return matrix * value;
+    return mat * val;
 }
 
 } // namespace mc
