@@ -607,34 +607,34 @@ TEST_F(TestMatrixMxN, CanMultiplyIdentityMatrixByMatrixMNP)
     EXPECT_DOUBLE_EQ(m0r(2,2), 51.0);
 }
 
-// TEST_F(TestMatrixMxN, CanMultiplyIdentityMatrixByMatrix3x3)
-// {
-//     std::vector<TYPE> x
-//     {
-//         1.0, 2.0, 3.0,
-//         4.0, 5.0, 6.0,
-//         7.0, 8.0, 9.0
-//     };
+TEST_F(TestMatrixMxN, CanMultiplyIdentityMatrixByMatrix3x3)
+{
+    std::vector<TYPE> x
+    {
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    };
 
-//     mc::MatrixMxN<TYPE,ROWS,COLS> m;
-//     m.setFromStdVector(x);
+    mc::MatrixMxN<TYPE,ROWS,COLS> m;
+    m.setFromStdVector(x);
 
-//     mc::MatrixMxN<TYPE,ROWS,COLS> mr = m * m;
+    mc::MatrixMxN<TYPE,ROWS,COLS> mr = m * m;
 
-//     // Following tests uses expected values calculated with GNU Octave
-//     // tests/mcsim/utils/math/octave/test_matrix.m
-//     EXPECT_DOUBLE_EQ(mr(0,0),  30.0);
-//     EXPECT_DOUBLE_EQ(mr(0,1),  36.0);
-//     EXPECT_DOUBLE_EQ(mr(0,2),  42.0);
+    // Following tests uses expected values calculated with GNU Octave
+    // tests/mcsim/utils/math/octave/test_matrix.m
+    EXPECT_DOUBLE_EQ(mr(0,0),  30.0);
+    EXPECT_DOUBLE_EQ(mr(0,1),  36.0);
+    EXPECT_DOUBLE_EQ(mr(0,2),  42.0);
 
-//     EXPECT_DOUBLE_EQ(mr(1,0),  66.0);
-//     EXPECT_DOUBLE_EQ(mr(1,1),  81.0);
-//     EXPECT_DOUBLE_EQ(mr(1,2),  96.0);
+    EXPECT_DOUBLE_EQ(mr(1,0),  66.0);
+    EXPECT_DOUBLE_EQ(mr(1,1),  81.0);
+    EXPECT_DOUBLE_EQ(mr(1,2),  96.0);
 
-//     EXPECT_DOUBLE_EQ(mr(2,0), 102.0);
-//     EXPECT_DOUBLE_EQ(mr(2,1), 126.0);
-//     EXPECT_DOUBLE_EQ(mr(2,2), 150.0);
-// }
+    EXPECT_DOUBLE_EQ(mr(2,0), 102.0);
+    EXPECT_DOUBLE_EQ(mr(2,1), 126.0);
+    EXPECT_DOUBLE_EQ(mr(2,2), 150.0);
+}
 
 // TEST_F(TestMatrixMxN, CanDivideByNumber)
 // {

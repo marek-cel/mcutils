@@ -735,6 +735,86 @@ public:
         }
     }
 
+    /**
+     * \brief Division by a scalar operator.
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
+     * 
+     * \tparam RHS_TYPE type of the right-hand side value
+     * \param val value to be divided by
+     * \return matrix divided by the value
+     */
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator/(const RHS_TYPE& val) const
+    {
+        MatrixMxN<std::common_type_t<TYPE, RHS_TYPE>, ROWS, COLS> result;
+        multiplyMatrixByScalar(*this, 1.0 / val, &result);
+        return result;
+    }
+
+    /**
+     * \brief Division by a scalar operator.
+     * 
+     * This template is enabled when TYPE or TYPE_RHS is an arithmetic type
+     * while the other is a unit.
+     * 
+     * \tparam RHS_TYPE type of the right-hand side value
+     * \param val value to be divided by
+     * \return matrix divided by the value
+     */
+    template <typename RHS_TYPE>
+    requires (
+        (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value) ||
+        (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    )
+    auto operator/(const RHS_TYPE& val) const
+    {
+        if constexpr (units::traits::is_unit_t<TYPE>::value)
+        {
+            MatrixMxN<TYPE, ROWS, COLS> result;
+            multiplyMatrixByScalar(*this, 1.0 / val, &result);
+            return result;
+        }
+        else
+        {
+            MatrixMxN<
+                units::unit_t<
+                    units::inverse<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type>
+                >,
+                ROWS, COLS
+            > result;
+            multiplyMatrixByScalar(*this, 1.0 / val, &result);
+            return result;
+        }
+    }
+
+    /**
+     * \brief Division by a scalar operator.
+     * 
+     * This template is enabled when TYPE and RHS_TYPE are both units.
+     * 
+     * \tparam RHS_TYPE type of the right-hand side value
+     * \param val value to be divided by
+     * \return matrix divided by the value
+     */
+    template <typename RHS_TYPE>
+    requires (units::traits::is_unit_t<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    auto operator/(const RHS_TYPE& val) const
+    {
+        MatrixMxN<
+            units::unit_t<
+                units::compound_unit<
+                    typename units::traits::unit_t_traits<TYPE>::unit_type,
+                    units::inverse<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type>
+                >
+            >,
+            ROWS, COLS
+        > result;
+        multiplyMatrixByScalar(*this, 1.0 / val, &result);
+        return result;
+    }
+
     // /**
     //  * \brief Division by scalar operator.
     //  *
