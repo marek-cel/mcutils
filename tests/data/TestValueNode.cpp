@@ -4,8 +4,6 @@
 
 #include <mcutils/data/ValueNode.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
 class TestValueNode : public ::testing::Test
 {
 protected:
@@ -14,8 +12,6 @@ protected:
     void SetUp() override {}
     void TearDown() override {}
 };
-
-////////////////////////////////////////////////////////////////////////////////
 
 TEST_F(TestValueNode, CanConstruct)
 {
@@ -32,8 +28,6 @@ TEST_F(TestValueNode, CanConstruct)
     delete nodeD;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 TEST_F(TestValueNode, CanDestruct)
 {
     mc::ValueNode<bool> *nodeB = new mc::ValueNode<bool>();
@@ -46,8 +40,6 @@ TEST_F(TestValueNode, CanDestruct)
     EXPECT_NO_THROW( delete nodeD );
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 TEST_F(TestValueNode, CanInstantiate)
 {
     mc::ValueNode<bool> nodeB;
@@ -59,8 +51,6 @@ TEST_F(TestValueNode, CanInstantiate)
     mc::ValueNode<double> nodeD;
     EXPECT_NEAR( nodeD.getValue(), 0.0, 1.0e-12 );
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 TEST_F(TestValueNode, CanGetValue)
 {
@@ -79,8 +69,6 @@ TEST_F(TestValueNode, CanGetValue)
     nodeD.setValue( M_PI );
     EXPECT_NEAR( nodeD.getValue(), M_PI, 1.0e-12 );
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 TEST_F(TestValueNode, CanSetValue)
 {
