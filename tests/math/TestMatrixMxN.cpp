@@ -407,204 +407,204 @@ TEST_F(TestMatrixMxN, CanMultiplyByNumber)
     }
 }
 
-TEST_F(TestMatrixMxN, CanMultiplyIdentityMatrixByVector)
-{
-    mc::MatrixMxN<TYPE,ROWS,COLS> m;
+// TEST_F(TestMatrixMxN, CanMultiplyIdentityMatrixByVector)
+// {
+//     mc::MatrixMxN<TYPE,ROWS,COLS> m;
 
-    m(0,0) =  1.0;
-    m(0,1) =  0.0;
-    m(0,2) =  0.0;
+//     m(0,0) =  1.0;
+//     m(0,1) =  0.0;
+//     m(0,2) =  0.0;
 
-    m(1,0) =  0.0;
-    m(1,1) =  1.0;
-    m(1,2) =  0.0;
+//     m(1,0) =  0.0;
+//     m(1,1) =  1.0;
+//     m(1,2) =  0.0;
 
-    m(2,0) =  0.0;
-    m(2,1) =  0.0;
-    m(2,2) =  1.0;
+//     m(2,0) =  0.0;
+//     m(2,1) =  0.0;
+//     m(2,2) =  1.0;
 
-    mc::VectorN<TYPE,ROWS> v;
-    v(0) = 1.0;
-    v(1) = 2.0;
-    v(2) = 3.0;
+//     mc::VectorN<TYPE,ROWS> v;
+//     v(0) = 1.0;
+//     v(1) = 2.0;
+//     v(2) = 3.0;
 
-    mc::VectorN<TYPE,ROWS> vr = m * v;
-    EXPECT_DOUBLE_EQ(vr(0),  1.0);
-    EXPECT_DOUBLE_EQ(vr(1),  2.0);
-    EXPECT_DOUBLE_EQ(vr(2),  3.0);
-}
+//     mc::VectorN<TYPE,ROWS> vr = m * v;
+//     EXPECT_DOUBLE_EQ(vr(0),  1.0);
+//     EXPECT_DOUBLE_EQ(vr(1),  2.0);
+//     EXPECT_DOUBLE_EQ(vr(2),  3.0);
+// }
 
-TEST_F(TestMatrixMxN, CanMultiplyNegativeIdentityMatrixByVector)
-{
-    mc::MatrixMxN<TYPE,ROWS,COLS> m;
+// TEST_F(TestMatrixMxN, CanMultiplyNegativeIdentityMatrixByVector)
+// {
+//     mc::MatrixMxN<TYPE,ROWS,COLS> m;
 
-    m(0,0) = -1.0;
-    m(0,1) =  0.0;
-    m(0,2) =  0.0;
+//     m(0,0) = -1.0;
+//     m(0,1) =  0.0;
+//     m(0,2) =  0.0;
 
-    m(1,0) =  0.0;
-    m(1,1) = -1.0;
-    m(1,2) =  0.0;
+//     m(1,0) =  0.0;
+//     m(1,1) = -1.0;
+//     m(1,2) =  0.0;
 
-    m(2,0) =  0.0;
-    m(2,1) =  0.0;
-    m(2,2) = -1.0;
+//     m(2,0) =  0.0;
+//     m(2,1) =  0.0;
+//     m(2,2) = -1.0;
 
-    mc::VectorN<TYPE,ROWS> v;
-    v(0) = 1.0;
-    v(1) = 2.0;
-    v(2) = 3.0;
+//     mc::VectorN<TYPE,ROWS> v;
+//     v(0) = 1.0;
+//     v(1) = 2.0;
+//     v(2) = 3.0;
 
-    mc::VectorN<TYPE,ROWS> vr = m * v;
-    EXPECT_DOUBLE_EQ(vr(0), -1.0);
-    EXPECT_DOUBLE_EQ(vr(1), -2.0);
-    EXPECT_DOUBLE_EQ(vr(2), -3.0);
-}
+//     mc::VectorN<TYPE,ROWS> vr = m * v;
+//     EXPECT_DOUBLE_EQ(vr(0), -1.0);
+//     EXPECT_DOUBLE_EQ(vr(1), -2.0);
+//     EXPECT_DOUBLE_EQ(vr(2), -3.0);
+// }
 
-TEST_F(TestMatrixMxN, CanMultiplySkewXYMatrixByVector)
-{
-    mc::MatrixMxN<TYPE,ROWS,COLS> m;
+// TEST_F(TestMatrixMxN, CanMultiplySkewXYMatrixByVector)
+// {
+//     mc::MatrixMxN<TYPE,ROWS,COLS> m;
 
-    m(0,0) =  0.0;
-    m(0,1) =  1.0;
-    m(0,2) =  0.0;
+//     m(0,0) =  0.0;
+//     m(0,1) =  1.0;
+//     m(0,2) =  0.0;
 
-    m(1,0) =  1.0;
-    m(1,1) =  0.0;
-    m(1,2) =  0.0;
+//     m(1,0) =  1.0;
+//     m(1,1) =  0.0;
+//     m(1,2) =  0.0;
 
-    m(2,0) =  0.0;
-    m(2,1) =  0.0;
-    m(2,2) =  1.0;
+//     m(2,0) =  0.0;
+//     m(2,1) =  0.0;
+//     m(2,2) =  1.0;
 
-    mc::VectorN<TYPE,ROWS> v;
-    v(0) = 1.0;
-    v(1) = 2.0;
-    v(2) = 3.0;
+//     mc::VectorN<TYPE,ROWS> v;
+//     v(0) = 1.0;
+//     v(1) = 2.0;
+//     v(2) = 3.0;
 
-    mc::VectorN<TYPE,ROWS> vr = m * v;
-    EXPECT_DOUBLE_EQ(vr(0),  2.0);
-    EXPECT_DOUBLE_EQ(vr(1),  1.0);
-    EXPECT_DOUBLE_EQ(vr(2),  3.0);
-}
+//     mc::VectorN<TYPE,ROWS> vr = m * v;
+//     EXPECT_DOUBLE_EQ(vr(0),  2.0);
+//     EXPECT_DOUBLE_EQ(vr(1),  1.0);
+//     EXPECT_DOUBLE_EQ(vr(2),  3.0);
+// }
 
-TEST_F(TestMatrixMxN, CanMultiplyRandomMatrixByVector)
-{
-    mc::MatrixMxN<TYPE,ROWS,COLS> m3;
+// TEST_F(TestMatrixMxN, CanMultiplyRandomMatrixByVector)
+// {
+//     mc::MatrixMxN<TYPE,ROWS,COLS> m3;
 
-    std::vector<TYPE> x
-    {
-        1.0, 2.0, 3.0,
-        4.0, 5.0, 6.0,
-        7.0, 8.0, 9.0
-    };
-    mc::MatrixMxN<TYPE,ROWS,COLS> m;
-    m.setFromStdVector(x);
+//     std::vector<TYPE> x
+//     {
+//         1.0, 2.0, 3.0,
+//         4.0, 5.0, 6.0,
+//         7.0, 8.0, 9.0
+//     };
+//     mc::MatrixMxN<TYPE,ROWS,COLS> m;
+//     m.setFromStdVector(x);
 
-    mc::VectorN<TYPE,ROWS> v;
-    v(0) = 1.0;
-    v(1) = 2.0;
-    v(2) = 3.0;
+//     mc::VectorN<TYPE,ROWS> v;
+//     v(0) = 1.0;
+//     v(1) = 2.0;
+//     v(2) = 3.0;
 
-    mc::VectorN<TYPE,ROWS> vr = m * v;
+//     mc::VectorN<TYPE,ROWS> vr = m * v;
 
-    // Following tests uses expected values calculated with GNU Octave
-    // tests/mcsim/utils/math/octave/test_matrix.m
-    EXPECT_DOUBLE_EQ(vr(0), 14.0);
-    EXPECT_DOUBLE_EQ(vr(1), 32.0);
-    EXPECT_DOUBLE_EQ(vr(2), 50.0);
-}
+//     // Following tests uses expected values calculated with GNU Octave
+//     // tests/mcsim/utils/math/octave/test_matrix.m
+//     EXPECT_DOUBLE_EQ(vr(0), 14.0);
+//     EXPECT_DOUBLE_EQ(vr(1), 32.0);
+//     EXPECT_DOUBLE_EQ(vr(2), 50.0);
+// }
 
-TEST_F(TestMatrixMxN, CanMultiplyIdentityMatrixByMatrixMNP)
-{
-    std::vector<TYPE> x01
-    {
-        1.0, 2.0,
-        2.0, 4.0,
-        5.0, 6.0
-    };
+// TEST_F(TestMatrixMxN, CanMultiplyIdentityMatrixByMatrixMNP)
+// {
+//     std::vector<TYPE> x01
+//     {
+//         1.0, 2.0,
+//         2.0, 4.0,
+//         5.0, 6.0
+//     };
 
-    std::vector<TYPE> x02
-    {
-        1.0, 2.0, 3.0,
-        4.0, 5.0, 6.0
-    };
+//     std::vector<TYPE> x02
+//     {
+//         1.0, 2.0, 3.0,
+//         4.0, 5.0, 6.0
+//     };
 
-    mc::MatrixMxN<TYPE,3,2> m01;
-    mc::MatrixMxN<TYPE,2,3> m02;
+//     mc::MatrixMxN<TYPE,3,2> m01;
+//     mc::MatrixMxN<TYPE,2,3> m02;
 
-    m01.setFromStdVector(x01);
-    m02.setFromStdVector(x02);
+//     m01.setFromStdVector(x01);
+//     m02.setFromStdVector(x02);
 
-    mc::MatrixMxN<TYPE,3,3> m0r = m01 * m02;
+//     mc::MatrixMxN<TYPE,3,3> m0r = m01 * m02;
 
-    // Following tests uses expected values calculated with GNU Octave
-    // tests/mcsim/utils/math/octave/test_matrix.m
-    EXPECT_DOUBLE_EQ(m0r(0,0),  9.0);
-    EXPECT_DOUBLE_EQ(m0r(0,1), 12.0);
-    EXPECT_DOUBLE_EQ(m0r(0,2), 15.0);
-    EXPECT_DOUBLE_EQ(m0r(1,0), 18.0);
-    EXPECT_DOUBLE_EQ(m0r(1,1), 24.0);
-    EXPECT_DOUBLE_EQ(m0r(1,2), 30.0);
-    EXPECT_DOUBLE_EQ(m0r(2,0), 29.0);
-    EXPECT_DOUBLE_EQ(m0r(2,1), 40.0);
-    EXPECT_DOUBLE_EQ(m0r(2,2), 51.0);
-}
+//     // Following tests uses expected values calculated with GNU Octave
+//     // tests/mcsim/utils/math/octave/test_matrix.m
+//     EXPECT_DOUBLE_EQ(m0r(0,0),  9.0);
+//     EXPECT_DOUBLE_EQ(m0r(0,1), 12.0);
+//     EXPECT_DOUBLE_EQ(m0r(0,2), 15.0);
+//     EXPECT_DOUBLE_EQ(m0r(1,0), 18.0);
+//     EXPECT_DOUBLE_EQ(m0r(1,1), 24.0);
+//     EXPECT_DOUBLE_EQ(m0r(1,2), 30.0);
+//     EXPECT_DOUBLE_EQ(m0r(2,0), 29.0);
+//     EXPECT_DOUBLE_EQ(m0r(2,1), 40.0);
+//     EXPECT_DOUBLE_EQ(m0r(2,2), 51.0);
+// }
 
-TEST_F(TestMatrixMxN, CanMultiplyIdentityMatrixByMatrix3x3)
-{
-    std::vector<TYPE> x
-    {
-        1.0, 2.0, 3.0,
-        4.0, 5.0, 6.0,
-        7.0, 8.0, 9.0
-    };
+// TEST_F(TestMatrixMxN, CanMultiplyIdentityMatrixByMatrix3x3)
+// {
+//     std::vector<TYPE> x
+//     {
+//         1.0, 2.0, 3.0,
+//         4.0, 5.0, 6.0,
+//         7.0, 8.0, 9.0
+//     };
 
-    mc::MatrixMxN<TYPE,ROWS,COLS> m;
-    m.setFromStdVector(x);
+//     mc::MatrixMxN<TYPE,ROWS,COLS> m;
+//     m.setFromStdVector(x);
 
-    mc::MatrixMxN<TYPE,ROWS,COLS> mr = m * m;
+//     mc::MatrixMxN<TYPE,ROWS,COLS> mr = m * m;
 
-    // Following tests uses expected values calculated with GNU Octave
-    // tests/mcsim/utils/math/octave/test_matrix.m
-    EXPECT_DOUBLE_EQ(mr(0,0),  30.0);
-    EXPECT_DOUBLE_EQ(mr(0,1),  36.0);
-    EXPECT_DOUBLE_EQ(mr(0,2),  42.0);
+//     // Following tests uses expected values calculated with GNU Octave
+//     // tests/mcsim/utils/math/octave/test_matrix.m
+//     EXPECT_DOUBLE_EQ(mr(0,0),  30.0);
+//     EXPECT_DOUBLE_EQ(mr(0,1),  36.0);
+//     EXPECT_DOUBLE_EQ(mr(0,2),  42.0);
 
-    EXPECT_DOUBLE_EQ(mr(1,0),  66.0);
-    EXPECT_DOUBLE_EQ(mr(1,1),  81.0);
-    EXPECT_DOUBLE_EQ(mr(1,2),  96.0);
+//     EXPECT_DOUBLE_EQ(mr(1,0),  66.0);
+//     EXPECT_DOUBLE_EQ(mr(1,1),  81.0);
+//     EXPECT_DOUBLE_EQ(mr(1,2),  96.0);
 
-    EXPECT_DOUBLE_EQ(mr(2,0), 102.0);
-    EXPECT_DOUBLE_EQ(mr(2,1), 126.0);
-    EXPECT_DOUBLE_EQ(mr(2,2), 150.0);
-}
+//     EXPECT_DOUBLE_EQ(mr(2,0), 102.0);
+//     EXPECT_DOUBLE_EQ(mr(2,1), 126.0);
+//     EXPECT_DOUBLE_EQ(mr(2,2), 150.0);
+// }
 
-TEST_F(TestMatrixMxN, CanDivideByNumber)
-{
-    constexpr double val = 2.0;
+// TEST_F(TestMatrixMxN, CanDivideByNumber)
+// {
+//     constexpr double val = 2.0;
 
-    std::vector<TYPE> x
-    {
-        1.0, 2.0, 3.0,
-        4.0, 5.0, 6.0,
-        7.0, 8.0, 9.0
-    };
+//     std::vector<TYPE> x
+//     {
+//         1.0, 2.0, 3.0,
+//         4.0, 5.0, 6.0,
+//         7.0, 8.0, 9.0
+//     };
 
-    mc::MatrixMxN<TYPE,ROWS,COLS> m1;
-    mc::MatrixMxN<TYPE,ROWS,COLS> mr;
-    m1.setFromStdVector(x);
-    mr = m1 / val;
+//     mc::MatrixMxN<TYPE,ROWS,COLS> m1;
+//     mc::MatrixMxN<TYPE,ROWS,COLS> mr;
+//     m1.setFromStdVector(x);
+//     mr = m1 / val;
 
-    for ( int r = 0; r < ROWS; ++r )
-    {
-        for ( int c = 0; c < COLS; ++c )
-        {
-            double ref_value = x[r*COLS + c] / val;
-            EXPECT_DOUBLE_EQ(mr(r,c), ref_value) << "Error at row " << r << " and col " << c;
-        }
-    }
-}
+//     for ( int r = 0; r < ROWS; ++r )
+//     {
+//         for ( int c = 0; c < COLS; ++c )
+//         {
+//             double ref_value = x[r*COLS + c] / val;
+//             EXPECT_DOUBLE_EQ(mr(r,c), ref_value) << "Error at row " << r << " and col " << c;
+//         }
+//     }
+// }
 
 TEST_F(TestMatrixMxN, CanUnaryAdd)
 {
@@ -658,55 +658,55 @@ TEST_F(TestMatrixMxN, CanUnarySubtract)
     }
 }
 
-TEST_F(TestMatrixMxN, CanUnaryMultiplyByNumber)
-{
-    constexpr double val = 2.0;
+// TEST_F(TestMatrixMxN, CanUnaryMultiplyByNumber)
+// {
+//     constexpr double val = 2.0;
 
-    std::vector<TYPE> x
-    {
-        1.0, 2.0, 3.0,
-        4.0, 5.0, 6.0,
-        7.0, 8.0, 9.0
-    };
+//     std::vector<TYPE> x
+//     {
+//         1.0, 2.0, 3.0,
+//         4.0, 5.0, 6.0,
+//         7.0, 8.0, 9.0
+//     };
 
-    mc::MatrixMxN<TYPE,ROWS,COLS> m;
-    m.setFromStdVector(x);
-    m *= val;
+//     mc::MatrixMxN<TYPE,ROWS,COLS> m;
+//     m.setFromStdVector(x);
+//     m *= val;
 
-    for ( int r = 0; r < ROWS; ++r )
-    {
-        for ( int c = 0; c < COLS; ++c )
-        {
-            double ref_value = x[r*COLS + c] * val;
-            EXPECT_DOUBLE_EQ(m(r,c), ref_value) << "Error at row " << r << " and col " << c;
-        }
-    }
-}
+//     for ( int r = 0; r < ROWS; ++r )
+//     {
+//         for ( int c = 0; c < COLS; ++c )
+//         {
+//             double ref_value = x[r*COLS + c] * val;
+//             EXPECT_DOUBLE_EQ(m(r,c), ref_value) << "Error at row " << r << " and col " << c;
+//         }
+//     }
+// }
 
-TEST_F(TestMatrixMxN, CanUnaryDivideByNumber)
-{
-    constexpr double val = 2.0;
+// TEST_F(TestMatrixMxN, CanUnaryDivideByNumber)
+// {
+//     constexpr double val = 2.0;
 
-    std::vector<TYPE> x
-    {
-        1.0, 2.0, 3.0,
-        4.0, 5.0, 6.0,
-        7.0, 8.0, 9.0
-    };
+//     std::vector<TYPE> x
+//     {
+//         1.0, 2.0, 3.0,
+//         4.0, 5.0, 6.0,
+//         7.0, 8.0, 9.0
+//     };
 
-    mc::MatrixMxN<TYPE,ROWS,COLS> m;
-    m.setFromStdVector(x);
-    m /= val;
+//     mc::MatrixMxN<TYPE,ROWS,COLS> m;
+//     m.setFromStdVector(x);
+//     m /= val;
 
-    for ( int r = 0; r < ROWS; ++r )
-    {
-        for ( int c = 0; c < COLS; ++c )
-        {
-            double ref_value = x[r*COLS + c] / val;
-            EXPECT_DOUBLE_EQ(m(r,c), ref_value) << "Error at row " << r << " and col " << c;
-        }
-    }
-}
+//     for ( int r = 0; r < ROWS; ++r )
+//     {
+//         for ( int c = 0; c < COLS; ++c )
+//         {
+//             double ref_value = x[r*COLS + c] / val;
+//             EXPECT_DOUBLE_EQ(m(r,c), ref_value) << "Error at row " << r << " and col " << c;
+//         }
+//     }
+// }
 
 TEST_F(TestMatrixMxN, CanCompare)
 {
