@@ -231,6 +231,7 @@ public:
      * \brief Casting operator.
      * Converts the vector to another type.
      * \tparam NEW_TYPE new vector element type
+     * \return converted vector
      */
     template <typename NEW_TYPE>
     requires (
@@ -287,9 +288,6 @@ public:
 
     /**
      * \brief Addition operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
-     * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param vect vector to be added
      * \return sum of the vectors
@@ -309,9 +307,6 @@ public:
 
     /**
      * \brief Addition operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are convertible units.
-     * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param vect vector to be added
      * \return sum of the vectors
@@ -355,9 +350,6 @@ public:
 
     /**
      * \brief Substraction operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
-     * 
      * \param vect vector to be subtracted
      * \return difference of the vectors
      */
@@ -377,9 +369,6 @@ public:
 
     /**
      * \brief Substraction operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are convertible units.
-     * 
      * \param vect vector to be subtracted
      * \return difference of the vectors
      */
@@ -399,9 +388,6 @@ public:
 
     /**
      * \brief Multiplication by a scalar operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
-     * 
      * \tparam TYPE_RHS right-hand side operand type
      * \param val value to be multiplied by
      * \return product of the vector multiplied by the value
@@ -417,10 +403,6 @@ public:
 
     /**
      * \brief Multiplication by a scalar operator.
-     * 
-     * This template is enabled when TYPE or TYPE_RHS is an arithmetic type
-     * while the other is a unit.
-     * 
      * \tparam TYPE_RHS right-hand side operand type
      * \param val value to be multiplied by
      * \return product of the vector multiplied by the value
@@ -449,9 +431,6 @@ public:
 
     /**
      * \brief Multiplication by a scalar operator.
-     * 
-     * This template is enabled when both TYPE and TYPE_RHS are units and angle stripping is not needed.
-     * 
      * \tparam TYPE_RHS right-hand side operand type
      * \param val value to be multiplied by
      * \return product of the vector multiplied by the value
@@ -479,8 +458,6 @@ public:
 
     /**
      * \brief Multiplication by a scalar operator.
-     * 
-     * This template is enabled when both TYPE and TYPE_RHS are units and angle stripping is needed.
      * 
      * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
      * this makes radians a pure number without physical dimension.
@@ -534,9 +511,6 @@ public:
 
     /**
      * \brief Dot product operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
-     * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param vect right-hand side vector
      * \return dot product of the vectors
@@ -552,10 +526,6 @@ public:
 
     /**
      * \brief Dot product operator.
-     * 
-     * This template is enabled when TYPE or TYPE_RHS is an arithmetic type
-     * while the other is a unit.
-     * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param vect right-hand side vector
      * \return dot product of the vectors
@@ -583,9 +553,6 @@ public:
 
     /**
      * \brief Dot product operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are both units and angle stripping is not needed.
-     * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param vect right-hand side vector
      * \return dot product of the vectors
@@ -610,8 +577,6 @@ public:
 
     /**
      * \brief Dot product operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are both units and angle stripping is needed.
      * 
      * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
      * this makes radians a pure number without physical dimension.
@@ -662,9 +627,6 @@ public:
 
     /**
      * \brief Division by a scalar operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
-     * 
      * \tparam RHS_TYPE type of the right-hand side value
      * \param val value to be divided by
      * \return vector divided by the value
@@ -680,10 +642,6 @@ public:
 
     /**
      * \brief Division by a scalar operator.
-     * 
-     * This template is enabled when TYPE or TYPE_RHS is an arithmetic type
-     * while the other is a unit.
-     * 
      * \tparam RHS_TYPE type of the right-hand side value
      * \param val value to be divided by
      * \return vector divided by the value
@@ -716,9 +674,6 @@ public:
 
     /**
      * \brief Division by a scalar operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are both units.
-     * 
      * \tparam RHS_TYPE type of the right-hand side value
      * \param val value to be divided by
      * \return vector divided by the value
@@ -742,9 +697,6 @@ public:
 
     /**
      * \brief Assignment operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
-     * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param vect right-hand side vector
      * \return reference to the updated vector
@@ -767,9 +719,6 @@ public:
 
     /**
      * \brief Assignment operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are convertible units.
-     * 
      * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param vect right-hand side vector
      * \return reference to the updated vector
