@@ -31,6 +31,7 @@ set(SOURCES
     TestEulerRect.cpp
     TestMatrixMxN.cpp
     TestMatrixMxNWithUnits.cpp
+    TestMatrixNxN.cpp
     TestQuaternion.cpp
     TestRungeKutta4.cpp
     TestSegPlaneIsect.cpp

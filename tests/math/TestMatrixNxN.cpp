@@ -91,38 +91,6 @@ TEST_F(TestMatrixNxN, CanTranspose)
     }
 }
 
-TEST_F(TestMatrixNxN, GetDimensionless)
-{
-    mc::MatrixNxN<TYPE,SIZE> m1;
-
-    m1(0,0) = 1.0;
-    m1(0,1) = 2.0;
-    m1(0,2) = 3.0;
-
-    m1(1,0) = 4.0;
-    m1(1,1) = 5.0;
-    m1(1,2) = 6.0;
-
-    m1(2,0) = 7.0;
-    m1(2,1) = 8.0;
-    m1(2,2) = 9.0;
-
-    mc::MatrixNxN<double,SIZE> m2;
-    m2 = m1.getDimensionless();
-
-    EXPECT_DOUBLE_EQ(m2(0,0), 1.0);
-    EXPECT_DOUBLE_EQ(m2(0,1), 2.0);
-    EXPECT_DOUBLE_EQ(m2(0,2), 3.0);
-
-    EXPECT_DOUBLE_EQ(m2(1,0), 4.0);
-    EXPECT_DOUBLE_EQ(m2(1,1), 5.0);
-    EXPECT_DOUBLE_EQ(m2(1,2), 6.0);
-
-    EXPECT_DOUBLE_EQ(m2(2,0), 7.0);
-    EXPECT_DOUBLE_EQ(m2(2,1), 8.0);
-    EXPECT_DOUBLE_EQ(m2(2,2), 9.0);
-}
-
 TEST_F(TestMatrixNxN, CanAdd)
 {
     constexpr double val = 2.0;
