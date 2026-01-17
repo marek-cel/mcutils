@@ -710,7 +710,7 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
      * 
-     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \tparam RHS_TYPE type of the right-hand side value
      * \param val value to be divided by
      * \return vector divided by the value
      */
@@ -729,7 +729,7 @@ public:
      * This template is enabled when TYPE or TYPE_RHS is an arithmetic type
      * while the other is a unit.
      * 
-     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \tparam RHS_TYPE type of the right-hand side value
      * \param val value to be divided by
      * \return vector divided by the value
      */
@@ -764,7 +764,7 @@ public:
      * 
      * This template is enabled when TYPE and RHS_TYPE are both units.
      * 
-     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \tparam RHS_TYPE type of the right-hand side value
      * \param val value to be divided by
      * \return vector divided by the value
      */
