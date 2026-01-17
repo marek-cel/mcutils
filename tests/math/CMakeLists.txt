@@ -36,6 +36,7 @@ set(SOURCES
     TestMatrixNxN.cpp
     TestMatrixNxNWithUnits.cpp
     TestQuaternion.cpp
+    TestRotMatrix.cpp
     TestRungeKutta4.cpp
     TestSegPlaneIsect.cpp
     TestTable.cpp

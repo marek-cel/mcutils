@@ -678,22 +678,22 @@ void RotMatrix_CanMultiplyByVector()
 
     mc::Vector3<T> v(T{1}, T{2}, T{3});
 
-    mc::Vector3d v1 = (m1 * v).getDimensionless();
+    mc::Vector3d v1 = static_cast<mc::Vector3d>(m1 * v);
     EXPECT_NEAR(v1.x(),  1.0, 1.0e-9);
     EXPECT_NEAR(v1.y(),  2.0, 1.0e-9);
     EXPECT_NEAR(v1.z(),  3.0, 1.0e-9);
 
-    mc::Vector3d v2 = (m2 * v).getDimensionless();
+    mc::Vector3d v2 = static_cast<mc::Vector3d>(m2 * v);
     EXPECT_NEAR(v2.x(), -1.0, 1.0e-9);
     EXPECT_NEAR(v2.y(), -2.0, 1.0e-9);
     EXPECT_NEAR(v2.z(), -3.0, 1.0e-9);
 
-    mc::Vector3d v3 = (m3 * v).getDimensionless();
+    mc::Vector3d v3 = static_cast<mc::Vector3d>(m3 * v);
     EXPECT_NEAR(v3.x(),  2.0, 1.0e-9);
     EXPECT_NEAR(v3.y(),  1.0, 1.0e-9);
     EXPECT_NEAR(v3.z(),  3.0, 1.0e-9);
 
-    mc::Vector3d v4 = (m4 * v).getDimensionless();
+    mc::Vector3d v4 = static_cast<mc::Vector3d>(m4 * v);
     EXPECT_NEAR(v4.x(),  1.0, 1.0e-9);
     EXPECT_NEAR(v4.y(), -3.0, 1.0e-9);
     EXPECT_NEAR(v4.z(), -2.0, 1.0e-9);

@@ -66,12 +66,12 @@ RotMatrix::RotMatrix(const Angles& angl)
     zz() =  (cos_phi * cos_tht);
 }
 
-RotMatrix::RotMatrix(const Quaternion& qtrn)
+RotMatrix::RotMatrix(const Quaternion& quat)
 {
-    double e0 = qtrn.e0();
-    double ex = qtrn.ex();
-    double ey = qtrn.ey();
-    double ez = qtrn.ez();
+    double e0 = quat.e0();
+    double ex = quat.ex();
+    double ey = quat.ey();
+    double ez = quat.ez();
 
     double e02 = e0*e0;
     double ex2 = ex*ex;
@@ -168,7 +168,6 @@ Quaternion RotMatrix::getQuaternion() const
     return result;
 }
 
-/** \brief Returns transposed matrix. */
 RotMatrix RotMatrix::getTransposed() const
 {
     RotMatrix result(*this);
@@ -176,15 +175,13 @@ RotMatrix RotMatrix::getTransposed() const
     return result;
 }
 
-/** \brief Addition operator. */
-RotMatrix RotMatrix::operator+(const RotMatrix& matrix) const
+RotMatrix RotMatrix::operator+(const RotMatrix& mat) const
 {
-    RotMatrix result(*this);
-    result.add(matrix);
+    RotMatrix result;
+    addMatrices(*this, mat, &result);
     return result;
 }
 
-/** \brief Negation operator. */
 RotMatrix RotMatrix::operator-() const
 {
     RotMatrix result(*this);
@@ -192,63 +189,55 @@ RotMatrix RotMatrix::operator-() const
     return result;
 }
 
-/** \brief Subtraction operator. */
-RotMatrix RotMatrix::operator-(const RotMatrix& matrix) const
-{
-    RotMatrix result(*this);
-    result.subtract(matrix);
-    return result;
-}
-
-/** \brief Multiplication operator (by number). */
-RotMatrix RotMatrix::operator*(double value) const
+RotMatrix RotMatrix::operator-(const RotMatrix& mat) const
 {
     RotMatrix result;
-    multiplyMatrixByValue(*this, value, &result);
+    subtractMatrices(*this, mat, &result);
     return result;
 }
 
-/** \brief Multiplication operator (by matrix). */
-RotMatrix RotMatrix::operator*(const RotMatrix& matrix) const
+RotMatrix RotMatrix::operator*(double val) const
 {
     RotMatrix result;
-    multiplyMatrixByMatrix(*this, matrix, &result);
+    multiplyMatrixByScalar(*this, val, &result);
     return result;
 }
 
-/** \brief Division operator (by number). */
-RotMatrix RotMatrix::operator/(double value) const
+RotMatrix RotMatrix::operator*(const RotMatrix& mat) const
 {
     RotMatrix result;
-    multiplyMatrixByValue(*this, 1.0 / value, &result);
+    multiplyMatrixByMatrix(*this, mat, &result);
     return result;
 }
 
-/** \brief Unary addition operator. */
-RotMatrix& RotMatrix::operator+=(const RotMatrix& matrix)
+RotMatrix RotMatrix::operator/(double val) const
 {
-    add(matrix);
+    RotMatrix result;
+    multiplyMatrixByScalar(*this, 1.0 / val, &result);
+    return result;
+}
+
+RotMatrix& RotMatrix::operator+=(const RotMatrix& mat)
+{
+    addMatrices(*this, mat, this);
     return *this;
 }
 
-/** \brief Unary subtraction operator. */
-RotMatrix& RotMatrix::operator-=(const RotMatrix& matrix)
+RotMatrix& RotMatrix::operator-=(const RotMatrix& mat)
 {
-    subtract(matrix);
+    subtractMatrices(*this, mat, this);
     return *this;
 }
 
-/** \brief Unary multiplication operator (by number). */
-RotMatrix& RotMatrix::operator*=(double value)
+RotMatrix& RotMatrix::operator*=(double val)
 {
-    *this = (*this) * value;
+    *this = (*this) * val;
     return *this;
 }
 
-/** \brief Unary division operator (by number). */
-RotMatrix& RotMatrix::operator/=(double value)
+RotMatrix& RotMatrix::operator/=(double val)
 {
-    *this = (*this) / value;
+    *this = (*this) / val;
     return *this;
 }
 
