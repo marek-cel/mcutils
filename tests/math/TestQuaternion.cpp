@@ -372,7 +372,7 @@ TEST_F(TestQuaternion, CanAdd)
 TEST_F(TestQuaternion, CanNegate)
 {
     mc::Quaternion q0(1.0, 2.0, 3.0, 4.0);
-    mc::Quaternion q1 = -q1;
+    mc::Quaternion q1 = -q0;
 
     EXPECT_DOUBLE_EQ(q1.e0(), -1.0);
     EXPECT_DOUBLE_EQ(q1.ex(), -2.0);
