@@ -849,32 +849,46 @@ public:
     }
 
     /** \brief Unary addition operator. */
-    MatrixMxN<TYPE, ROWS, COLS>& operator+=(const MatrixMxN<TYPE, ROWS, COLS>& matrix)
+    template <typename RHS_TYPE>
+    requires (
+        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    MatrixMxN<TYPE, ROWS, COLS>& operator+=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix)
     {
         addMatrices(*this, matrix, this);
         return *this;
     }
 
     /** \brief Unary subtraction operator. */
-    MatrixMxN<TYPE, ROWS, COLS>& operator-=(const MatrixMxN<TYPE, ROWS, COLS>& matrix)
+    template <typename RHS_TYPE>
+    requires (
+        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    MatrixMxN<TYPE, ROWS, COLS>& operator-=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix)
     {
         subtractMatrices(*this, matrix, this);
         return *this;
     }
 
-    // /** \brief Unary multiplication operator (by number). */
-    // MatrixMxN<TYPE, ROWS, COLS>& operator*=(double value)
-    // {
-    //     *this = (*this) * value;
-    //     return *this;
-    // }
+    /** \brief Unary multiplication operator (by number). */
+    template <typename RHS_TYPE>
+    requires std::is_arithmetic<RHS_TYPE>::value
+    MatrixMxN<TYPE, ROWS, COLS>& operator*=(RHS_TYPE value)
+    {
+        *this = (*this) * value;
+        return *this;
+    }
 
     /** \brief Unary division operator (by number). */
-    // MatrixMxN<TYPE, ROWS, COLS>& operator/=(double value)
-    // {
-    //     *this = (*this) / value;
-    //     return *this;
-    // }
+    template <typename RHS_TYPE>
+    requires std::is_arithmetic<RHS_TYPE>::value
+    MatrixMxN<TYPE, ROWS, COLS>& operator/=(RHS_TYPE value)
+    {
+        *this = (*this) / value;
+        return *this;
+    }
 
     /** \brief Equality operator. */
     bool operator==(const MatrixMxN<TYPE, ROWS, COLS>& matrix) const
