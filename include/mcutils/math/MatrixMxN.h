@@ -284,6 +284,8 @@ public:
     /**
      * \brief Casting operator.
      *  Converts the matrix to another type.
+     * \tparam NEW_TYPE type of the new matrix elements
+     * \return converted matrix
      */
     template <class NEW_TYPE>
     requires (
@@ -407,7 +409,10 @@ public:
         return result;
     }
 
-    /** \brief Negation operator. */
+    /** 
+     * \brief Negation operator.
+     * \return negated matrix
+     */
     MatrixMxN<TYPE, ROWS, COLS> operator-() const
     {
         MatrixMxN<TYPE, kRows, kCols> result(*this);
@@ -415,7 +420,11 @@ public:
         return result;
     }
 
-    /** \brief Subtraction operator. */
+    /** 
+     * \brief Subtraction operator.
+     * \param matrix matrix to be subtracted
+     * \return difference of the matrices
+     */
     MatrixMxN<TYPE, ROWS, COLS> operator-(const MatrixMxN<TYPE, ROWS, COLS>& mat) const
     {
         MatrixMxN<TYPE, kRows, kCols> result;
@@ -423,7 +432,12 @@ public:
         return result;
     }
 
-    /** \brief Subtraction operator. */
+    /** 
+     * \brief Subtraction operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param matrix matrix to be subtracted
+     * \return difference of the matrices
+     */
     template <typename RHS_TYPE>
     requires (
         std::is_arithmetic<TYPE>::value  && 
@@ -437,7 +451,12 @@ public:
         return result;
     }
 
-    /** \brief Subtraction operator. */
+    /** 
+     * \brief Subtraction operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param matrix matrix to be subtracted
+     * \return difference of the matrices
+     */
     template <typename RHS_TYPE>
     requires (
         std::is_arithmetic<TYPE>::value == false && 
@@ -454,9 +473,6 @@ public:
 
     /**
      * \brief Multiplication by a scalar operator.
-     *
-     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
-     * 
      * \tparam TYPE_RHS right-hand side operand type
      * \param val value to be multiplied by
      * \return product of the matrix multiplied by the value
@@ -470,6 +486,12 @@ public:
         return result;
     }
 
+    /**
+     * \brief Multiplication by a scalar operator.
+     * \tparam RHS_TYPE right-hand side operand type
+     * \param val value to be multiplied by
+     * \return product of the matrix multiplied by the value
+     */
     template <typename RHS_TYPE>
     requires (
         (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value) ||
@@ -491,6 +513,12 @@ public:
         }
     }
 
+    /**
+     * \brief Multiplication by a scalar operator.
+     * \tparam RHS_TYPE right-hand side operand type
+     * \param val value to be multiplied by
+     * \return product of the matrix multiplied by the value
+     */
     template <typename RHS_TYPE>
     requires (
         units::traits::is_unit_t<TYPE>::value && 
@@ -512,6 +540,16 @@ public:
         return result;
     }
 
+    /**
+     * \brief Multiplication by a scalar operator.
+     * 
+     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+     * this makes radians a pure number without physical dimension.
+     * 
+     * \tparam RHS_TYPE right-hand side operand type
+     * \param val value to be multiplied by
+     * \return product of the matrix multiplied by the value
+     */
     template <typename RHS_TYPE>
     requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
     auto operator*(const RHS_TYPE& val) const
@@ -560,6 +598,9 @@ public:
 
     /**
      * \brief Multiplication by a vector operator.
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param vect vector to be multiplied by
+     * \return product of the matrix multiplied by the vector
      */
     template <typename RHS_TYPE>
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
@@ -570,6 +611,12 @@ public:
         return result;
     }
 
+    /**
+     * \brief Multiplication by a vector operator.
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param vect vector to be multiplied by
+     * \return product of the matrix multiplied by the vector
+     */
     template <typename RHS_TYPE>
     requires (
         (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
@@ -591,6 +638,12 @@ public:
         }
     }
 
+    /**
+     * \brief Multiplication by a vector operator.
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param vect vector to be multiplied by
+     * \return product of the matrix multiplied by the vector
+     */
     template <typename RHS_TYPE>
     requires (
         units::traits::is_unit_t<TYPE>::value && 
@@ -612,6 +665,16 @@ public:
         return result;
     }
 
+    /**
+     * \brief Multiplication by a vector operator.
+     * 
+     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+     * this makes radians a pure number without physical dimension.
+     * 
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param vect vector to be multiplied by
+     * \return product of the matrix multiplied by the vector
+     */
     template <typename RHS_TYPE>
     requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
     auto operator*(const VectorN<RHS_TYPE, ROWS>& vect) const
@@ -660,6 +723,10 @@ public:
 
     /**
      * \brief Multiplication by a matrix operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \tparam P number of columns of the right-hand side matrix
+     * \param mat matrix to be multiplied by
+     * \return product of the matrices
      */
     template <typename RHS_TYPE, unsigned int P>
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
@@ -670,6 +737,13 @@ public:
         return result;
     }
 
+    /**
+     * \brief Multiplication by a matrix operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \tparam P number of columns of the right-hand side matrix
+     * \param mat matrix to be multiplied by
+     * \return product of the matrices
+     */
     template <typename RHS_TYPE, unsigned int P>
     requires (
         (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
@@ -691,6 +765,13 @@ public:
         }
     }
 
+    /**
+     * \brief Multiplication by a matrix operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \tparam P number of columns of the right-hand side matrix
+     * \param mat matrix to be multiplied by
+     * \return product of the matrices
+     */
     template <typename RHS_TYPE, unsigned int P>
     requires (
         units::traits::is_unit_t<TYPE>::value && 
@@ -712,6 +793,17 @@ public:
         return result;
     }
 
+    /**
+     * \brief Multiplication by a matrix operator.
+     * 
+     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+     * this makes radians a pure number without physical dimension.
+     * 
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \tparam P number of columns of the right-hand side matrix
+     * \param mat matrix to be multiplied by
+     * \return product of the matrices
+     */
     template <typename RHS_TYPE, unsigned int P>
     requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
     auto operator*(const MatrixMxN<RHS_TYPE,COLS, P>& mat) const
@@ -760,9 +852,6 @@ public:
 
     /**
      * \brief Division by a scalar operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are both arithmetic types.
-     * 
      * \tparam RHS_TYPE type of the right-hand side value
      * \param val value to be divided by
      * \return matrix divided by the value
@@ -778,10 +867,6 @@ public:
 
     /**
      * \brief Division by a scalar operator.
-     * 
-     * This template is enabled when TYPE or TYPE_RHS is an arithmetic type
-     * while the other is a unit.
-     * 
      * \tparam RHS_TYPE type of the right-hand side value
      * \param val value to be divided by
      * \return matrix divided by the value
@@ -814,9 +899,6 @@ public:
 
     /**
      * \brief Division by a scalar operator.
-     * 
-     * This template is enabled when TYPE and RHS_TYPE are both units.
-     * 
      * \tparam RHS_TYPE type of the right-hand side value
      * \param val value to be divided by
      * \return matrix divided by the value
@@ -838,6 +920,12 @@ public:
         return result;
     }
 
+    /**
+     * \brief Assignment operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat right-hand side matrix
+     * \return reference to this matrix
+     */
     template <typename RHS_TYPE>
     requires (
         std::is_arithmetic<TYPE>::value && 
@@ -854,6 +942,12 @@ public:
         return *this;
     }
 
+    /**
+     * \brief Assignment operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat right-hand side matrix
+     * \return reference to this matrix
+     */
     template <typename RHS_TYPE>
     requires (
         std::is_arithmetic<TYPE>::value == false &&
@@ -871,7 +965,12 @@ public:
         return *this;
     }
 
-    /** \brief Unary addition operator. */
+    /** 
+     * \brief Unary addition operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat right-hand side matrix
+     * \return reference to this matrix
+     */
     template <typename RHS_TYPE>
     requires (
         (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
@@ -883,7 +982,12 @@ public:
         return *this;
     }
 
-    /** \brief Unary subtraction operator. */
+    /** 
+     * \brief Unary subtraction operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat right-hand side matrix
+     * \return reference to this matrix
+     */
     template <typename RHS_TYPE>
     requires (
         (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
@@ -895,7 +999,12 @@ public:
         return *this;
     }
 
-    /** \brief Unary multiplication operator (by number). */
+    /** 
+     * \brief Unary multiplication operator (by number). 
+     * \tparam RHS_TYPE type of the right-hand side value
+     * \param value value to multiply by
+     * \return reference to this matrix
+     */
     template <typename RHS_TYPE>
     requires std::is_arithmetic<RHS_TYPE>::value
     MatrixMxN<TYPE, ROWS, COLS>& operator*=(RHS_TYPE value)
@@ -904,7 +1013,12 @@ public:
         return *this;
     }
 
-    /** \brief Unary division operator (by number). */
+    /** 
+     * \brief Unary division operator (by number). 
+     * \tparam RHS_TYPE type of the right-hand side value
+     * \param value value to divide by
+     * \return reference to this matrix
+     */
     template <typename RHS_TYPE>
     requires std::is_arithmetic<RHS_TYPE>::value
     MatrixMxN<TYPE, ROWS, COLS>& operator/=(RHS_TYPE value)
@@ -913,7 +1027,11 @@ public:
         return *this;
     }
 
-    /** \brief Equality operator. */
+    /** 
+     * \brief Equality operator. 
+     * \param mat matrix to compare with
+     * \return true if the matrices are equal, false otherwise
+     */
     bool operator==(const MatrixMxN<TYPE, ROWS, COLS>& mat) const
     {
         bool result = true;
@@ -924,7 +1042,11 @@ public:
         return result;
     }
 
-    /** \brief Inequality operator. */
+    /** 
+     * \brief Inequality operator. 
+     * \param mat matrix to compare with
+     * \return true if the matrices are not equal, false otherwise
+     */
     bool operator!=(const MatrixMxN<TYPE, ROWS, COLS>& mat) const
     {
         return !(*this == mat);
@@ -933,18 +1055,6 @@ public:
 protected:
 
     TYPE _elements[kSize] = { TYPE{0} };    ///< matrix elements
-
-    /** \brief Matrix transposition algorithm. */
-    void transposeMatrix(const MatrixMxN<TYPE, ROWS, COLS> matrix, MatrixMxN<TYPE, COLS, ROWS>* result) const
-    {
-        for (unsigned int r = 0; r < kRows; ++r)
-        {
-            for (unsigned int c = 0; c < kCols; ++c)
-            {
-                (*result)(c, r) = matrix(r, c);
-            }
-        }
-    }
 };
 
 /** 
@@ -1082,7 +1192,36 @@ void multiplyMatrixByMatrix(
     }
 }
 
-/** \brief Multiplication operator. */
+/** 
+ * \brief Matrix transposition algorithm. 
+ * \tparam TYPE type of the matrix elements
+ * \tparam ROWS number of matrix rows
+ * \tparam COLS number of matrix columns
+ * \param matrix input matrix
+ * \param result output transposed matrix
+ */
+template <typename TYPE, unsigned int ROWS, unsigned int COLS>
+void transposeMatrix(const MatrixMxN<TYPE, ROWS, COLS> matrix, MatrixMxN<TYPE, COLS, ROWS>* result)
+{
+    for (unsigned int r = 0; r < ROWS; ++r)
+    {
+        for (unsigned int c = 0; c < COLS; ++c)
+        {
+            (*result)(c, r) = matrix(r, c);
+        }
+    }
+}
+
+/** 
+ * \brief Multiplication operator. 
+ * \tparam LHS_TYPE type of the left-hand side value
+ * \tparam RHS_TYPE type of the right-hand side matrix elements
+ * \tparam ROWS number of matrix rows
+ * \tparam COLS number of matrix columns
+ * \param val value to be multiplied by
+ * \param mat matrix to be multiplied
+ * \return product of the value multiplied by the matrix
+ */
 template <typename LHS_TYPE, class RHS_TYPE, unsigned int ROWS, unsigned int COLS>
 requires (
     std::is_arithmetic<LHS_TYPE>::value ||
