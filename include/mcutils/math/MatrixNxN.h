@@ -100,9 +100,9 @@ public:
      * \param mat matrix to be added
      * \return sum of the matrices
      */
-    MatrixNxN<TYPE,SIZE> operator+(const MatrixNxN<TYPE,SIZE>& mat) const
+    MatrixNxN<TYPE, SIZE> operator+(const MatrixNxN<TYPE, SIZE>& mat) const
     {
-        MatrixNxN<TYPE,SIZE> result(*this);
+        MatrixNxN<TYPE, SIZE> result(*this);
         addMatrices(*this, mat, &result);
         return result;
     }
