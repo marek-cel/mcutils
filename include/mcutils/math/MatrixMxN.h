@@ -364,6 +364,26 @@ public:
         return result;
     }
 
+    /**
+     * \brief Addition operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param matrix matrix to be added
+     * \return sum of the matrices
+     */
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value == false && 
+        std::is_arithmetic<RHS_TYPE>::value == false &&
+        std::is_same<TYPE, RHS_TYPE>::value == false &&
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    auto operator+(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix) const
+    {
+        MatrixMxN<TYPE, kRows, kCols> result(*this);
+        addMatrices(*this, matrix, &result);
+        return result;
+    }
+
     /** \brief Negation operator. */
     MatrixMxN<TYPE, ROWS, COLS> operator-() const
     {
@@ -374,6 +394,35 @@ public:
 
     /** \brief Subtraction operator. */
     MatrixMxN<TYPE, ROWS, COLS> operator-(const MatrixMxN<TYPE, ROWS, COLS>& matrix) const
+    {
+        MatrixMxN<TYPE, kRows, kCols> result;
+        subtractMatrices(*this, matrix, &result);
+        return result;
+    }
+
+    /** \brief Subtraction operator. */
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value  && 
+        std::is_arithmetic<RHS_TYPE>::value && 
+        std::is_same<TYPE, RHS_TYPE>::value == false
+    )
+    auto operator-(const MatrixMxN<TYPE, ROWS, COLS>& matrix) const
+    {
+        MatrixMxN<std::common_type_t<TYPE, RHS_TYPE>, kRows, kCols> result;
+        subtractMatrices(*this, matrix, &result);
+        return result;
+    }
+
+    /** \brief Subtraction operator. */
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value == false && 
+        std::is_arithmetic<RHS_TYPE>::value == false &&
+        std::is_same<TYPE, RHS_TYPE>::value == false &&
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    auto operator-(const MatrixMxN<TYPE, ROWS, COLS>& matrix) const
     {
         MatrixMxN<TYPE, kRows, kCols> result;
         subtractMatrices(*this, matrix, &result);

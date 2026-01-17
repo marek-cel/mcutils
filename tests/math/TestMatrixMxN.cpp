@@ -328,6 +328,34 @@ TEST_F(TestMatrixMxN, CanAdd)
     }
 }
 
+TEST_F(TestMatrixMxN, CanAddDifferentType)
+{
+    constexpr double val = 2.0;
+
+    std::vector<TYPE> x
+    {
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    };
+
+    mc::MatrixMxN<TYPE,ROWS,COLS> m1;
+    mc::MatrixMxN<float,ROWS,COLS> m2;
+    mc::MatrixMxN<TYPE,ROWS,COLS> mr;
+    m1.setFromStdVector(x);
+    m2.fill(val);
+    mr = m1 + m2;
+
+    for ( int r = 0; r < ROWS; ++r )
+    {
+        for ( int c = 0; c < COLS; ++c )
+        {
+            double ref_value = x[r*COLS + c] + val;
+            EXPECT_DOUBLE_EQ(mr(r,c), ref_value) << "Error at row " << r << " and col " << c;
+        }
+    }
+}
+
 TEST_F(TestMatrixMxN, CanNegate)
 {
     std::vector<TYPE> x
@@ -366,6 +394,34 @@ TEST_F(TestMatrixMxN, CanSubtract)
 
     mc::MatrixMxN<TYPE,ROWS,COLS> m1;
     mc::MatrixMxN<TYPE,ROWS,COLS> m2;
+    mc::MatrixMxN<TYPE,ROWS,COLS> mr;
+    m1.setFromStdVector(x);
+    m2.fill(val);
+    mr = m1 - m2;
+
+    for ( int r = 0; r < ROWS; ++r )
+    {
+        for ( int c = 0; c < COLS; ++c )
+        {
+            double ref_value = x[r*COLS + c] - val;
+            EXPECT_DOUBLE_EQ(mr(r,c), ref_value) << "Error at row " << r << " and col " << c;
+        }
+    }
+}
+
+TEST_F(TestMatrixMxN, CanSubtractDifferentType)
+{
+    constexpr double val = 2.0;
+
+    std::vector<TYPE> x
+    {
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    };
+
+    mc::MatrixMxN<TYPE,ROWS,COLS> m1;
+    mc::MatrixMxN<float,ROWS,COLS> m2;
     mc::MatrixMxN<TYPE,ROWS,COLS> mr;
     m1.setFromStdVector(x);
     m2.fill(val);
