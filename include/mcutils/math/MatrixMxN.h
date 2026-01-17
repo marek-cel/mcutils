@@ -91,7 +91,7 @@ public:
     )
     MatrixMxN(const MatrixMxN<TYPE2, ROWS, COLS>& mat)
     {
-        for (unsigned int i = 0; i < this->kSize; ++i)
+        for (unsigned int i = 0; i < kSize; ++i)
         {
             _elements[i] = mat(i);
         }
@@ -373,7 +373,7 @@ public:
     /**
      * \brief Addition operator.
      * \tparam RHS_TYPE type of the right-hand side matrix elements
-     * \param matrix matrix to be added
+     * \param mat matrix to be added
      * \return sum of the matrices
      */
     template <typename RHS_TYPE>
@@ -392,7 +392,7 @@ public:
     /**
      * \brief Addition operator.
      * \tparam RHS_TYPE type of the right-hand side matrix elements
-     * \param matrix matrix to be added
+     * \param mat matrix to be added
      * \return sum of the matrices
      */
     template <typename RHS_TYPE>
@@ -422,7 +422,7 @@ public:
 
     /** 
      * \brief Subtraction operator.
-     * \param matrix matrix to be subtracted
+     * \param mat matrix to be subtracted
      * \return difference of the matrices
      */
     MatrixMxN<TYPE, ROWS, COLS> operator-(const MatrixMxN<TYPE, ROWS, COLS>& mat) const
@@ -435,7 +435,7 @@ public:
     /** 
      * \brief Subtraction operator.
      * \tparam RHS_TYPE type of the right-hand side matrix elements
-     * \param matrix matrix to be subtracted
+     * \param mat matrix to be subtracted
      * \return difference of the matrices
      */
     template <typename RHS_TYPE>
@@ -454,7 +454,7 @@ public:
     /** 
      * \brief Subtraction operator.
      * \tparam RHS_TYPE type of the right-hand side matrix elements
-     * \param matrix matrix to be subtracted
+     * \param mat matrix to be subtracted
      * \return difference of the matrices
      */
     template <typename RHS_TYPE>
@@ -560,7 +560,7 @@ public:
                 typename units::detail::strip_angle_dimension<TYPE>::stripped_type, 
                 ROWS, COLS
             > temp;
-            for (unsigned int i = 0; i < this->kSize; ++i)
+            for (unsigned int i = 0; i < kSize; ++i)
             {
                 temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
             }
@@ -606,7 +606,7 @@ public:
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
     auto operator*(const VectorN<RHS_TYPE, ROWS>& vect) const
     {
-        VectorN<std::common_type_t<TYPE, RHS_TYPE>,ROWS> result;
+        VectorN<std::common_type_t<TYPE, RHS_TYPE>, ROWS> result;
         multiplyMatrixByVector(*this, vect, &result);
         return result;
     }
@@ -682,7 +682,7 @@ public:
         if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
         {
             MatrixMxN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, ROWS, COLS> temp;
-            for (unsigned int i = 0; i < this->kSize; ++i)
+            for (unsigned int i = 0; i < kSize; ++i)
             {
                 temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
             }
@@ -730,7 +730,7 @@ public:
      */
     template <typename RHS_TYPE, unsigned int P>
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
-    auto operator*(const MatrixMxN<RHS_TYPE,COLS, P>& mat) const
+    auto operator*(const MatrixMxN<RHS_TYPE, COLS, P>& mat) const
     {
         MatrixMxN<std::common_type_t<TYPE, RHS_TYPE>, ROWS, P> result;
         multiplyMatrixByMatrix(*this, mat, &result);
@@ -749,7 +749,7 @@ public:
         (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
         (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
     )
-    auto operator*(const MatrixMxN<RHS_TYPE,COLS, P>& mat) const
+    auto operator*(const MatrixMxN<RHS_TYPE, COLS, P>& mat) const
     {
         if constexpr (units::traits::is_unit_t<TYPE>::value)
         {
@@ -778,7 +778,7 @@ public:
         units::traits::is_unit_t<RHS_TYPE>::value &&
         units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value == false
     )
-    auto operator*(const MatrixMxN<RHS_TYPE,COLS, P>& mat) const
+    auto operator*(const MatrixMxN<RHS_TYPE, COLS, P>& mat) const
     {
         MatrixMxN<
             units::unit_t<
@@ -806,12 +806,12 @@ public:
      */
     template <typename RHS_TYPE, unsigned int P>
     requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
-    auto operator*(const MatrixMxN<RHS_TYPE,COLS, P>& mat) const
+    auto operator*(const MatrixMxN<RHS_TYPE, COLS, P>& mat) const
     {
         if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
         {
             MatrixMxN<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type, ROWS, P> temp;
-            for (unsigned int i = 0; i < this->kSize; ++i)
+            for (unsigned int i = 0; i < kSize; ++i)
             {
                 temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
             }
@@ -831,7 +831,7 @@ public:
         else
         {
             MatrixMxN<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type, ROWS, P> temp;
-            for (unsigned int i = 0; i < this->kSize; ++i)
+            for (unsigned int i = 0; i < kSize; ++i)
             {
                 temp(i) = units::detail::strip_angle_dimension<TYPE>::strip(mat(i));
             }
@@ -934,7 +934,7 @@ public:
     )
     MatrixMxN<TYPE, ROWS, COLS>& operator=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& mat)
     {
-        for (unsigned int i = 0; i < this->kSize; ++i)
+        for (unsigned int i = 0; i < kSize; ++i)
         {
             _elements[i] = static_cast<TYPE>(mat(i));
         }
@@ -957,7 +957,7 @@ public:
     )
     MatrixMxN<TYPE, ROWS, COLS>& operator=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& mat)
     {
-        for (unsigned int i = 0; i < this->kSize; ++i)
+        for (unsigned int i = 0; i < kSize; ++i)
         {
             _elements[i] = mat(i);
         }
@@ -1002,28 +1002,28 @@ public:
     /** 
      * \brief Unary multiplication operator (by number). 
      * \tparam RHS_TYPE type of the right-hand side value
-     * \param value value to multiply by
+     * \param val value to multiply by
      * \return reference to this matrix
      */
     template <typename RHS_TYPE>
     requires std::is_arithmetic<RHS_TYPE>::value
-    MatrixMxN<TYPE, ROWS, COLS>& operator*=(RHS_TYPE value)
+    MatrixMxN<TYPE, ROWS, COLS>& operator*=(RHS_TYPE val)
     {
-        *this = (*this) * value;
+        *this = (*this) * val;
         return *this;
     }
 
     /** 
      * \brief Unary division operator (by number). 
      * \tparam RHS_TYPE type of the right-hand side value
-     * \param value value to divide by
+     * \param val value to divide by
      * \return reference to this matrix
      */
     template <typename RHS_TYPE>
     requires std::is_arithmetic<RHS_TYPE>::value
-    MatrixMxN<TYPE, ROWS, COLS>& operator/=(RHS_TYPE value)
+    MatrixMxN<TYPE, ROWS, COLS>& operator/=(RHS_TYPE val)
     {
-        *this = (*this) / value;
+        *this = (*this) / val;
         return *this;
     }
 
@@ -1227,7 +1227,7 @@ requires (
     std::is_arithmetic<LHS_TYPE>::value ||
     units::traits::is_unit_t<LHS_TYPE>::value
 )
-auto operator*(LHS_TYPE val, const MatrixMxN<RHS_TYPE,ROWS,COLS>& mat)
+auto operator*(LHS_TYPE val, const MatrixMxN<RHS_TYPE, ROWS, COLS>& mat)
 {
     return mat * val;
 }
