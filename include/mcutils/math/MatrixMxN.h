@@ -75,6 +75,29 @@ public:
     // LCOV_EXCL_STOP
 
     /**
+     * \brief Converting constructor.
+     * 
+     * This template is enabled when TYPE and TYPE2 are convertible units.
+     * 
+     * \tparam TYPE2 type of the other matrix elements
+     * \param mat other matrix
+     */
+    template <typename TYPE2>
+    requires (
+        std::is_arithmetic<TYPE>::value == false && 
+        std::is_arithmetic<TYPE2>::value == false &&
+        std::is_same<TYPE, TYPE2>::value == false &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE2>::value
+    )
+    MatrixMxN(const MatrixMxN<TYPE2, ROWS, COLS>& mat)
+    {
+        for (unsigned int i = 0; i < this->kSize; ++i)
+        {
+            _elements[i] = mat(i);
+        }
+    }
+
+    /**
      * \brief Fills all matrix elements with the given value.
      * \param val given value to fill all matrix elements
      */
@@ -338,10 +361,10 @@ public:
      * \param matrix matrix to be added
      * \return sum of the matrices
      */
-    MatrixMxN<TYPE, ROWS, COLS> operator+(const MatrixMxN<TYPE, ROWS, COLS>& matrix) const
+    MatrixMxN<TYPE, ROWS, COLS> operator+(const MatrixMxN<TYPE, ROWS, COLS>& mat) const
     {
         MatrixMxN<TYPE, kRows, kCols> result;
-        addMatrices(*this, matrix, &result);
+        addMatrices(*this, mat, &result);
         return result;
     }
 
@@ -357,10 +380,10 @@ public:
         std::is_arithmetic<RHS_TYPE>::value && 
         std::is_same<TYPE, RHS_TYPE>::value == false
     )
-    auto operator+(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix) const
+    auto operator+(const MatrixMxN<RHS_TYPE, ROWS, COLS>& mat) const
     {
         MatrixMxN<std::common_type_t<TYPE, RHS_TYPE>, kRows, kCols> result(*this);
-        addMatrices(*this, matrix, &result);
+        addMatrices(*this, mat, &result);
         return result;
     }
 
@@ -377,10 +400,10 @@ public:
         std::is_same<TYPE, RHS_TYPE>::value == false &&
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
-    auto operator+(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix) const
+    auto operator+(const MatrixMxN<RHS_TYPE, ROWS, COLS>& mat) const
     {
         MatrixMxN<TYPE, kRows, kCols> result(*this);
-        addMatrices(*this, matrix, &result);
+        addMatrices(*this, mat, &result);
         return result;
     }
 
@@ -393,10 +416,10 @@ public:
     }
 
     /** \brief Subtraction operator. */
-    MatrixMxN<TYPE, ROWS, COLS> operator-(const MatrixMxN<TYPE, ROWS, COLS>& matrix) const
+    MatrixMxN<TYPE, ROWS, COLS> operator-(const MatrixMxN<TYPE, ROWS, COLS>& mat) const
     {
         MatrixMxN<TYPE, kRows, kCols> result;
-        subtractMatrices(*this, matrix, &result);
+        subtractMatrices(*this, mat, &result);
         return result;
     }
 
@@ -407,10 +430,10 @@ public:
         std::is_arithmetic<RHS_TYPE>::value && 
         std::is_same<TYPE, RHS_TYPE>::value == false
     )
-    auto operator-(const MatrixMxN<TYPE, ROWS, COLS>& matrix) const
+    auto operator-(const MatrixMxN<TYPE, ROWS, COLS>& mat) const
     {
         MatrixMxN<std::common_type_t<TYPE, RHS_TYPE>, kRows, kCols> result;
-        subtractMatrices(*this, matrix, &result);
+        subtractMatrices(*this, mat, &result);
         return result;
     }
 
@@ -422,10 +445,10 @@ public:
         std::is_same<TYPE, RHS_TYPE>::value == false &&
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
-    auto operator-(const MatrixMxN<TYPE, ROWS, COLS>& matrix) const
+    auto operator-(const MatrixMxN<TYPE, ROWS, COLS>& mat) const
     {
         MatrixMxN<TYPE, kRows, kCols> result;
-        subtractMatrices(*this, matrix, &result);
+        subtractMatrices(*this, mat, &result);
         return result;
     }
 
@@ -640,10 +663,10 @@ public:
      */
     template <typename RHS_TYPE, unsigned int P>
     requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
-    auto operator*(const MatrixMxN<RHS_TYPE,COLS, P>& matrix) const
+    auto operator*(const MatrixMxN<RHS_TYPE,COLS, P>& mat) const
     {
         MatrixMxN<std::common_type_t<TYPE, RHS_TYPE>, ROWS, P> result;
-        multiplyMatrixByMatrix(*this, matrix, &result);
+        multiplyMatrixByMatrix(*this, mat, &result);
         return result;
     }
 
@@ -652,18 +675,18 @@ public:
         (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
         (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
     )
-    auto operator*(const MatrixMxN<RHS_TYPE,COLS, P>& matrix) const
+    auto operator*(const MatrixMxN<RHS_TYPE,COLS, P>& mat) const
     {
         if constexpr (units::traits::is_unit_t<TYPE>::value)
         {
             MatrixMxN<TYPE, ROWS, P> result;
-            multiplyMatrixByMatrix(*this, matrix, &result);
+            multiplyMatrixByMatrix(*this, mat, &result);
             return result;
         } 
         else 
         {
             MatrixMxN<RHS_TYPE, ROWS, P> result;
-            multiplyMatrixByMatrix(*this, matrix, &result);
+            multiplyMatrixByMatrix(*this, mat, &result);
             return result;
         }
     }
@@ -674,7 +697,7 @@ public:
         units::traits::is_unit_t<RHS_TYPE>::value &&
         units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value == false
     )
-    auto operator*(const MatrixMxN<RHS_TYPE,COLS, P>& matrix) const
+    auto operator*(const MatrixMxN<RHS_TYPE,COLS, P>& mat) const
     {
         MatrixMxN<
             units::unit_t<
@@ -685,13 +708,13 @@ public:
             >,
             ROWS, P
         > result;
-        multiplyMatrixByMatrix(*this, matrix, &result);
+        multiplyMatrixByMatrix(*this, mat, &result);
         return result;
     }
 
     template <typename RHS_TYPE, unsigned int P>
     requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
-    auto operator*(const MatrixMxN<RHS_TYPE,COLS, P>& matrix) const
+    auto operator*(const MatrixMxN<RHS_TYPE,COLS, P>& mat) const
     {
         if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
         {
@@ -710,7 +733,7 @@ public:
                 >,
                 ROWS, P
             > result;
-            multiplyMatrixByMatrix(temp, matrix, &result);
+            multiplyMatrixByMatrix(temp, mat, &result);
             return result;
         }
         else
@@ -718,7 +741,7 @@ public:
             MatrixMxN<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type, ROWS, P> temp;
             for (unsigned int i = 0; i < this->kSize; ++i)
             {
-                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip(matrix(i));
+                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip(mat(i));
             }
 
             MatrixMxN<
@@ -821,11 +844,11 @@ public:
         std::is_arithmetic<RHS_TYPE>::value &&
         std::is_same<TYPE, RHS_TYPE>::value == false
     )
-    MatrixMxN<TYPE, ROWS, COLS>& operator=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix)
+    MatrixMxN<TYPE, ROWS, COLS>& operator=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& mat)
     {
         for (unsigned int i = 0; i < this->kSize; ++i)
         {
-            _elements[i] = static_cast<TYPE>(matrix(i));
+            _elements[i] = static_cast<TYPE>(mat(i));
         }
 
         return *this;
@@ -838,11 +861,11 @@ public:
         std::is_same<TYPE, RHS_TYPE>::value == false &&
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
-    MatrixMxN<TYPE, ROWS, COLS>& operator=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix)
+    MatrixMxN<TYPE, ROWS, COLS>& operator=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& mat)
     {
         for (unsigned int i = 0; i < this->kSize; ++i)
         {
-            _elements[i] = matrix(i);
+            _elements[i] = mat(i);
         }
 
         return *this;
@@ -854,9 +877,9 @@ public:
         (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
-    MatrixMxN<TYPE, ROWS, COLS>& operator+=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix)
+    MatrixMxN<TYPE, ROWS, COLS>& operator+=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& mat)
     {
-        addMatrices(*this, matrix, this);
+        addMatrices(*this, mat, this);
         return *this;
     }
 
@@ -866,9 +889,9 @@ public:
         (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
         units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
     )
-    MatrixMxN<TYPE, ROWS, COLS>& operator-=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& matrix)
+    MatrixMxN<TYPE, ROWS, COLS>& operator-=(const MatrixMxN<RHS_TYPE, ROWS, COLS>& mat)
     {
-        subtractMatrices(*this, matrix, this);
+        subtractMatrices(*this, mat, this);
         return *this;
     }
 
@@ -891,20 +914,20 @@ public:
     }
 
     /** \brief Equality operator. */
-    bool operator==(const MatrixMxN<TYPE, ROWS, COLS>& matrix) const
+    bool operator==(const MatrixMxN<TYPE, ROWS, COLS>& mat) const
     {
         bool result = true;
         for (unsigned int i = 0; i < kSize; ++i)
         {
-            result = result && (_elements[i] == matrix._elements[i]);
+            result = result && (_elements[i] == mat._elements[i]);
         }
         return result;
     }
 
     /** \brief Inequality operator. */
-    bool operator!=(const MatrixMxN<TYPE, ROWS, COLS>& matrix) const
+    bool operator!=(const MatrixMxN<TYPE, ROWS, COLS>& mat) const
     {
-        return !(*this == matrix);
+        return !(*this == mat);
     }
 
 protected:
@@ -993,7 +1016,7 @@ void subtractMatrices(
  */
 template <typename LHS_TYPE, typename RHS_TYPE, typename RESULT_TYPE, unsigned int ROWS, unsigned int COLS>
 void multiplyMatrixByScalar(
-    const MatrixMxN<LHS_TYPE, ROWS, COLS>& matrix, 
+    const MatrixMxN<LHS_TYPE, ROWS, COLS>& mat, 
     const RHS_TYPE& val,
     MatrixMxN<RESULT_TYPE, ROWS, COLS>* result
 )
@@ -1002,7 +1025,7 @@ void multiplyMatrixByScalar(
     {
         for (unsigned int c = 0; c < COLS; ++c)
         {
-            (*result)(r, c) = matrix(r, c) * val;
+            (*result)(r, c) = mat(r, c) * val;
         }
     }
 }
@@ -1017,7 +1040,7 @@ void multiplyMatrixByScalar(
  */
 template <typename LHS_TYPE, typename RHS_TYPE, typename RESULT_TYPE, unsigned int ROWS, unsigned int COLS>
 void multiplyMatrixByVector(
-    const MatrixMxN<LHS_TYPE, ROWS, COLS>& matrix, 
+    const MatrixMxN<LHS_TYPE, ROWS, COLS>& mat, 
     const VectorN<RHS_TYPE, ROWS>& vect,
     VectorN<RESULT_TYPE, ROWS>* result
 )
@@ -1026,7 +1049,7 @@ void multiplyMatrixByVector(
     {
         for (unsigned int c = 0; c < COLS; ++c)
         {
-            (*result)(r) += matrix(r,c) * vect(c);
+            (*result)(r) += mat(r,c) * vect(c);
         }
     }
 }
@@ -1042,8 +1065,8 @@ void multiplyMatrixByVector(
  */
 template <typename LHS_TYPE, typename RHS_TYPE, typename RESULT_TYPE, unsigned int M, unsigned int N, unsigned int P>
 void multiplyMatrixByMatrix(
-    const MatrixMxN<LHS_TYPE, M, N>& m1, 
-    const MatrixMxN<RHS_TYPE, N, P>& m2,
+    const MatrixMxN<LHS_TYPE, M, N>& lhs,
+    const MatrixMxN<RHS_TYPE, N, P>& rhs,
     MatrixMxN<RESULT_TYPE,M,P>* result)
 {
     for (unsigned int i = 0; i < M; ++i)
@@ -1053,30 +1076,21 @@ void multiplyMatrixByMatrix(
             (*result)(i, j) = RESULT_TYPE{0};
             for (unsigned int k = 0; k < N; ++k)
             {
-                (*result)(i, j) += m1(i, k) * m2(k, j);
+                (*result)(i, j) += lhs(i, k) * rhs(k, j);
             }
         }
     }
 }
 
 /** \brief Multiplication operator. */
-template <typename TYPE1, class TYPE2, unsigned int ROWS, unsigned int COLS, typename std::enable_if<
-    units::traits::is_unit_t<TYPE1>::value, int>::type = 0
->
-auto operator*(TYPE1 value, const MatrixMxN<TYPE2,ROWS,COLS>& matrix)
+template <typename LHS_TYPE, class RHS_TYPE, unsigned int ROWS, unsigned int COLS>
+requires (
+    std::is_arithmetic<LHS_TYPE>::value ||
+    units::traits::is_unit_t<LHS_TYPE>::value
+)
+auto operator*(LHS_TYPE val, const MatrixMxN<RHS_TYPE,ROWS,COLS>& mat)
 {
-    return matrix * value;
-}
-
-/**
- * \brief Multiplication operator.
- *
- * This is a specialization for the case when the value is a number.
- */
-template<typename TYPE, unsigned int ROWS, unsigned int COLS>
-MatrixMxN<TYPE,ROWS,COLS> operator*(double value, const MatrixMxN<TYPE,ROWS,COLS>& matrix)
-{
-    return matrix * value;
+    return mat * val;
 }
 
 } // namespace mc
