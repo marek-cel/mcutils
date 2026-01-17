@@ -71,51 +71,6 @@ public:
     // LCOV_EXCL_STOP
 
     /**
-     * \brief Converting constructor.
-     * 
-     * This template is enabled when TYPE and TYPE2 are both arithmetic types.
-     * 
-     * \tparam TYPE2 type of the other vector elements
-     * \param vect other vector
-     */
-    template <typename TYPE2>
-    requires (
-        std::is_arithmetic<TYPE>::value &&
-        std::is_arithmetic<TYPE2>::value && 
-        std::is_same<TYPE, TYPE2>::value == false
-    )
-    VectorN(const VectorN<TYPE2, SIZE>& vect)
-    {
-        for (unsigned int i = 0; i < SIZE; ++i)
-        {
-            _elements[i] = static_cast<TYPE>(vect(i));
-        }
-    }
-
-    /**
-     * \brief Converting constructor.
-     * 
-     * This template is enabled when TYPE and TYPE2 are convertible units.
-     * 
-     * \tparam TYPE2 type of the other vector elements
-     * \param vect other vector
-     */
-    template <typename TYPE2>
-    requires (
-        std::is_arithmetic<TYPE>::value == false && 
-        std::is_arithmetic<TYPE2>::value == false &&
-        std::is_same<TYPE, TYPE2>::value == false &&
-        units::traits::is_convertible_unit_t<TYPE, TYPE2>::value
-    )
-    VectorN(const VectorN<TYPE2, SIZE>& vect)
-    {
-        for (unsigned int i = 0; i < SIZE; ++i)
-        {
-            _elements[i] = vect(i);
-        }
-    }
-
-    /**
      * \brief Checks if all elements in the vector are valid.
      *
      * This function verifies that none of the elements in the vector are NaN (not a number)

@@ -66,24 +66,6 @@ public:
 
     /**
      * \brief Constructor.
-     * \tparam TYPE2 type of the other vector elements
-     * \param x value of the x element
-     * \param y value of the y element
-     * \param z value of the z element
-     */
-    template <typename TYPE2>
-    requires (
-        std::is_arithmetic<TYPE>::value &&
-        std::is_arithmetic<TYPE2>::value && 
-        std::is_same<TYPE, TYPE2>::value == false
-    )
-    Vector3(TYPE2 x, TYPE2 y, TYPE2 z)
-    {
-        set(static_cast<TYPE>(x), static_cast<TYPE>(y), static_cast<TYPE>(z));
-    }
-
-    /**
-     * \brief Constructor.
      * \param x value of the x element
      * \param y value of the y element
      * \param z value of the z element
