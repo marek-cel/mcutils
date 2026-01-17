@@ -63,6 +63,57 @@ public:
     }
 
     /**
+     * \brief Converting constructor.
+     * \tparam TYPE_XX type of the xx element
+     * \tparam TYPE_XY type of the xy element
+     * \tparam TYPE_XZ type of the xz element
+     * \tparam TYPE_YX type of the yx element
+     * \tparam TYPE_YY type of the yy element
+     * \tparam TYPE_YZ type of the yz element
+     * \tparam TYPE_ZX type of the zx element
+     * \tparam TYPE_ZY type of the zy element
+     * \tparam TYPE_ZZ type of the zz element
+     * \param xx value of the xx element
+     * \param xy value of the xy element
+     * \param xz value of the xz element
+     * \param yx value of the yx element
+     * \param yy value of the yy element
+     * \param yz value of the yz element
+     * \param zx value of the zx element
+     * \param zy value of the zy element
+     * \param zz value of the zz element
+     */
+    template <typename TYPE_XX, typename TYPE_XY, typename TYPE_XZ,
+              typename TYPE_YX, typename TYPE_YY, typename TYPE_YZ,
+              typename TYPE_ZX, typename TYPE_ZY, typename TYPE_ZZ>
+    requires (
+        std::is_arithmetic<TYPE_XX>::value == false &&
+        std::is_arithmetic<TYPE_XY>::value == false &&
+        std::is_arithmetic<TYPE_XZ>::value == false &&
+        std::is_arithmetic<TYPE_YX>::value == false &&
+        std::is_arithmetic<TYPE_YY>::value == false &&
+        std::is_arithmetic<TYPE_YZ>::value == false &&
+        std::is_arithmetic<TYPE_ZX>::value == false &&
+        std::is_arithmetic<TYPE_ZY>::value == false &&
+        std::is_arithmetic<TYPE_ZZ>::value == false &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_XX>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_XY>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_XZ>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_YX>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_YY>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_YZ>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_ZX>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_ZY>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_ZZ>::value
+    )
+    Matrix3x3(TYPE_XX xx = TYPE{0}, TYPE_XY xy = TYPE{0}, TYPE_XZ xz = TYPE{0},
+              TYPE_YX yx = TYPE{0}, TYPE_YY yy = TYPE{0}, TYPE_YZ yz = TYPE{0},
+              TYPE_ZX zx = TYPE{0}, TYPE_ZY zy = TYPE{0}, TYPE_ZZ zz = TYPE{0})
+    {
+        set(xx, xy, xz, yx, yy, yz, zx, zy, zz);
+    }
+
+    /**
      * \brief Sets items of the matrix.
      * \param xx item at position xx
      * \param xy item at position xy
@@ -77,6 +128,65 @@ public:
     void set(TYPE xx, TYPE xy, TYPE xz,
              TYPE yx, TYPE yy, TYPE yz,
              TYPE zx, TYPE zy, TYPE zz)
+    {
+        this->_elements[0] = xx;
+        this->_elements[1] = xy;
+        this->_elements[2] = xz;
+        this->_elements[3] = yx;
+        this->_elements[4] = yy;
+        this->_elements[5] = yz;
+        this->_elements[6] = zx;
+        this->_elements[7] = zy;
+        this->_elements[8] = zz;
+    }
+
+    /**
+     * \brief Sets items of the matrix.
+     * \tparam TYPE_XX type of the xx element
+     * \tparam TYPE_XY type of the xy element
+     * \tparam TYPE_XZ type of the xz element
+     * \tparam TYPE_YX type of the yx element
+     * \tparam TYPE_YY type of the yy element
+     * \tparam TYPE_YZ type of the yz element
+     * \tparam TYPE_ZX type of the zx element
+     * \tparam TYPE_ZY type of the zy element
+     * \tparam TYPE_ZZ type of the zz element
+     * \param xx value of the xx element
+     * \param xy value of the xy element
+     * \param xz value of the xz element
+     * \param yx value of the yx element
+     * \param yy value of the yy element
+     * \param yz value of the yz element
+     * \param zx value of the zx element
+     * \param zy value of the zy element
+     * \param zz value of the zz element
+     */
+    template <typename TYPE_XX, typename TYPE_XY, typename TYPE_XZ,
+              typename TYPE_YX, typename TYPE_YY, typename TYPE_YZ,
+              typename TYPE_ZX, typename TYPE_ZY, typename TYPE_ZZ>
+    requires (
+        std::is_arithmetic<TYPE_XX>::value == false &&
+        std::is_arithmetic<TYPE_XY>::value == false &&
+        std::is_arithmetic<TYPE_XZ>::value == false &&
+        std::is_arithmetic<TYPE_YX>::value == false &&
+        std::is_arithmetic<TYPE_YY>::value == false &&
+        std::is_arithmetic<TYPE_YZ>::value == false &&
+        std::is_arithmetic<TYPE_ZX>::value == false &&
+        std::is_arithmetic<TYPE_ZY>::value == false &&
+        std::is_arithmetic<TYPE_ZZ>::value == false &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_XX>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_XY>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_XZ>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_YX>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_YY>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_YZ>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_ZX>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_ZY>::value &&
+        units::traits::is_convertible_unit_t<TYPE, TYPE_ZZ>::value
+    )
+    void set(TYPE_XX xx = TYPE{0}, TYPE_XY xy = TYPE{0}, TYPE_XZ xz = TYPE{0},
+             TYPE_YX yx = TYPE{0}, TYPE_YY yy = TYPE{0}, TYPE_YZ yz = TYPE{0},
+             TYPE_ZX zx = TYPE{0}, TYPE_ZY zy = TYPE{0}, TYPE_ZZ zz = TYPE{0})
     {
         this->_elements[0] = xx;
         this->_elements[1] = xy;
@@ -113,54 +223,89 @@ public:
     Matrix3x3<TYPE> getTransposed() const
     {
         Matrix3x3<TYPE> result;
-        this->transposeMatrix(*this, &result);
+        transposeMatrix(*this, &result);
         return result;
     }
 
-    /** \brief Converts the matrix to a dimensionless matrix. */
-    inline Matrix3x3<double> getDimensionless() const
+    /**
+     * \brief Casting operator.
+     *  Converts the matrix to another type.
+     * \tparam NEW_TYPE type of the new matrix elements
+     * \return converted matrix
+     */
+    template <class NEW_TYPE>
+    requires (
+        std::is_same<TYPE, NEW_TYPE>::value == false &&
+        (std::is_arithmetic<NEW_TYPE>::value || units::traits::is_convertible_unit_t<NEW_TYPE, TYPE>::value)
+    )
+    operator Matrix3x3<NEW_TYPE>() const
     {
-        Matrix3x3<double> result;
+        Matrix3x3<NEW_TYPE> result;
         for (unsigned int r = 0; r < this->kRows; ++r)
         {
             for (unsigned int c = 0; c < this->kCols; ++c)
             {
-                result(r, c) = static_cast<double>(this->_elements[r * this->kCols + c]);
+                result(r, c) = static_cast<NEW_TYPE>(this->_elements[r * this->kCols + c]);
             }
         }
         return result;
     }
 
-    /** \brief Casting operator. */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value
-        &&
-        units::traits::is_convertible_unit_t<TYPE, TYPE2>::value, int>::type = 0
-    >
-    operator Matrix3x3<TYPE2>() const
-    {
-        Matrix3x3<TYPE2> result;
-        for (unsigned int r = 0; r < this->kRows; ++r)
-        {
-            for (unsigned int c = 0; c < this->kCols; ++c)
-            {
-                result(r, c) = this->_elements[r * this->kCols + c];
-            }
-        }
-        return result;
-    }
-
-    /** \brief Addition operator. */
-    Matrix3x3<TYPE> operator+(const Matrix3x3<TYPE>& matrix) const
+    /**
+     * \brief Addition operator.
+     * \param mat matrix to be added
+     * \return sum of the matrices
+     */
+    Matrix3x3<TYPE> operator+(const Matrix3x3<TYPE>& mat) const
     {
         Matrix3x3<TYPE> result(*this);
-        result.add(matrix);
+        addMatrices(*this, mat, &result);
         return result;
     }
 
-    /** \brief Negation operator. */
+    /**
+     * \brief Addition operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat matrix to be added
+     * \return sum of the matrices
+     */
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value  && 
+        std::is_arithmetic<RHS_TYPE>::value && 
+        std::is_same<TYPE, RHS_TYPE>::value == false
+    )
+    auto operator+(const Matrix3x3<RHS_TYPE>& mat) const
+    {
+        Matrix3x3<std::common_type_t<TYPE, RHS_TYPE>> result(*this);
+        addMatrices(*this, mat, &result);
+        return result;
+    }
+
+    /**
+     * \brief Addition operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat matrix to be added
+     * \return sum of the matrices
+     */
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value == false && 
+        std::is_arithmetic<RHS_TYPE>::value == false &&
+        std::is_same<TYPE, RHS_TYPE>::value == false &&
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    auto operator+(const Matrix3x3<RHS_TYPE>& mat) const
+    {
+        Matrix3x3<TYPE> result(*this);
+        addMatrices(*this, mat, &result);
+        return result;
+    }
+
+    /** 
+     * \brief Negation operator.
+     * \return negated matrix
+     */
     Matrix3x3<TYPE> operator-() const
     {
         Matrix3x3<TYPE> result(*this);
@@ -168,501 +313,548 @@ public:
         return result;
     }
 
-    /** \brief Subtraction operator. */
-    Matrix3x3<TYPE> operator-(const Matrix3x3<TYPE>& matrix) const
+    /** 
+     * \brief Subtraction operator.
+     * \param mat matrix to be subtracted
+     * \return difference of the matrices
+     */
+    Matrix3x3<TYPE> operator-(const Matrix3x3<TYPE>& mat) const
     {
         Matrix3x3<TYPE> result(*this);
-        result.subtract(matrix);
+        subtractMatrices(*this, mat, &result);
         return result;
     }
 
-    /**
-     * \brief Multiplication by a scalar operator.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     * So operators for angular velocity and angular acceleration are defined
-     * as specializations of this template.
-     *
-     * This template is enabled when TYPE and TYPE2 are both units, but TYPE2 is not
-     * angular velocity or angular acceleration.
+    /** 
+     * \brief Subtraction operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat matrix to be subtracted
+     * \return difference of the matrices
      */
-    template <class TYPE2, typename std::enable_if<
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
-        &&
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    auto operator*(TYPE2 value) const
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value  && 
+        std::is_arithmetic<RHS_TYPE>::value && 
+        std::is_same<TYPE, RHS_TYPE>::value == false
+    )
+    auto operator-(const Matrix3x3<TYPE>& mat) const
     {
-        Matrix3x3<
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<TYPE2>::unit_type
-                >
-            >
-        > result;
-        this->multiplyMatrixByValue(*this, value, &result);
+        Matrix3x3<std::common_type_t<TYPE, RHS_TYPE>> result;
+        subtractMatrices(*this, mat, &result);
         return result;
     }
 
-    /**
-     * \brief Multiplication by a scalar operator.
-     *
-     * This is a specialization for the case when the value is angular velocity.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     *
-     * This specialization is enabled when TYPE is a unit and TYPE2 is angular velocity.
-     *
-     * Example: calculating angular momentum from inertia and angular velocity.
-     * L = I * omega
-     *
-     * \tparam TYPE2 RHS operand type
-     * \param value value to be multiplied by
-     * \return product of the matrix multiplied by the value
+    /** 
+     * \brief Subtraction operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat matrix to be subtracted
+     * \return difference of the matrices
      */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_convertible_unit_t<
-            TYPE2, units::angular_velocity::radians_per_second_t
-        >::value, int>::type = 0
-    >
-    auto operator*(TYPE2 value) const
-    {
-        units::angular_velocity::radians_per_second_t temp_rad_per_s = value;
-        units::inverted::per_second_t temp = units::inverted::per_second_t{ temp_rad_per_s() };
-
-        Matrix3x3<
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
-                >
-            >
-        > result;
-        this->multiplyMatrixByValue(*this, temp, &result);
-        return result;
-    }
-
-    /**
-     * \brief Multiplication by a scalar operator.
-     *
-     * This is a specialization for the case when the value is angular acceleration.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     *
-     * This specialization is enabled when TYPE is a unit and TYPE2 is angular acceleration.
-     *
-     * Example: calculating torque from inertia and angular acceleration.
-     * T = I * alpha
-     *
-     * \tparam TYPE2 RHS operand type
-     * \param value value to be multiplied by
-     * \return product of the matrix multiplied by the value
-     */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_convertible_unit_t<
-            TYPE2, units::angular_acceleration::radians_per_second_squared_t
-        >::value, int>::type = 0
-    >
-    auto operator*(TYPE2 value) const
-    {
-        units::angular_acceleration::radians_per_second_squared_t temp_rad_per_s_sq = value;
-        units::inverted::per_second_squared_t temp = units::inverted::per_second_squared_t{ temp_rad_per_s_sq() };
-
-        Matrix3x3<
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
-                >
-            >
-        > result;
-        this->multiplyMatrixByValue(*this, temp, &result);
-        return result;
-    }
-
-    /**
-     * \brief Multiplication by a scalar operator.
-     *
-     * This is a specialization for the case when the matrix is dimensionless.
-     */
-    template <class TYPE2, typename std::enable_if<
-        !units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    Matrix3x3<TYPE2> operator*(TYPE2 value) const
-    {
-        Matrix3x3<TYPE2> result;
-        this->multiplyMatrixByValue(*this, value, &result);
-        return result;
-    }
-
-    /**
-     * \brief Multiplication by a scalar operator.
-     *
-     * This is a specialization for the case when the value is dimensionless.
-     */
-    Matrix3x3<TYPE> operator*(double value) const
+    template <typename RHS_TYPE>
+    requires (
+        std::is_arithmetic<TYPE>::value == false && 
+        std::is_arithmetic<RHS_TYPE>::value == false &&
+        std::is_same<TYPE, RHS_TYPE>::value == false &&
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    auto operator-(const Matrix3x3<TYPE>& mat) const
     {
         Matrix3x3<TYPE> result;
-        this->multiplyMatrixByValue(*this, value, &result);
+        subtractMatrices(*this, mat, &result);
         return result;
     }
 
     /**
-     * \brief Multiplication operator by a vector.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     * So operators for angular velocity and angular acceleration are defined
-     * as specializations of this template.
-     *
-     * This template is enabled when TYPE and TYPE2 are both units, but TYPE2 is not
-     * angular velocity or angular acceleration.
+     * \brief Multiplication by a scalar operator.
+     * \tparam TYPE_RHS right-hand side operand type
+     * \param val value to be multiplied by
+     * \return product of the matrix multiplied by the value
      */
-    template <class TYPE2, typename std::enable_if<
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
-        &&
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    auto operator*(const Vector3<TYPE2>& vect) const
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator*(const RHS_TYPE& val) const
     {
-        Vector3<
+        Matrix3x3<std::common_type_t<TYPE, RHS_TYPE>> result;
+        multiplyMatrixByScalar(*this, val, &result);
+        return result;
+    }
+
+    /**
+     * \brief Multiplication by a scalar operator.
+     * \tparam RHS_TYPE right-hand side operand type
+     * \param val value to be multiplied by
+     * \return product of the matrix multiplied by the value
+     */
+    template <typename RHS_TYPE>
+    requires (
+        (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value) ||
+        (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    )
+    auto operator*(const RHS_TYPE& val) const
+    {
+        if constexpr (units::traits::is_unit_t<TYPE>::value)
+        {
+            Matrix3x3<TYPE> result;
+            multiplyMatrixByScalar(*this, val, &result);
+            return result;
+        }
+        else
+        {
+            Matrix3x3<RHS_TYPE> result;
+            multiplyMatrixByScalar(*this, val, &result);
+            return result;
+        }
+    }
+
+    /**
+     * \brief Multiplication by a scalar operator.
+     * \tparam RHS_TYPE right-hand side operand type
+     * \param val value to be multiplied by
+     * \return product of the matrix multiplied by the value
+     */
+    template <typename RHS_TYPE>
+    requires (
+        units::traits::is_unit_t<TYPE>::value && 
+        units::traits::is_unit_t<RHS_TYPE>::value &&
+        units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value == false
+    )
+    auto operator*(const RHS_TYPE& val) const
+    {
+        Matrix3x3<
             units::unit_t<
                 units::compound_unit<
                     typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<TYPE2>::unit_type
+                    typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
                 >
             >
         > result;
-        this->multiplyMatrixByVector(*this, vect, &result);
+        multiplyMatrixByScalar(*this, val, &result);
         return result;
     }
 
     /**
-     * \brief Multiplication operator by a vector.
-     *
-     * This is a specialization for the case when the vector is angular velocity.
-     *
+     * \brief Multiplication by a scalar operator.
+     * 
      * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
      * this makes radians a pure number without physical dimension.
-     *
-     *  This specialization is enabled when TYPE is a unit and TYPE2 is angular velocity.
-     *
-     * Example: calculating angular momentum from inertia and angular velocity.
-     * L = I * omega
-     *
-     * \tparam TYPE2 RHS operand type
+     * 
+     * \tparam RHS_TYPE right-hand side operand type
+     * \param val value to be multiplied by
+     * \return product of the matrix multiplied by the value
+     */
+    template <typename RHS_TYPE>
+    requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
+    auto operator*(const RHS_TYPE& val) const
+    {
+		if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
+		{
+            Matrix3x3<
+                typename units::detail::strip_angle_dimension<TYPE>::stripped_type
+            > temp;
+            for (unsigned int i = 0; i < this->kSize; ++i)
+            {
+                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
+            }
+
+            Matrix3x3<
+                units::unit_t<
+                    units::compound_unit<
+                        typename units::detail::strip_angle_dimension<TYPE>::stripped_unit,
+                        typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
+                    >
+                >
+            > result;
+            multiplyMatrixByScalar(temp, val, &result);
+            return result;
+		}
+		else
+		{
+            typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type temp = 
+                units::detail::strip_angle_dimension<RHS_TYPE>::strip(val);
+
+            Matrix3x3<
+                units::unit_t<
+                    units::compound_unit<
+                        typename units::traits::unit_t_traits<TYPE>::unit_type,
+                        typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_unit
+                    >
+                >
+            > result;
+            multiplyMatrixByScalar(*this, temp, &result);
+            return result;
+		}
+    }
+
+    /**
+     * \brief Multiplication by a vector operator.
+     * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param vect vector to be multiplied by
      * \return product of the matrix multiplied by the vector
      */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_convertible_unit_t<
-            TYPE2, units::angular_velocity::radians_per_second_t
-        >::value, int>::type = 0
-    >
-    auto operator*(const Vector3<TYPE2>& vect) const
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator*(const Vector3<RHS_TYPE>& vect) const
     {
-        Vector3<units::angular_velocity::radians_per_second_t> temp_rad_per_s = vect;
-        Vector3<units::inverted::per_second_t> temp;
-        temp.x() = units::inverted::per_second_t{ temp_rad_per_s.x()() };
-        temp.y() = units::inverted::per_second_t{ temp_rad_per_s.y()() };
-        temp.z() = units::inverted::per_second_t{ temp_rad_per_s.z()() };
-
-        Vector3<
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<units::inverted::per_second_t>::unit_type
-                >
-            >
-        > result;
-        this->multiplyMatrixByVector(*this, temp, &result);
+        Vector3<std::common_type_t<TYPE, RHS_TYPE>> result;
+        multiplyMatrixByVector(*this, vect, &result);
         return result;
     }
 
     /**
-     * \brief Multiplication operator by a vector.
-     *
-     * This is a specialization for the case when the vector is angular acceleration.
-     *
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     *
-     * This specialization is enabled when TYPE is a unit and TYPE2 is angular acceleration.
-     *
-     * Example: calculating torque from inertia and angular acceleration.
-     * T = I * alpha
-     *
-     * \tparam TYPE2 RHS operand type
+     * \brief Multiplication by a vector operator.
+     * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param vect vector to be multiplied by
      * \return product of the matrix multiplied by the vector
      */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_convertible_unit_t<
-            TYPE2, units::angular_acceleration::radians_per_second_squared_t
-        >::value, int>::type = 0
-    >
-    auto operator*(const Vector3<TYPE2>& vect) const
+    template <typename RHS_TYPE>
+    requires (
+        (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
+        (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    )
+    auto operator*(const Vector3<RHS_TYPE>& vect) const
     {
-        Vector3<units::angular_acceleration::radians_per_second_squared_t> temp_rad_per_s = vect;
-        Vector3<units::inverted::per_second_squared_t> temp;
-        temp.x() = units::inverted::per_second_squared_t{ temp_rad_per_s.x()() };
-        temp.y() = units::inverted::per_second_squared_t{ temp_rad_per_s.y()() };
-        temp.z() = units::inverted::per_second_squared_t{ temp_rad_per_s.z()() };
+        if constexpr (units::traits::is_unit_t<TYPE>::value)
+        {
+            Vector3<TYPE> result;
+            multiplyMatrixByVector(*this, vect, &result);
+            return result;
+        }
+        else
+        {
+            Vector3<RHS_TYPE> result;
+            multiplyMatrixByVector(*this, vect, &result);
+            return result;
+        }
+    }
 
+    /**
+     * \brief Multiplication by a vector operator.
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param vect vector to be multiplied by
+     * \return product of the matrix multiplied by the vector
+     */
+    template <typename RHS_TYPE>
+    requires (
+        units::traits::is_unit_t<TYPE>::value && 
+        units::traits::is_unit_t<RHS_TYPE>::value &&
+        units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value == false
+    )
+    auto operator*(const Vector3<RHS_TYPE>& vect) const
+    {
         Vector3<
             units::unit_t<
                 units::compound_unit<
                     typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<units::inverted::per_second_squared_t>::unit_type
+                    typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
                 >
             >
         > result;
-        this->multiplyMatrixByVector(*this, temp, &result);
+        multiplyMatrixByVector(*this, vect, &result);
         return result;
     }
 
     /**
-     * \brief Multiplication operator by a vector.
-     *
-     * This is a specialization for the case when the vector is dimensionless.
-     */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        !units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    Vector3<TYPE> operator*(const Vector3<TYPE2>& vect)
-    {
-        Vector3<TYPE> result;
-        this->multiplyMatrixByVector(*this, vect, &result);
-        return result;
-    }
-
-    /**
-     * \brief Multiplication operator by a vector.
-     *
-     * This is a specialization for the case when the matrix is dimensionless.
-     */
-    template <class TYPE2, typename std::enable_if<
-        !units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    Vector3<TYPE2> operator*(const Vector3<TYPE2>& vect)
-    {
-        Vector3<TYPE2> result;
-        this->multiplyMatrixByVector(*this, vect, &result);
-        return result;
-    }
-
-    /**
-     * \brief Multiplication operator by a vector.
-     *
-     * This is a specialization for the case when both matrix and vector are dimensionless.
-     */
-    template <class TYPE2, typename std::enable_if<
-        !units::traits::is_unit_t<TYPE>::value
-        &&
-        !units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    Vector3<double> operator*(const Vector3<TYPE2>& vect)
-    {
-        Vector3<double> result;
-        this->multiplyMatrixByVector(*this, vect, &result);
-        return result;
-    }
-
-    /** \brief Multiplies by a matrix by a matrix. */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    auto operator*(const Matrix3x3<TYPE2>& matrix)
-    {
-        Matrix3x3<
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::traits::unit_t_traits<TYPE2>::unit_type
-                >
-            >
-        > result;
-        this->multiplyMatrixByMatrix(*this, matrix, &result);
-        return result;
-    }
-
-    /**
-     * \brief Multiplies by a matrix by a matrix.
-     *
-     * This is a specialization for the case when the first matrix is dimensionless.
-     */
-    template <class TYPE2, typename std::enable_if<
-        !units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    Matrix3x3<TYPE2> operator*(const Matrix3x3<TYPE2>& matrix)
-    {
-        Matrix3x3<TYPE2> result;
-        this->multiplyMatrixByMatrix(*this, matrix, &result);
-        return result;
-    }
-
-    /**
-     * \brief Multiplies by a matrix by a matrix.
-     *
-     * This is a specialization for the case when the second matrix is dimensionless.
-     */
-    template <class TYPE2, typename std::enable_if<
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        !units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    Matrix3x3<TYPE> operator*(const Matrix3x3<TYPE2>& matrix)
-    {
-        Matrix3x3<TYPE> result;
-        this->multiplyMatrixByMatrix(*this, matrix, &result);
-        return result;
-    }
-
-    /**
-     * \brief Multiplies by a matrix by a matrix.
-     *
-     * This is a specialization for the case when both matrices are dimensionless.
-     */
-    template <class TYPE2, typename std::enable_if<
-        !units::traits::is_unit_t<TYPE>::value
-        &&
-        !units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    Matrix3x3<double> operator*(const Matrix3x3<TYPE2>& matrix)
-    {
-        Matrix3x3<double> result;
-        this->multiplyMatrixByMatrix(*this, matrix, &result);
-        return result;
-    }
-
-    /**
-     * \brief Division by scalar operator.
-     *
+     * \brief Multiplication by a vector operator.
+     * 
      * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
      * this makes radians a pure number without physical dimension.
-     * So operators for angular velocity and angular acceleration are defined
-     * as specializations of this template.
-     *
-     * This template is enabled when TYPE and TYPE2 are both units, but TYPE2 is not angular velocity
-     * or angular acceleration.
-     *
-     * \tparam TYPE2 RHS operand type
-     * \param value value to divide the matrix by
-     * \return result of the division
+     * 
+     * \tparam RHS_TYPE type of the right-hand side vector elements
+     * \param vect vector to be multiplied by
+     * \return product of the matrix multiplied by the vector
      */
-    template <class TYPE2, typename std::enable_if<
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_velocity::radians_per_second_t>::value
-        &&
-        !units::traits::is_convertible_unit_t<TYPE2, units::angular_acceleration::radians_per_second_squared_t>::value
-        &&
-        units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    auto operator/(TYPE2 value) const
+    template <typename RHS_TYPE>
+    requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
+    auto operator*(const Vector3<RHS_TYPE>& vect) const
+    {
+        if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
+        {
+            Matrix3x3<typename units::detail::strip_angle_dimension<TYPE>::stripped_type> temp;
+            for (unsigned int i = 0; i < this->kSize; ++i)
+            {
+                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
+            }
+
+            Vector3<
+                units::unit_t<
+                    units::compound_unit<
+                        typename units::detail::strip_angle_dimension<TYPE>::stripped_unit,
+                        typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
+                    >
+                >
+            > result;
+            multiplyMatrixByVector(temp, vect, &result);
+            return result;
+        }
+        else
+        {
+            Vector3<typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type> temp;
+            temp.x() = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect.x());
+            temp.y() = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect.y());
+            temp.z() = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect.z());
+
+            Vector3<
+                units::unit_t<
+                    units::compound_unit<
+                        typename units::traits::unit_t_traits<TYPE>::unit_type,
+                        typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_unit
+                    >
+                >
+            > result;
+            multiplyMatrixByVector(*this, temp, &result);
+            return result;
+        }
+    }
+
+    /**
+     * \brief Multiplication by a matrix operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat matrix to be multiplied by
+     * \return product of the matrices
+     */
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator*(const Matrix3x3<RHS_TYPE>& mat) const
+    {
+        Matrix3x3<std::common_type_t<TYPE, RHS_TYPE>> result;
+        multiplyMatrixByMatrix(*this, mat, &result);
+        return result;
+    }
+
+    /**
+     * \brief Multiplication by a matrix operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat matrix to be multiplied by
+     * \return product of the matrices
+     */
+    template <typename RHS_TYPE>
+    requires (
+        (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
+        (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    )
+    auto operator*(const Matrix3x3<RHS_TYPE>& mat) const
+    {
+        if constexpr (units::traits::is_unit_t<TYPE>::value)
+        {
+            Matrix3x3<TYPE> result;
+            multiplyMatrixByMatrix(*this, mat, &result);
+            return result;
+        } 
+        else 
+        {
+            Matrix3x3<RHS_TYPE> result;
+            multiplyMatrixByMatrix(*this, mat, &result);
+            return result;
+        }
+    }
+
+    /**
+     * \brief Multiplication by a matrix operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat matrix to be multiplied by
+     * \return product of the matrices
+     */
+    template <typename RHS_TYPE>
+    requires (
+        units::traits::is_unit_t<TYPE>::value && 
+        units::traits::is_unit_t<RHS_TYPE>::value &&
+        units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value == false
+    )
+    auto operator*(const Matrix3x3<RHS_TYPE>& mat) const
     {
         Matrix3x3<
             units::unit_t<
                 units::compound_unit<
                     typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    units::inverse<typename units::traits::unit_t_traits<TYPE2>::unit_type>
+                    typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
                 >
             >
         > result;
-        this->multiplyMatrixByValue(*this, 1.0 / value, &result);
+        multiplyMatrixByMatrix(*this, mat, &result);
         return result;
     }
 
     /**
-     * \brief Division operator.
-     *
-     * This is a specialization for the case when the matrix is dimensionless.
+     * \brief Multiplication by a matrix operator.
+     * 
+     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+     * this makes radians a pure number without physical dimension.
+     * 
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat matrix to be multiplied by
+     * \return product of the matrices
      */
-    template <class TYPE2, typename std::enable_if<
-        !units::traits::is_unit_t<TYPE>::value
-        &&
-        units::traits::is_unit_t<TYPE2>::value, int>::type = 0
-    >
-    auto operator/(TYPE2 value) const
+    template <typename RHS_TYPE>
+    requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
+    auto operator*(const Matrix3x3<RHS_TYPE>& mat) const
+    {
+        if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
+        {
+            Matrix3x3<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type> temp;
+            for (unsigned int i = 0; i < this->kSize; ++i)
+            {
+                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
+            }
+
+            Matrix3x3<
+                units::unit_t<
+                    units::compound_unit<
+                        typename units::detail::strip_angle_dimension<TYPE>::stripped_unit,
+                        typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
+                    >
+                >
+            > result;
+            multiplyMatrixByMatrix(temp, mat, &result);
+            return result;
+        }
+        else
+        {
+            Matrix3x3<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type> temp;
+            for (unsigned int i = 0; i < this->kSize; ++i)
+            {
+                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip(mat(i));
+            }
+
+            Matrix3x3<
+                units::unit_t<
+                    units::compound_unit<
+                        typename units::traits::unit_t_traits<TYPE>::unit_type,
+                        typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_unit
+                    >
+                >
+            > result;
+            multiplyMatrixByMatrix(*this, temp, &result);
+            return result;
+        }
+    }
+
+    /**
+     * \brief Division by a scalar operator.
+     * \tparam RHS_TYPE type of the right-hand side value
+     * \param val value to be divided by
+     * \return matrix divided by the value
+     */
+    template <typename RHS_TYPE>
+    requires (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    auto operator/(const RHS_TYPE& val) const
+    {
+        Matrix3x3<std::common_type_t<TYPE, RHS_TYPE>> result;
+        multiplyMatrixByScalar(*this, 1.0 / val, &result);
+        return result;
+    }
+
+    /**
+     * \brief Division by a scalar operator.
+     * \tparam RHS_TYPE type of the right-hand side value
+     * \param val value to be divided by
+     * \return matrix divided by the value
+     */
+    template <typename RHS_TYPE>
+    requires (
+        (std::is_arithmetic<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value) ||
+        (units::traits::is_unit_t<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value)
+    )
+    auto operator/(const RHS_TYPE& val) const
+    {
+        if constexpr (units::traits::is_unit_t<TYPE>::value)
+        {
+            Matrix3x3<TYPE> result;
+            multiplyMatrixByScalar(*this, 1.0 / val, &result);
+            return result;
+        }
+        else
+        {
+            Matrix3x3<
+                units::unit_t<
+                    units::inverse<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type>
+                >
+            > result;
+            multiplyMatrixByScalar(*this, 1.0 / val, &result);
+            return result;
+        }
+    }
+
+    /**
+     * \brief Division by a scalar operator.
+     * \tparam RHS_TYPE type of the right-hand side value
+     * \param val value to be divided by
+     * \return matrix divided by the value
+     */
+    template <typename RHS_TYPE>
+    requires (units::traits::is_unit_t<TYPE>::value && units::traits::is_unit_t<RHS_TYPE>::value)
+    auto operator/(const RHS_TYPE& val) const
     {
         Matrix3x3<
             units::unit_t<
                 units::compound_unit<
-                    units::inverse<typename units::traits::unit_t_traits<TYPE2>::unit_type>
+                    typename units::traits::unit_t_traits<TYPE>::unit_type,
+                    units::inverse<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type>
                 >
             >
         > result;
-        this->multiplyMatrixByValue(*this, 1.0 / value, &result);
+        multiplyMatrixByScalar(*this, 1.0 / val, &result);
         return result;
     }
 
-    /**
-     * \brief Division operator.
-     *
-     * This is a specialization for the case when the value is dimensionless.
+    /** 
+     * \brief Unary addition operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat right-hand side matrix
+     * \return reference to this matrix
      */
-    Matrix3x3<TYPE> operator/(double value) const
+    template <typename RHS_TYPE>
+    requires (
+        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    Matrix3x3<TYPE>& operator+=(const Matrix3x3<RHS_TYPE>& mat)
     {
-        Matrix3x3<TYPE> result;
-        this->multiplyMatrixByValue(*this, 1.0 / value, &result);
-        return result;
-    }
-
-    /** \brief Unary addition operator. */
-    Matrix3x3<TYPE>& operator+=(const Matrix3x3<TYPE>& matrix)
-    {
-        this->add(matrix);
+        addMatrices(*this, mat, this);
         return *this;
     }
 
-    /** \brief Unary subtraction operator. */
-    Matrix3x3<TYPE>& operator-=(const Matrix3x3<TYPE>& matrix)
+    /** 
+     * \brief Unary subtraction operator.
+     * \tparam RHS_TYPE type of the right-hand side matrix elements
+     * \param mat right-hand side matrix
+     * \return reference to this matrix
+     */
+    template <typename RHS_TYPE>
+    requires (
+        (std::is_arithmetic<TYPE>::value && std::is_arithmetic<RHS_TYPE>::value) ||
+        units::traits::is_convertible_unit_t<TYPE, RHS_TYPE>::value
+    )
+    Matrix3x3<TYPE>& operator-=(const Matrix3x3<RHS_TYPE>& mat)
     {
-        this->subtract(matrix);
+        subtractMatrices(*this, mat, this);
         return *this;
     }
 
-    /** \brief Unary multiplication operator (by number). */
-    Matrix3x3<TYPE>& operator*=(double value)
+    /** 
+     * \brief Unary multiplication operator (by number). 
+     * \tparam RHS_TYPE type of the right-hand side value
+     * \param val value to multiply by
+     * \return reference to this matrix
+     */
+    template <typename RHS_TYPE>
+    requires std::is_arithmetic<RHS_TYPE>::value
+    Matrix3x3<TYPE>& operator*=(RHS_TYPE val)
     {
-        *this = (*this) * value;
+        *this = (*this) * val;
         return *this;
     }
 
-    /** \brief Unary division operator (by number). */
-    Matrix3x3<TYPE>& operator/=(double value)
+    /** 
+     * \brief Unary division operator (by number). 
+     * \tparam RHS_TYPE type of the right-hand side value
+     * \param val value to divide by
+     * \return reference to this matrix
+     */
+    template <typename RHS_TYPE>
+    requires std::is_arithmetic<RHS_TYPE>::value
+    Matrix3x3<TYPE>& operator/=(RHS_TYPE val)
     {
-        *this = (*this) / value;
+        *this = (*this) / val;
         return *this;
     }
 };

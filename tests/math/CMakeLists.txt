@@ -29,6 +29,8 @@ set(SOURCES
     TestAngles.cpp
     TestDegMinSec.cpp
     TestEulerRect.cpp
+    TestMatrix3x3.cpp
+    TestMatrix3x3WithUnits.cpp
     TestMatrixMxN.cpp
     TestMatrixMxNWithUnits.cpp
     TestMatrixNxN.cpp
