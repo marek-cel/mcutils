@@ -24,13 +24,13 @@ TEST_F(TestSegPlaneIsect, CanCheckIfThereIsSegPlaneIsect)
     e.set(0.0_m, 0.0_m, -1.0_m);
     r.set(0.0_m, 0.0_m,  0.0_m);
     n.set(0.0, 0.0,  1.0);
-    EXPECT_TRUE(mc::math::isSegPlaneIsect(b, e, r, n));
+    EXPECT_TRUE(mc::isSegmentPlaneIsect(b, e, r, n));
 
     b.set(0.0_m, 0.0_m,  1.0_m);
     e.set(0.0_m, 0.0_m,  0.0_m);
     r.set(0.0_m, 0.0_m, -1.0_m);
     n.set(0.0, 0.0,  1.0);
-    EXPECT_FALSE(mc::math::isSegPlaneIsect(b, e, r, n));
+    EXPECT_FALSE(mc::isSegmentPlaneIsect(b, e, r, n));
 }
 
 TEST_F(TestSegPlaneIsect, CanGetSegPlaneIsectWithPlaneAtZ0)
@@ -45,7 +45,7 @@ TEST_F(TestSegPlaneIsect, CanGetSegPlaneIsectWithPlaneAtZ0)
     e.set(0.0_m, 0.0_m, -1.0_m);
     r.set(0.0_m, 0.0_m,  0.0_m);
     n.set(0.0, 0.0,  1.0);
-    i = mc::math::getSegPlaneIsect(b, e, r, n);
+    i = mc::getSegmentPlaneIsect(b, e, r, n);
     EXPECT_DOUBLE_EQ(0.0, i.x()());
     EXPECT_DOUBLE_EQ(0.0, i.y()());
     EXPECT_DOUBLE_EQ(0.0, i.z()());
@@ -54,7 +54,7 @@ TEST_F(TestSegPlaneIsect, CanGetSegPlaneIsectWithPlaneAtZ0)
     e.set(1.0_m, 1.0_m, -1.0_m);
     r.set(0.0_m, 0.0_m,  0.0_m);
     n.set(0.0, 0.0,  1.0);
-    i = mc::math::getSegPlaneIsect(b, e, r, n);
+    i = mc::getSegmentPlaneIsect(b, e, r, n);
     EXPECT_DOUBLE_EQ(1.0, i.x()());
     EXPECT_DOUBLE_EQ(1.0, i.y()());
     EXPECT_DOUBLE_EQ(0.0, i.z()());
@@ -72,7 +72,7 @@ TEST_F(TestSegPlaneIsect, CanGetSegPlaneIsectWithPlaneAtZ05)
     e.set(0.0, 0.0, -1.0);
     r.set(0.0, 0.0,  0.5);
     n.set(0.0, 0.0,  1.0);
-    i = mc::math::getSegPlaneIsect(b, e, r, n);
+    i = mc::getSegmentPlaneIsect(b, e, r, n);
     EXPECT_DOUBLE_EQ(0.0, i.x());
     EXPECT_DOUBLE_EQ(0.0, i.y());
     EXPECT_DOUBLE_EQ(0.5, i.z());
@@ -81,7 +81,7 @@ TEST_F(TestSegPlaneIsect, CanGetSegPlaneIsectWithPlaneAtZ05)
     e.set(1.0, 1.0, -1.0);
     r.set(0.0, 0.0,  0.5);
     n.set(0.0, 0.0,  1.0);
-    i = mc::math::getSegPlaneIsect(b, e, r, n);
+    i = mc::getSegmentPlaneIsect(b, e, r, n);
     EXPECT_DOUBLE_EQ(1.0, i.x());
     EXPECT_DOUBLE_EQ(1.0, i.y());
     EXPECT_DOUBLE_EQ(0.5, i.z());
@@ -100,7 +100,7 @@ TEST_F(TestSegPlaneIsect, CanGetSegPlaneIsectNoIntersection)
     e.set(0.0, 0.0,  0.0);
     r.set(0.0, 0.0, -1.0);
     n.set(0.0, 0.0,  1.0);
-    i = mc::math::getSegPlaneIsect(b, e, r, n);
+    i = mc::getSegmentPlaneIsect(b, e, r, n);
     EXPECT_DOUBLE_EQ(0.0, i.x());
     EXPECT_DOUBLE_EQ(0.0, i.y());
     EXPECT_DOUBLE_EQ(0.0, i.z());
@@ -110,7 +110,7 @@ TEST_F(TestSegPlaneIsect, CanGetSegPlaneIsectNoIntersection)
     e.set(1.0, 1.0,  1.0);
     r.set(0.0, 0.0, -1.0);
     n.set(0.0, 0.0,  1.0);
-    i = mc::math::getSegPlaneIsect(b, e, r, n);
+    i = mc::getSegmentPlaneIsect(b, e, r, n);
     EXPECT_DOUBLE_EQ(1.0, i.x());
     EXPECT_DOUBLE_EQ(1.0, i.y());
     EXPECT_DOUBLE_EQ(1.0, i.z());
@@ -129,7 +129,7 @@ TEST_F(TestSegPlaneIsect, CanGetSegPlaneIsectOnThePlane)
     e.set(0.0, 0.0,  0.0);
     r.set(0.0, 0.0,  0.0);
     n.set(0.0, 0.0,  1.0);
-    i = mc::math::getSegPlaneIsect(b, e, r, n);
+    i = mc::getSegmentPlaneIsect(b, e, r, n);
     EXPECT_DOUBLE_EQ(1.0, i.x());
     EXPECT_DOUBLE_EQ(1.0, i.y());
     EXPECT_DOUBLE_EQ(0.0, i.z());

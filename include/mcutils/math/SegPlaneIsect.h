@@ -29,7 +29,6 @@
 using namespace units::math;
 
 namespace mc {
-namespace math {
 
 /**
  * \brief Checks for intersections.
@@ -52,8 +51,8 @@ namespace math {
  * \return true if there is an intersection, false otherwise
  */
 template <typename TYPE_L, typename TYPE_N>
-bool isSegPlaneIsect(const Vector3<TYPE_L>& b, const Vector3<TYPE_L>& e,
-                     const Vector3<TYPE_L>& r, const Vector3<TYPE_N>& n)
+bool isSegmentPlaneIsect(const Vector3<TYPE_L>& b, const Vector3<TYPE_L>& e,
+                         const Vector3<TYPE_L>& r, const Vector3<TYPE_N>& n)
 {
     TYPE_L num = n * (r - b);
     TYPE_L den = n * (e - b);
@@ -91,8 +90,8 @@ bool isSegPlaneIsect(const Vector3<TYPE_L>& b, const Vector3<TYPE_L>& e,
  * \return intersection point, or end point if there is no intersection, or beginning point if segment lies on the plane
  */
 template <typename TYPE_L, typename TYPE_N>
-Vector3<TYPE_L> getSegPlaneIsect(const Vector3<TYPE_L>& b, const Vector3<TYPE_L>& e,
-                                 const Vector3<TYPE_L>& r, const Vector3<TYPE_N>& n)
+Vector3<TYPE_L> getSegmentPlaneIsect(const Vector3<TYPE_L>& b, const Vector3<TYPE_L>& e,
+                                     const Vector3<TYPE_L>& r, const Vector3<TYPE_N>& n)
 {
     Vector3<TYPE_L> r_i = e;
 
@@ -121,7 +120,6 @@ Vector3<TYPE_L> getSegPlaneIsect(const Vector3<TYPE_L>& b, const Vector3<TYPE_L>
     return r_i;
 }
 
-} // namespace math
 } // namespace mc
 
 #endif // MCUTILS_MATH_SEGPLANEISECT_H_
