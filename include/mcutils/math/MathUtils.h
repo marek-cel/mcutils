@@ -25,7 +25,6 @@
 #include <cmath>
 
 namespace mc {
-namespace math {
 
 /**
  * \brief Checks if value is within the given range.
@@ -61,7 +60,7 @@ inline bool isOutside(const T& min, const T& max, const T& val)
  * \return returns base to the power of the given EXPONENT
  */
 template <unsigned int EXPONENT, typename T>
-inline auto pow(const T& base)
+inline auto npow(const T& base)
 {
     if constexpr (EXPONENT == 0)
     {
@@ -69,7 +68,7 @@ inline auto pow(const T& base)
     }
     else
     {
-        return base * pow<EXPONENT - 1, T>(base);
+        return base * npow<EXPONENT - 1, T>(base);
     }
 }
 
@@ -108,10 +107,11 @@ inline int sign(const T& val)
  * \param x normalized input value <-1.0;1.0>
  * \return approximated sine wave
  */
-inline float sineWave(const float& x)
+template <typename T>
+inline T sineWave(const T& x)
 {
-    float y = 4.0f * x - 4.0f * x * fabs(x);
-    return 0.225f * (y * fabs(y) - y) + y;
+    float y = T{4} * x - T{4} * x * fabs(x);
+    return T{0.225} * (y * fabs(y) - y) + y;
 }
 
 /**
@@ -124,10 +124,11 @@ inline float sineWave(const float& x)
  * ### References:
  * - [Smoothstep - Wikipedia](https://en.wikipedia.org/wiki/Smoothstep)
  */
-inline double smoothstep(const double& xmin, const double& xmax, double x)
+template <typename T>
+inline T smoothstep(const T& xmin, const T& xmax, T x)
 {
-    x = satur(0.0, 1.0, (x - xmin) / (xmax - xmin));
-    return x * x * (3.0 - 2.0 * x);
+    x = satur(T{0}, T{1}, (x - xmin) / (xmax - xmin));
+    return x * x * (T{3} - T{2} * x);
 }
 
 /**
@@ -138,9 +139,10 @@ inline double smoothstep(const double& xmin, const double& xmax, double x)
  * ### References:
  * - [Smoothstep - Wikipedia](https://en.wikipedia.org/wiki/Smoothstep)
  */
-inline double smoothstep(double x)
+template <typename T>
+inline T smoothstep(T x)
 {
-    return smoothstep(0.0, 1.0, x);
+    return smoothstep(T{0}, T{1}, x);
 }
 
 /**
@@ -155,14 +157,14 @@ inline double smoothstep(double x)
  * ### References:
  * - [Smoothstep - Wikipedia](https://en.wikipedia.org/wiki/Smoothstep)
  */
-inline double smoothstep(const double& xmin, const double& xmax,
-                         const double& ymin, const double& ymax,
-                         double x)
+template <typename T>
+inline T smoothstep(const T& xmin, const T& xmax,
+                    const T& ymin, const T& ymax,
+                    T x)
 {
     return smoothstep(xmin, xmax, x) * (ymax - ymin) + ymin;
 }
 
-} // namespace math
 } // namespace mc
 
 #endif // MCUTILS_MATH_MATHUTILS_H_

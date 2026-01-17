@@ -85,13 +85,13 @@ void ECEF::convertCart2Geo(units::length::meter_t x,
                            units::length::meter_t* alt) const
 {
     // units not used due to performance reasons
-    double z2 = math::pow<2>(z)();
-    double r  = sqrt(math::pow<2>(x)() + math::pow<2>(y)());
+    double z2 = npow<2>(z)();
+    double r  = sqrt(npow<2>(x)() + npow<2>(y)());
     double r2 = r*r;
     double e2 = _ellipsoid.a2()() - _ellipsoid.b2()();
     double f  = 54.0 * _ellipsoid.b2()() * z2;
     double g  = r2 + (1.0 - _ellipsoid.e2())*z2 - _ellipsoid.e2()*e2;
-    double c  = _ellipsoid.e2()*_ellipsoid.e2() * f * r2 / math::pow<3>(g);
+    double c  = _ellipsoid.e2()*_ellipsoid.e2() * f * r2 / npow<3>(g);
     double s  = pow(1.0 + c + sqrt(c*c + 2.0*c), 1.0/3.0);
     double p0 = s + 1.0/s + 1.0;
     double p  = f / (3.0 * p0*p0 * g*g);
@@ -126,14 +126,14 @@ void ECEF::convertCart2GeoFast(units::length::meter_t x,
     double cosTht = cos(tht());
 
     *lat = atan(
-        (z + _ellipsoid.b()*ed2*math::pow<3>(sinTht))
+        (z + _ellipsoid.b()*ed2*npow<3>(sinTht))
         /
-        (p - _ellipsoid.e2()*_ellipsoid.a()*math::pow<3>(cosTht))
+        (p - _ellipsoid.e2()*_ellipsoid.a()*npow<3>(cosTht))
     );
     *lon = atan2(y, x);
 
     double sinLat = sin((*lat)());
-    units::length::meter_t n = _ellipsoid.a() / sqrt(1.0 - _ellipsoid.e2()*math::pow<2>(sinLat));
+    units::length::meter_t n = _ellipsoid.a() / sqrt(1.0 - _ellipsoid.e2()*npow<2>(sinLat));
 
     *alt = p / cos((*lat)()) - n;
 }
