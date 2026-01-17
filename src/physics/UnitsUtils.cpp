@@ -28,7 +28,6 @@
 using namespace units::literals;
 
 namespace mc {
-namespace physics {
 
 units::length::meter_t convertToMeters(const char* unit_name, double value)
 {
@@ -96,5 +95,4 @@ units::mass::kilogram_t convertToKilograms(const char* unit_name, double value)
     return 1_kg * std::numeric_limits<double>::quiet_NaN();
 }
 
-} // namespace physics
 } // namespace mc

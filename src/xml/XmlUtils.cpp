@@ -30,7 +30,6 @@
 using namespace units::literals;
 
 namespace mc {
-namespace xml {
 
 double readDouble(XmlNode node)
 {
@@ -67,7 +66,7 @@ units::length::meter_t readLength(XmlNode node)
             if ( node.hasAttribute("unit") )
             {
                 std::string unit_name = node.getAttribute("unit");
-                result = physics::convertToMeters(unit_name.c_str(), temp);
+                result = convertToMeters(unit_name.c_str(), temp);
             }
             else
             {
@@ -89,7 +88,7 @@ units::angle::radian_t readAngle(XmlNode node)
             if ( node.hasAttribute("unit") )
             {
                 std::string unit_name = node.getAttribute("unit");
-                result = physics::convertToRadians(unit_name.c_str(), temp);
+                result = convertToRadians(unit_name.c_str(), temp);
             }
             else
             {
@@ -111,7 +110,7 @@ units::velocity::meters_per_second_t readVelocity(XmlNode node)
             if ( node.hasAttribute("unit") )
             {
                 std::string unit_name = node.getAttribute("unit");
-                result = physics::convertToMPS(unit_name.c_str(), temp);
+                result = convertToMPS(unit_name.c_str(), temp);
             }
             else
             {
@@ -133,7 +132,7 @@ units::mass::kilogram_t readMass(XmlNode node)
             if ( node.hasAttribute("unit") )
             {
                 std::string unit_name = node.getAttribute("unit");
-                result = physics::convertToKilograms(unit_name.c_str(), temp);
+                result = convertToKilograms(unit_name.c_str(), temp);
             }
             else
             {
@@ -165,9 +164,9 @@ Angles readAngles(XmlNode node)
             if ( node.hasAttribute("unit") )
             {
                 std::string unit_name = node.getAttribute("unit");
-                temp.phi() = physics::convertToRadians(unit_name.c_str(), readDouble(node_phi));
-                temp.tht() = physics::convertToRadians(unit_name.c_str(), readDouble(node_tht));
-                temp.psi() = physics::convertToRadians(unit_name.c_str(), readDouble(node_psi));
+                temp.phi() = convertToRadians(unit_name.c_str(), readDouble(node_phi));
+                temp.tht() = convertToRadians(unit_name.c_str(), readDouble(node_tht));
+                temp.psi() = convertToRadians(unit_name.c_str(), readDouble(node_psi));
             }
             else
             {
@@ -184,75 +183,74 @@ Angles readAngles(XmlNode node)
     return result;
 }
 
-// Vector3d readVector3d(XmlNode node)
-// {
-//     Vector3d result;
+Vector3d readVector3d(XmlNode node)
+{
+    Vector3d result;
 
-//     result.x() = std::numeric_limits<double>::quiet_NaN();
-//     result.y() = std::numeric_limits<double>::quiet_NaN();
-//     result.z() = std::numeric_limits<double>::quiet_NaN();
+    result.x() = std::numeric_limits<double>::quiet_NaN();
+    result.y() = std::numeric_limits<double>::quiet_NaN();
+    result.z() = std::numeric_limits<double>::quiet_NaN();
 
-//     if ( node.isValid() )
-//     {
-//         XmlNode node_x = node.getFirstChildElement("x");
-//         XmlNode node_y = node.getFirstChildElement("y");
-//         XmlNode node_z = node.getFirstChildElement("z");
+    if ( node.isValid() )
+    {
+        XmlNode node_x = node.getFirstChildElement("x");
+        XmlNode node_y = node.getFirstChildElement("y");
+        XmlNode node_z = node.getFirstChildElement("z");
 
-//         if ( node_x.isValid() && node_y.isValid() && node_z.isValid() )
-//         {
-//             Vector3d temp;
+        if ( node_x.isValid() && node_y.isValid() && node_z.isValid() )
+        {
+            Vector3d temp;
 
-//             temp.x() = readDouble(node_x);
-//             temp.y() = readDouble(node_y);
-//             temp.z() = readDouble(node_z);
+            temp.x() = readDouble(node_x);
+            temp.y() = readDouble(node_y);
+            temp.z() = readDouble(node_z);
 
-//             if ( temp.isValid() )
-//                 result = temp;
-//         }
-//     }
+            if ( temp.isValid() )
+                result = temp;
+        }
+    }
 
-//     return result;
-// }
+    return result;
+}
 
-// Vector3_m readVector3_m(XmlNode node)
-// {
-//     Vector3_m result;
+Vector3_m readVector3_m(XmlNode node)
+{
+    Vector3_m result;
 
-//     result.x() = 1_m * std::numeric_limits<double>::quiet_NaN();
-//     result.y() = 1_m * std::numeric_limits<double>::quiet_NaN();
-//     result.z() = 1_m * std::numeric_limits<double>::quiet_NaN();
+    result.x() = 1_m * std::numeric_limits<double>::quiet_NaN();
+    result.y() = 1_m * std::numeric_limits<double>::quiet_NaN();
+    result.z() = 1_m * std::numeric_limits<double>::quiet_NaN();
 
-//     if ( node.isValid() )
-//     {
-//         XmlNode node_x = node.getFirstChildElement("x");
-//         XmlNode node_y = node.getFirstChildElement("y");
-//         XmlNode node_z = node.getFirstChildElement("z");
+    if ( node.isValid() )
+    {
+        XmlNode node_x = node.getFirstChildElement("x");
+        XmlNode node_y = node.getFirstChildElement("y");
+        XmlNode node_z = node.getFirstChildElement("z");
 
-//         if ( node_x.isValid() && node_y.isValid() && node_z.isValid() )
-//         {
-//             Vector3_m temp;
+        if ( node_x.isValid() && node_y.isValid() && node_z.isValid() )
+        {
+            Vector3_m temp;
 
-//             if ( node.hasAttribute("unit") )
-//             {
-//                 std::string unit_name = node.getAttribute("unit");
-//                 temp.x() = physics::convertToMeters(unit_name.c_str(), readDouble(node_x));
-//                 temp.y() = physics::convertToMeters(unit_name.c_str(), readDouble(node_y));
-//                 temp.z() = physics::convertToMeters(unit_name.c_str(), readDouble(node_z));
-//             }
-//             else
-//             {
-//                 temp.x() = 1_m * readDouble(node_x);
-//                 temp.y() = 1_m * readDouble(node_y);
-//                 temp.z() = 1_m * readDouble(node_z);
-//             }
+            if ( node.hasAttribute("unit") )
+            {
+                std::string unit_name = node.getAttribute("unit");
+                temp.x() = convertToMeters(unit_name.c_str(), readDouble(node_x));
+                temp.y() = convertToMeters(unit_name.c_str(), readDouble(node_y));
+                temp.z() = convertToMeters(unit_name.c_str(), readDouble(node_z));
+            }
+            else
+            {
+                temp.x() = 1_m * readDouble(node_x);
+                temp.y() = 1_m * readDouble(node_y);
+                temp.z() = 1_m * readDouble(node_z);
+            }
 
-//             if ( temp.isValid() )
-//                 result = temp;
-//         }
-//     }
+            if ( temp.isValid() )
+                result = temp;
+        }
+    }
 
-//     return result;
-// }
+    return result;
+}
 
-} // namespace xml
 } // namespace mc

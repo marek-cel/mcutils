@@ -27,7 +27,6 @@
 #include <mcutils/mcutils_api.h>
 
 namespace mc {
-namespace physics {
 
 /**
  * \brief Converts a given value from a specified unit to meters.
@@ -61,7 +60,6 @@ MCUTILS_API units::velocity::meters_per_second_t convertToMPS(const char* unit_n
  */
 MCUTILS_API units::mass::kilogram_t convertToKilograms(const char* unit_name, double value = 1.0);
 
-} // namespace physics
 } // namespace mc
 
 #endif // MCUTILS_PHYSICS_UNITSUTILS_H_

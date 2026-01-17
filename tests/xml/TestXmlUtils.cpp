@@ -20,7 +20,7 @@ TEST_F(TestXmlUtils, CanReadDouble)
     mc::XmlNode root = doc.getRootNode();
     mc::XmlNode node = root.getFirstChildElement("test_double");
 
-    double result = mc::xml::readDouble(node);
+    double result = mc::readDouble(node);
 
     EXPECT_DOUBLE_EQ(result, 3.14);
 }
@@ -32,7 +32,7 @@ TEST_F(TestXmlUtils, CanReadInt)
     mc::XmlNode root = doc.getRootNode();
     mc::XmlNode node = root.getFirstChildElement("test_int");
 
-    int result = mc::xml::readInt(node);
+    int result = mc::readInt(node);
 
     EXPECT_EQ(result, 42);
 }
@@ -49,12 +49,12 @@ TEST_F(TestXmlUtils, CanReadLength)
     mc::XmlNode node_ft = root.getFirstChildElement("test_length_ft");
     mc::XmlNode node_in = root.getFirstChildElement("test_length_in");
 
-    units::length::meter_t result    = mc::xml::readLength(node);
-    units::length::meter_t result_m  = mc::xml::readLength(node_m);
-    units::length::meter_t result_cm = mc::xml::readLength(node_cm);
-    units::length::meter_t result_mm = mc::xml::readLength(node_mm);
-    units::length::meter_t result_ft = mc::xml::readLength(node_ft);
-    units::length::meter_t result_in = mc::xml::readLength(node_in);
+    units::length::meter_t result    = mc::readLength(node);
+    units::length::meter_t result_m  = mc::readLength(node_m);
+    units::length::meter_t result_cm = mc::readLength(node_cm);
+    units::length::meter_t result_mm = mc::readLength(node_mm);
+    units::length::meter_t result_ft = mc::readLength(node_ft);
+    units::length::meter_t result_in = mc::readLength(node_in);
 
     EXPECT_DOUBLE_EQ( result()    , 1.0    );
     EXPECT_DOUBLE_EQ( result_m()  , 1.0    );
@@ -73,9 +73,9 @@ TEST_F(TestXmlUtils, CanReadAngle)
     mc::XmlNode node_rad  = root.getFirstChildElement("test_angle_rad");
     mc::XmlNode node_deg  = root.getFirstChildElement("test_angle_deg");
 
-    units::angle::radian_t result     = mc::xml::readAngle(node);
-    units::angle::radian_t result_rad = mc::xml::readAngle(node_rad);
-    units::angle::radian_t result_deg = mc::xml::readAngle(node_deg);
+    units::angle::radian_t result     = mc::readAngle(node);
+    units::angle::radian_t result_rad = mc::readAngle(node_rad);
+    units::angle::radian_t result_deg = mc::readAngle(node_deg);
 
     EXPECT_DOUBLE_EQ( result()      , 1.0          );
     EXPECT_DOUBLE_EQ( result_rad()  , 1.0          );
@@ -95,13 +95,13 @@ TEST_F(TestXmlUtils, CanReadVelocity)
     mc::XmlNode node_kts = root.getFirstChildElement("test_vel_kts");
     mc::XmlNode node_fpm = root.getFirstChildElement("test_vel_fpm");
 
-    units::velocity::meters_per_second_t result     = mc::xml::readVelocity(node);
-    units::velocity::meters_per_second_t result_mps = mc::xml::readVelocity(node_mps);
-    units::velocity::meters_per_second_t result_fps = mc::xml::readVelocity(node_fps);
-    units::velocity::meters_per_second_t result_kph = mc::xml::readVelocity(node_kph);
-    units::velocity::meters_per_second_t result_mph = mc::xml::readVelocity(node_mph);
-    units::velocity::meters_per_second_t result_kts = mc::xml::readVelocity(node_kts);
-    units::velocity::meters_per_second_t result_fpm = mc::xml::readVelocity(node_fpm);
+    units::velocity::meters_per_second_t result     = mc::readVelocity(node);
+    units::velocity::meters_per_second_t result_mps = mc::readVelocity(node_mps);
+    units::velocity::meters_per_second_t result_fps = mc::readVelocity(node_fps);
+    units::velocity::meters_per_second_t result_kph = mc::readVelocity(node_kph);
+    units::velocity::meters_per_second_t result_mph = mc::readVelocity(node_mph);
+    units::velocity::meters_per_second_t result_kts = mc::readVelocity(node_kts);
+    units::velocity::meters_per_second_t result_fpm = mc::readVelocity(node_fpm);
 
     EXPECT_NEAR( result()     , 1.0       , 1.0e-5 );
     EXPECT_NEAR( result_mps() , 1.0       , 1.0e-5 );
@@ -125,12 +125,12 @@ TEST_F(TestXmlUtils, CanReadMass)
     mc::XmlNode node_slug = root.getFirstChildElement("test_mass_slug");
     mc::XmlNode node_t    = root.getFirstChildElement("test_mass_t");
 
-    units::mass::kilogram_t result      = mc::xml::readMass(node);
-    units::mass::kilogram_t result_kg   = mc::xml::readMass(node_kg);
-    units::mass::kilogram_t result_g    = mc::xml::readMass(node_g);
-    units::mass::kilogram_t result_lb   = mc::xml::readMass(node_lb);
-    units::mass::kilogram_t result_slug = mc::xml::readMass(node_slug);
-    units::mass::kilogram_t result_t    = mc::xml::readMass(node_t);
+    units::mass::kilogram_t result      = mc::readMass(node);
+    units::mass::kilogram_t result_kg   = mc::readMass(node_kg);
+    units::mass::kilogram_t result_g    = mc::readMass(node_g);
+    units::mass::kilogram_t result_lb   = mc::readMass(node_lb);
+    units::mass::kilogram_t result_slug = mc::readMass(node_slug);
+    units::mass::kilogram_t result_t    = mc::readMass(node_t);
 
     EXPECT_DOUBLE_EQ( result()      , 1.0        );
     EXPECT_DOUBLE_EQ( result_kg()   , 1.0        );
@@ -149,9 +149,9 @@ TEST_F(TestXmlUtils, CanReadAngles)
     mc::XmlNode node_rad = root.getFirstChildElement("test_angles_rad");
     mc::XmlNode node_deg = root.getFirstChildElement("test_angles_deg");
 
-    mc::Angles result     = mc::xml::readAngles(node);
-    mc::Angles result_rad = mc::xml::readAngles(node_rad);
-    mc::Angles result_deg = mc::xml::readAngles(node_deg);
+    mc::Angles result     = mc::readAngles(node);
+    mc::Angles result_rad = mc::readAngles(node_rad);
+    mc::Angles result_deg = mc::readAngles(node_deg);
 
     EXPECT_DOUBLE_EQ(result.phi()(), 1.0);
     EXPECT_DOUBLE_EQ(result.tht()(), 2.0);
@@ -173,7 +173,7 @@ TEST_F(TestXmlUtils, CanReadAngles)
 //     mc::XmlNode root = doc.getRootNode();
 //     mc::XmlNode node = root.getFirstChildElement("test_vector3d");
 
-//     mc::Vector3d result = mc::xml::readVector3d(node);
+//     mc::Vector3d result = mc::readVector3d(node);
 
 //     EXPECT_DOUBLE_EQ(result.x(), 1.0);
 //     EXPECT_DOUBLE_EQ(result.y(), 2.0);
@@ -192,12 +192,12 @@ TEST_F(TestXmlUtils, CanReadAngles)
 //     mc::XmlNode node_ft = root.getFirstChildElement("test_length_vector3_ft");
 //     mc::XmlNode node_in = root.getFirstChildElement("test_length_vector3_in");
 
-//     mc::Vector3_m result    = mc::xml::readVector3_m(node);
-//     mc::Vector3_m result_m  = mc::xml::readVector3_m(node_m);
-//     mc::Vector3_m result_cm = mc::xml::readVector3_m(node_cm);
-//     mc::Vector3_m result_mm = mc::xml::readVector3_m(node_mm);
-//     mc::Vector3_m result_ft = mc::xml::readVector3_m(node_ft);
-//     mc::Vector3_m result_in = mc::xml::readVector3_m(node_in);
+//     mc::Vector3_m result    = mc::readVector3_m(node);
+//     mc::Vector3_m result_m  = mc::readVector3_m(node_m);
+//     mc::Vector3_m result_cm = mc::readVector3_m(node_cm);
+//     mc::Vector3_m result_mm = mc::readVector3_m(node_mm);
+//     mc::Vector3_m result_ft = mc::readVector3_m(node_ft);
+//     mc::Vector3_m result_in = mc::readVector3_m(node_in);
 
 //     EXPECT_DOUBLE_EQ(result.x()(), 1.0);
 //     EXPECT_DOUBLE_EQ(result.y()(), 2.0);

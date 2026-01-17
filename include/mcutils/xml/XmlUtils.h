@@ -30,7 +30,6 @@
 #include <mcutils/xml/XmlNode.h>
 
 namespace mc {
-namespace xml {
 
 /**
  * \brief Reads double value from XML node.
@@ -81,21 +80,20 @@ MCUTILS_API units::mass::kilogram_t readMass(XmlNode node);
  */
 MCUTILS_API Angles readAngles(XmlNode node);
 
-// /**
-//  * \brief Reads 3D dimensionless vector from XML node.
-//  * \param node XML node to be processed
-//  * \return 3D dimensionless vector
-//  */
-// MCUTILS_API Vector3d readVector3d(XmlNode node);
+/**
+ * \brief Reads 3D dimensionless vector from XML node.
+ * \param node XML node to be processed
+ * \return 3D dimensionless vector
+ */
+MCUTILS_API Vector3d readVector3d(XmlNode node);
 
-// /**
-//  * \brief Reads 3D length vector from XML node.
-//  * \param node XML node to be processed
-//  * \return 3D length vector
-//  */
-// MCUTILS_API Vector3_m readVector3_m(XmlNode node);
+/**
+ * \brief Reads 3D length vector from XML node.
+ * \param node XML node to be processed
+ * \return 3D length vector
+ */
+MCUTILS_API Vector3_m readVector3_m(XmlNode node);
 
-} // namespace xml
 } // namespace mc
 
 #endif // MCUTILS_XML_XMLUTILS_H_
