@@ -636,31 +636,31 @@ TEST_F(TestMatrixMxN, CanMultiplyIdentityMatrixByMatrix3x3)
     EXPECT_DOUBLE_EQ(mr(2,2), 150.0);
 }
 
-// TEST_F(TestMatrixMxN, CanDivideByNumber)
-// {
-//     constexpr double val = 2.0;
+TEST_F(TestMatrixMxN, CanDivideByNumber)
+{
+    constexpr double val = 2.0;
 
-//     std::vector<TYPE> x
-//     {
-//         1.0, 2.0, 3.0,
-//         4.0, 5.0, 6.0,
-//         7.0, 8.0, 9.0
-//     };
+    std::vector<TYPE> x
+    {
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    };
 
-//     mc::MatrixMxN<TYPE,ROWS,COLS> m1;
-//     mc::MatrixMxN<TYPE,ROWS,COLS> mr;
-//     m1.setFromStdVector(x);
-//     mr = m1 / val;
+    mc::MatrixMxN<TYPE,ROWS,COLS> m1;
+    mc::MatrixMxN<TYPE,ROWS,COLS> mr;
+    m1.setFromStdVector(x);
+    mr = m1 / val;
 
-//     for ( int r = 0; r < ROWS; ++r )
-//     {
-//         for ( int c = 0; c < COLS; ++c )
-//         {
-//             double ref_value = x[r*COLS + c] / val;
-//             EXPECT_DOUBLE_EQ(mr(r,c), ref_value) << "Error at row " << r << " and col " << c;
-//         }
-//     }
-// }
+    for ( int r = 0; r < ROWS; ++r )
+    {
+        for ( int c = 0; c < COLS; ++c )
+        {
+            double ref_value = x[r*COLS + c] / val;
+            EXPECT_DOUBLE_EQ(mr(r,c), ref_value) << "Error at row " << r << " and col " << c;
+        }
+    }
+}
 
 TEST_F(TestMatrixMxN, CanUnaryAdd)
 {
