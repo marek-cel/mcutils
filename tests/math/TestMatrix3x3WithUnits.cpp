@@ -997,6 +997,42 @@ TEST_F(TestMatrix3x3WithUnits, CanUnaryAdd)
     Matrix3x3_CanUnaryAdd<units::moment_of_inertia::kilograms_meters_squared_t>();
 }
 
+template <typename T1, typename T2>
+void Matrix3x3_CanUnaryAddDifferentTypes()
+{
+    constexpr T2 val = T1{2};
+
+    std::vector<T1> x
+    {
+        T1{1}, T1{2}, T1{3},
+        T1{4}, T1{5}, T1{6},
+        T1{7}, T1{8}, T1{9}
+    };
+
+    mc::Matrix3x3<T1> m1;
+    mc::Matrix3x3<T2> m2;
+    m1.setFromStdVector(x);
+    m2.fill(val);
+    m1 += m2;
+
+    for ( unsigned int r = 0; r < SIZE; ++r )
+    {
+        for ( unsigned int c = 0; c < SIZE; ++c )
+        {
+            T1 ref = x[r*SIZE + c] + val;
+            EXPECT_DOUBLE_EQ(m1(r,c)(), ref()) << "Error at row " << r << " and col " << c;
+        }
+    }
+}
+
+TEST_F(TestMatrix3x3WithUnits, CanUnaryAddDifferentTypes)
+{
+    Matrix3x3_CanUnaryAddDifferentTypes<
+        units::moment_of_inertia::kilograms_meters_squared_t,
+        units::moment_of_inertia::slugs_feet_squared_t
+    >();
+}
+
 template <typename T>
 void Matrix3x3_CanUnarySubtract()
 {
@@ -1027,6 +1063,42 @@ void Matrix3x3_CanUnarySubtract()
 TEST_F(TestMatrix3x3WithUnits, CanUnarySubtract)
 {
     Matrix3x3_CanUnarySubtract<units::moment_of_inertia::kilograms_meters_squared_t>();
+}
+
+template <typename T1, typename T2>
+void Matrix3x3_CanUnarySubtractDifferentTypes()
+{
+    constexpr T2 val = T1{2};
+
+    std::vector<T1> x
+    {
+        T1{1}, T1{2}, T1{3},
+        T1{4}, T1{5}, T1{6},
+        T1{7}, T1{8}, T1{9}
+    };
+
+    mc::Matrix3x3<T1> m1;
+    mc::Matrix3x3<T2> m2;
+    m1.setFromStdVector(x);
+    m2.fill(val);
+    m1 -= m2;
+
+    for ( unsigned int r = 0; r < SIZE; ++r )
+    {
+        for ( unsigned int c = 0; c < SIZE; ++c )
+        {
+            T1 ref = x[r*SIZE + c] - val;
+            EXPECT_DOUBLE_EQ(m1(r,c)(), ref()) << "Error at row " << r << " and col " << c;
+        }
+    }
+}
+
+TEST_F(TestMatrix3x3WithUnits, CanUnarySubtractDifferentTypes)
+{
+    Matrix3x3_CanUnarySubtractDifferentTypes<
+        units::moment_of_inertia::kilograms_meters_squared_t,
+        units::moment_of_inertia::slugs_feet_squared_t
+    >();
 }
 
 template <typename T>
