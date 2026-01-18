@@ -30,7 +30,7 @@ mcutils is developed with a strong focus on reliability and correctness. The pro
 ### Building
 
 ```sh
-git clone https://github.com/yourusername/mcutils.git
+git clone https://github.com/marek-cel/mcutils.git
 cd mcutils
 mkdir build && cd build
 cmake ..
