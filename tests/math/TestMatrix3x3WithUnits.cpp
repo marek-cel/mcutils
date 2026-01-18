@@ -64,6 +64,64 @@ TEST_F(TestMatrix3x3WithUnits, CanInstantiate)
 }
 
 template <typename T>
+void Matrix3x3_CanInstantiateAndSetData()
+{
+    mc::Matrix3x3<T> m( 
+        T{1}, T{2}, T{3},
+        T{4}, T{5}, T{6},
+        T{7}, T{8}, T{9}
+    );
+
+    EXPECT_DOUBLE_EQ(m(0,0)(), 1.0);
+    EXPECT_DOUBLE_EQ(m(0,1)(), 2.0);
+    EXPECT_DOUBLE_EQ(m(0,2)(), 3.0);
+
+    EXPECT_DOUBLE_EQ(m(1,0)(), 4.0);
+    EXPECT_DOUBLE_EQ(m(1,1)(), 5.0);
+    EXPECT_DOUBLE_EQ(m(1,2)(), 6.0);
+
+    EXPECT_DOUBLE_EQ(m(2,0)(), 7.0);
+    EXPECT_DOUBLE_EQ(m(2,1)(), 8.0);
+    EXPECT_DOUBLE_EQ(m(2,2)(), 9.0);
+}
+
+TEST_F(TestMatrix3x3WithUnits, CanInstantiateAndSetData)
+{
+        Matrix3x3_CanInstantiateAndSetData<units::moment_of_inertia::kilograms_meters_squared_t>();
+}
+
+TEST_F(TestMatrix3x3WithUnits, CanInstantiateAndSetDataDifferentType)
+{
+    units::moment_of_inertia::kilograms_meters_squared_t xx = 1.0_kg_m_sq;
+    units::moment_of_inertia::slugs_feet_squared_t       xy = 2.0_kg_m_sq;
+    units::moment_of_inertia::kilograms_meters_squared_t xz = 3.0_kg_m_sq;
+    units::moment_of_inertia::slugs_feet_squared_t       yx = 4.0_kg_m_sq;
+    units::moment_of_inertia::kilograms_meters_squared_t yy = 5.0_kg_m_sq;
+    units::moment_of_inertia::slugs_feet_squared_t       yz = 6.0_kg_m_sq;
+    units::moment_of_inertia::kilograms_meters_squared_t zx = 7.0_kg_m_sq;
+    units::moment_of_inertia::slugs_feet_squared_t       zy = 8.0_kg_m_sq;
+    units::moment_of_inertia::kilograms_meters_squared_t zz = 9.0_kg_m_sq;
+
+    mc::Matrix3x3<units::moment_of_inertia::kilograms_meters_squared_t> m( 
+        xx, xy, xz,
+        yx, yy, yz,
+        zx, zy, zz
+    );
+
+    EXPECT_DOUBLE_EQ(m(0,0)(), 1.0);
+    EXPECT_DOUBLE_EQ(m(0,1)(), 2.0);
+    EXPECT_DOUBLE_EQ(m(0,2)(), 3.0);
+
+    EXPECT_DOUBLE_EQ(m(1,0)(), 4.0);
+    EXPECT_DOUBLE_EQ(m(1,1)(), 5.0);
+    EXPECT_DOUBLE_EQ(m(1,2)(), 6.0);
+
+    EXPECT_DOUBLE_EQ(m(2,0)(), 7.0);
+    EXPECT_DOUBLE_EQ(m(2,1)(), 8.0);
+    EXPECT_DOUBLE_EQ(m(2,2)(), 9.0);
+}
+
+template <typename T>
 void Matrix3x3_CanGetTransposed()
 {
     std::vector<T> x

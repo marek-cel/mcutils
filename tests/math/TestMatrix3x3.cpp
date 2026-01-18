@@ -318,13 +318,17 @@ TEST_F(TestMatrix3x3, CanAdd)
 
 TEST_F(TestMatrix3x3, CanAddDifferentType)
 {
-    mc::Matrix3x3d m1(1.0, 2.0, 3.0,
-                      4.0, 5.0, 6.0,
-                      7.0, 8.0, 9.0);
+    mc::Matrix3x3<float> m1(
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    );
 
-    mc::Matrix3x3<float> m2(1.0, 1.0, 1.0,
-                            1.0, 1.0, 1.0,
-                            1.0, 1.0, 1.0);
+    mc::Matrix3x3d m2(
+        1.0, 1.0, 1.0,
+        1.0, 1.0, 1.0,
+        1.0, 1.0, 1.0
+    );
 
     mc::Matrix3x3d m0 = m1 + m2;
 
@@ -384,13 +388,17 @@ TEST_F(TestMatrix3x3, CanSubstract)
 
 TEST_F(TestMatrix3x3, CanSubstractDifferentType)
 {
-    mc::Matrix3x3d m1(1.0, 2.0, 3.0,
-                      4.0, 5.0, 6.0,
-                      7.0, 8.0, 9.0);
+    mc::Matrix3x3<float> m1(
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    );
 
-    mc::Matrix3x3<float> m2(1.0, 1.0, 1.0,
-                            1.0, 1.0, 1.0,
-                            1.0, 1.0, 1.0);
+    mc::Matrix3x3d m2(
+        1.0, 1.0, 1.0,
+        1.0, 1.0, 1.0,
+        1.0, 1.0, 1.0
+    );
 
     mc::Matrix3x3d m0 = m1 - m2;
 
