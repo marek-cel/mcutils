@@ -471,7 +471,7 @@ public:
         std::vector<KEY_TYPE> key_values_temp;
         std::vector<VAL_TYPE> table_data_temp;
 
-        std::stringstream ss(misc::stripSpaces(str));
+        std::stringstream ss(str::stripSpaces(str));
         bool valid = true;
 
         while (!ss.eof() && valid)

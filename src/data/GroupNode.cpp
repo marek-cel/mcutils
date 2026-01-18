@@ -33,7 +33,7 @@ GroupNode::GroupNode(const char* name)
 std::weak_ptr<Node> GroupNode::getNode(const char* path)
 {
     std::lock_guard<std::mutex> lock(_mutex);
-    std::string path_temp = misc::toLower(path);
+    std::string path_temp = str::toLower(path);
     return findNode(path_temp.c_str());
 }
 

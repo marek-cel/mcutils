@@ -65,7 +65,7 @@ public:
         path_temp = stripDataPathDots(path_temp.c_str());
         if ( path_temp.length() > 0 )
         {
-            path_temp = misc::toLower(path_temp);
+            path_temp = str::toLower(path_temp);
             SplittedDataPath spath = splitDataPath(path_temp.c_str());
             if ( spath.trail.size() > 0 )
             {
@@ -154,7 +154,7 @@ protected:
     {
         std::lock_guard<std::mutex> lock(_mutex);
 
-        std::string name_lower = misc::toLower(name);
+        std::string name_lower = str::toLower(name);
         std::shared_ptr<Node> node = std::make_shared<TYPE>(name_lower.c_str());
         if ( node.get() )
         {

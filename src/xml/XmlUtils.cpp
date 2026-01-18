@@ -36,7 +36,7 @@ double readDouble(XmlNode node)
     double result = std::numeric_limits<double>::quiet_NaN();
     if ( node.isValid() )
     {
-        double temp = misc::toDouble(node.getFirstChild().getText());
+        double temp = str::toDouble(node.getFirstChild().getText());
         if ( check::isValid(temp) )
             result = temp;
     }
@@ -48,7 +48,7 @@ int readInt(XmlNode node)
     int result = std::numeric_limits<int>::quiet_NaN();
     if ( node.isValid() )
     {
-        int temp = misc::toInt(node.getFirstChild().getText());
+        int temp = str::toInt(node.getFirstChild().getText());
         if ( check::isValid(temp) )
             result = temp;
     }
@@ -60,7 +60,7 @@ units::length::meter_t readLength(XmlNode node)
     units::length::meter_t result(std::numeric_limits<double>::quiet_NaN());
     if ( node.isValid() )
     {
-        double temp = misc::toDouble(node.getFirstChild().getText());
+        double temp = str::toDouble(node.getFirstChild().getText());
         if ( check::isValid(temp) )
         {
             if ( node.hasAttribute("unit") )
@@ -82,7 +82,7 @@ units::angle::radian_t readAngle(XmlNode node)
     units::angle::radian_t result(std::numeric_limits<double>::quiet_NaN());
     if ( node.isValid() )
     {
-        double temp = misc::toDouble(node.getFirstChild().getText());
+        double temp = str::toDouble(node.getFirstChild().getText());
         if ( check::isValid(temp) )
         {
             if ( node.hasAttribute("unit") )
@@ -104,7 +104,7 @@ units::velocity::meters_per_second_t readVelocity(XmlNode node)
     units::velocity::meters_per_second_t result(std::numeric_limits<double>::quiet_NaN());
     if ( node.isValid() )
     {
-        double temp = misc::toDouble(node.getFirstChild().getText());
+        double temp = str::toDouble(node.getFirstChild().getText());
         if ( check::isValid(temp) )
         {
             if ( node.hasAttribute("unit") )
@@ -126,7 +126,7 @@ units::mass::kilogram_t readMass(XmlNode node)
     units::mass::kilogram_t result(std::numeric_limits<double>::quiet_NaN());
     if ( node.isValid() )
     {
-        double temp = misc::toDouble(node.getFirstChild().getText());
+        double temp = str::toDouble(node.getFirstChild().getText());
         if ( check::isValid(temp) )
         {
             if ( node.hasAttribute("unit") )

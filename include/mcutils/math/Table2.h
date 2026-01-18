@@ -371,8 +371,8 @@ public:
         std::vector<COL_TYPE> col_values_tmp;
         std::vector<VAL_TYPE> table_data_tmp;
 
-        std::stringstream ss(misc::stripSpaces(str));
-        std::stringstream sl(misc::getFirstLine(ss.str()));
+        std::stringstream ss(str::stripSpaces(str));
+        std::stringstream sl(str::getFirstLine(ss.str()));
 
         bool valid = true;
 

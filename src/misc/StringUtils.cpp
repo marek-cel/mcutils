@@ -31,7 +31,7 @@
 #include <mcutils/misc/Check.h>
 
 namespace mc {
-namespace misc {
+namespace str {
 
 int compareStrings(const std::string& str_1, const std::string& str_2,
                    bool case_sensitive)
@@ -180,5 +180,5 @@ std::string toUpper(const std::string& str)
     return result;
 }
 
-} // namespace misc
+} // namespace str
 } // namespace mc

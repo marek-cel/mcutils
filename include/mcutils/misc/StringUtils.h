@@ -30,7 +30,7 @@
 #include <mcutils/mcutils_api.h>
 
 namespace mc {
-namespace misc {
+namespace str {
 
 /**
  * \brief Compares strings.
@@ -130,7 +130,7 @@ MCUTILS_API std::string toLower(const std::string& str);
  */
 MCUTILS_API std::string toUpper(const std::string& str);
 
-} // namespace misc
+} // namespace str
 } // namespace mc
 
 #endif // MCUTILS_MISC_STRINGUTILS_H_
