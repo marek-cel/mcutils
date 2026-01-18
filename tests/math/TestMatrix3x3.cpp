@@ -316,6 +316,30 @@ TEST_F(TestMatrix3x3, CanAdd)
     EXPECT_DOUBLE_EQ(m0.zz(), 10.0);
 }
 
+TEST_F(TestMatrix3x3, CanAddDifferentType)
+{
+    mc::Matrix3x3d m1(1.0, 2.0, 3.0,
+                      4.0, 5.0, 6.0,
+                      7.0, 8.0, 9.0);
+
+    mc::Matrix3x3<float> m2(1.0, 1.0, 1.0,
+                            1.0, 1.0, 1.0,
+                            1.0, 1.0, 1.0);
+
+    mc::Matrix3x3d m0 = m1 + m2;
+
+    EXPECT_DOUBLE_EQ(m0.xx(),  2.0);
+    EXPECT_DOUBLE_EQ(m0.xy(),  3.0);
+    EXPECT_DOUBLE_EQ(m0.xz(),  4.0);
+    EXPECT_DOUBLE_EQ(m0.yx(),  5.0);
+    EXPECT_DOUBLE_EQ(m0.yy(),  6.0);
+    EXPECT_DOUBLE_EQ(m0.yz(),  7.0);
+    EXPECT_DOUBLE_EQ(m0.zx(),  8.0);
+    EXPECT_DOUBLE_EQ(m0.zy(),  9.0);
+    EXPECT_DOUBLE_EQ(m0.zz(), 10.0);
+}
+
+
 TEST_F(TestMatrix3x3, CanNegate)
 {
     mc::Matrix3x3d m1(1.0, 2.0, 3.0,
@@ -344,6 +368,29 @@ TEST_F(TestMatrix3x3, CanSubstract)
     mc::Matrix3x3d m2(1.0, 1.0, 1.0,
                       1.0, 1.0, 1.0,
                       1.0, 1.0, 1.0);
+
+    mc::Matrix3x3d m0 = m1 - m2;
+
+    EXPECT_DOUBLE_EQ(m0.xx(), 0.0);
+    EXPECT_DOUBLE_EQ(m0.xy(), 1.0);
+    EXPECT_DOUBLE_EQ(m0.xz(), 2.0);
+    EXPECT_DOUBLE_EQ(m0.yx(), 3.0);
+    EXPECT_DOUBLE_EQ(m0.yy(), 4.0);
+    EXPECT_DOUBLE_EQ(m0.yz(), 5.0);
+    EXPECT_DOUBLE_EQ(m0.zx(), 6.0);
+    EXPECT_DOUBLE_EQ(m0.zy(), 7.0);
+    EXPECT_DOUBLE_EQ(m0.zz(), 8.0);
+}
+
+TEST_F(TestMatrix3x3, CanSubstractDifferentType)
+{
+    mc::Matrix3x3d m1(1.0, 2.0, 3.0,
+                      4.0, 5.0, 6.0,
+                      7.0, 8.0, 9.0);
+
+    mc::Matrix3x3<float> m2(1.0, 1.0, 1.0,
+                            1.0, 1.0, 1.0,
+                            1.0, 1.0, 1.0);
 
     mc::Matrix3x3d m0 = m1 - m2;
 
