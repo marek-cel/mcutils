@@ -112,7 +112,7 @@ public:
     /** \return "true" if all elements are valid */
     bool isValid() const
     {
-        return mc::isValid(_elements, kSize);
+        return check::isValid(_elements, kSize);
     }
 
 
@@ -225,7 +225,7 @@ public:
             {
                 double temp = std::numeric_limits<double>::quiet_NaN();
                 ss >> temp;
-                valid &= mc::isValid(temp);
+                valid &= check::isValid(temp);
                 elements[i] = TYPE{temp};
             }
 

@@ -123,7 +123,7 @@ bool toBool(const std::string& str, bool def)
     int temp = std::numeric_limits<int>::quiet_NaN();
     std::stringstream ss(str);
     ss >> temp;
-    if ( isValid(temp) )
+    if ( check::isValid(temp) )
     {
         result = temp != 0;
     }
@@ -136,7 +136,7 @@ int toInt(const std::string& str, int def)
     int temp = std::numeric_limits<int>::quiet_NaN();
     std::stringstream ss(str);
     ss >> temp;
-    if ( isValid(temp) )
+    if ( check::isValid(temp) )
     {
         result = temp;
     }
@@ -149,7 +149,7 @@ double toDouble(const std::string& str, double def)
     double temp = std::numeric_limits<double>::quiet_NaN();
     std::stringstream ss(str);
     ss >> temp;
-    if ( isValid(temp) )
+    if ( check::isValid(temp) )
     {
         result = temp;
     }

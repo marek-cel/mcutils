@@ -25,6 +25,7 @@
 #include <cmath>
 
 namespace mc {
+namespace math {
 
 /**
  * \brief Checks if value is within the given range.
@@ -165,6 +166,7 @@ inline T smoothstep(const T& xmin, const T& xmax,
     return smoothstep(xmin, xmax, x) * (ymax - ymin) + ymin;
 }
 
+} // namespace math
 } // namespace mc
 
 #endif // MCUTILS_MATH_MATHUTILS_H_

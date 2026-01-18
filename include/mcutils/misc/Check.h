@@ -30,6 +30,7 @@
 #include <vector>
 
 namespace mc {
+namespace check {
 
 /**
  * \brief Checks if given varaible is Infinite.
@@ -65,7 +66,7 @@ inline bool isNaN(const T& val)
 template <typename T>
 inline bool isValid(const T& val)
 {
-    return !( isNaN(val) || isInf(val) );
+    return !(isNaN(val) || isInf(val));
 }
 
 /**
@@ -79,12 +80,14 @@ inline bool isValid(const T array[], unsigned int size)
 {
     for (unsigned int i = 0; i < size; ++i)
     {
-        if (isNaN(array[i]) || isInf(array[i])) return false;
+        if ( isNaN(array[i]) || isInf(array[i]) ) 
+            return false;
     }
 
     return true;
 }
 
+} // namespace check
 } // namespace mc
 
 #endif // MCUTILS_MISC_CHECK_H_

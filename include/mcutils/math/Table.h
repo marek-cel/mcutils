@@ -390,9 +390,9 @@ public:
 
         for (unsigned int i = 0; i < _size; ++i)
         {
-            if (result) result = mc::isValid(_key_values[i]);
-            if (result) result = mc::isValid(_table_data[i]);
-            if (result) result = mc::isValid(_inter_data[i]);
+            if (result) result = check::isValid(_key_values[i]);
+            if (result) result = check::isValid(_table_data[i]);
+            if (result) result = check::isValid(_inter_data[i]);
 
             if (!result) break;
         }
@@ -482,7 +482,7 @@ public:
             ss >> key;
             ss >> val;
 
-            valid &= mc::isValid(key) && mc::isValid(val);
+            valid &= check::isValid(key) && check::isValid(val);
 
             if (valid)
             {

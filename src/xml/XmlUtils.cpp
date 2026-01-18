@@ -37,7 +37,7 @@ double readDouble(XmlNode node)
     if ( node.isValid() )
     {
         double temp = misc::toDouble(node.getFirstChild().getText());
-        if ( isValid(temp) )
+        if ( check::isValid(temp) )
             result = temp;
     }
     return result;
@@ -49,7 +49,7 @@ int readInt(XmlNode node)
     if ( node.isValid() )
     {
         int temp = misc::toInt(node.getFirstChild().getText());
-        if ( isValid(temp) )
+        if ( check::isValid(temp) )
             result = temp;
     }
     return result;
@@ -61,7 +61,7 @@ units::length::meter_t readLength(XmlNode node)
     if ( node.isValid() )
     {
         double temp = misc::toDouble(node.getFirstChild().getText());
-        if ( isValid(temp) )
+        if ( check::isValid(temp) )
         {
             if ( node.hasAttribute("unit") )
             {
@@ -83,7 +83,7 @@ units::angle::radian_t readAngle(XmlNode node)
     if ( node.isValid() )
     {
         double temp = misc::toDouble(node.getFirstChild().getText());
-        if ( isValid(temp) )
+        if ( check::isValid(temp) )
         {
             if ( node.hasAttribute("unit") )
             {
@@ -105,7 +105,7 @@ units::velocity::meters_per_second_t readVelocity(XmlNode node)
     if ( node.isValid() )
     {
         double temp = misc::toDouble(node.getFirstChild().getText());
-        if ( isValid(temp) )
+        if ( check::isValid(temp) )
         {
             if ( node.hasAttribute("unit") )
             {
@@ -127,7 +127,7 @@ units::mass::kilogram_t readMass(XmlNode node)
     if ( node.isValid() )
     {
         double temp = misc::toDouble(node.getFirstChild().getText());
-        if ( isValid(temp) )
+        if ( check::isValid(temp) )
         {
             if ( node.hasAttribute("unit") )
             {
