@@ -328,7 +328,7 @@ TEST_F(TestMatrixMxN, CanAdd)
     }
 }
 
-TEST_F(TestMatrixMxN, CanAddDifferentType)
+TEST_F(TestMatrixMxN, CanAddDifferentTypes)
 {
     constexpr double val = 2.0;
 
@@ -409,7 +409,7 @@ TEST_F(TestMatrixMxN, CanSubtract)
     }
 }
 
-TEST_F(TestMatrixMxN, CanSubtractDifferentType)
+TEST_F(TestMatrixMxN, CanSubtractDifferentTypes)
 {
     constexpr double val = 2.0;
 
@@ -662,7 +662,7 @@ TEST_F(TestMatrixMxN, CanDivideByNumber)
     }
 }
 
-TEST_F(TestMatrixMxN, CanAssignDifferentType)
+TEST_F(TestMatrixMxN, CanAssignDifferentTypes)
 {
     std::vector<float> x
     {

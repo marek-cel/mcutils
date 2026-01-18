@@ -23,7 +23,7 @@ TEST_F(TestVectorN, CanInstantiate)
     }
 }
 
-TEST_F(TestVectorN, CanInstantiateFromDifferentType)
+TEST_F(TestVectorN, CanInstantiateFromDifferentTypes)
 {
     mc::VectorN<float,SIZE> v1;
     v1(0) = 1.0f;
@@ -424,7 +424,7 @@ TEST_F(TestVectorN, CanAssign)
     EXPECT_DOUBLE_EQ(v2(2), 3.0);
 }
 
-TEST_F(TestVectorN, CanAssignFromDifferentType)
+TEST_F(TestVectorN, CanAssignDifferentTypes)
 {
     mc::VectorN<float,SIZE> v1;
     mc::VectorN<double,SIZE> v2;

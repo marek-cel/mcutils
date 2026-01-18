@@ -316,7 +316,7 @@ TEST_F(TestMatrix3x3, CanAdd)
     EXPECT_DOUBLE_EQ(m0.zz(), 10.0);
 }
 
-TEST_F(TestMatrix3x3, CanAddDifferentType)
+TEST_F(TestMatrix3x3, CanAddDifferentTypes)
 {
     mc::Matrix3x3<float> m1(
         1.0, 2.0, 3.0,
@@ -386,7 +386,7 @@ TEST_F(TestMatrix3x3, CanSubstract)
     EXPECT_DOUBLE_EQ(m0.zz(), 8.0);
 }
 
-TEST_F(TestMatrix3x3, CanSubstractDifferentType)
+TEST_F(TestMatrix3x3, CanSubstractDifferentTypes)
 {
     mc::Matrix3x3<float> m1(
         1.0, 2.0, 3.0,

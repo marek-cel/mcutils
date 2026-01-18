@@ -90,7 +90,7 @@ TEST_F(TestMatrix3x3WithUnits, CanInstantiateAndSetData)
         Matrix3x3_CanInstantiateAndSetData<units::moment_of_inertia::kilograms_meters_squared_t>();
 }
 
-TEST_F(TestMatrix3x3WithUnits, CanInstantiateAndSetDataDifferentType)
+TEST_F(TestMatrix3x3WithUnits, CanInstantiateAndSetDataDifferentTypes)
 {
     units::moment_of_inertia::kilograms_meters_squared_t xx = 1.0_kg_m_sq;
     units::moment_of_inertia::slugs_feet_squared_t       xy = 2.0_kg_m_sq;
@@ -260,7 +260,7 @@ TEST_F(TestMatrix3x3WithUnits, CanAdd)
 }
 
 template <typename T1, typename T2>
-void Matrix3x3_CanAddDifferentType()
+void Matrix3x3_CanAddDifferentTypes()
 {
     constexpr T2 val = T1{2};
 
@@ -288,9 +288,9 @@ void Matrix3x3_CanAddDifferentType()
     }
 }
 
-TEST_F(TestMatrix3x3WithUnits, CanAddDifferentType)
+TEST_F(TestMatrix3x3WithUnits, CanAddDifferentTypes)
 {
-    Matrix3x3_CanAddDifferentType<
+    Matrix3x3_CanAddDifferentTypes<
         units::moment_of_inertia::kilograms_meters_squared_t,
         units::moment_of_inertia::slugs_feet_squared_t
     >();
@@ -362,7 +362,7 @@ TEST_F(TestMatrix3x3WithUnits, CanSubtract)
 }
 
 template <typename T1, typename T2>
-void Matrix3x3_CanSubtractDifferentType()
+void Matrix3x3_CanSubtractDifferentTypes()
 {
     constexpr T2 val = T1{2};
 
@@ -390,9 +390,9 @@ void Matrix3x3_CanSubtractDifferentType()
     }
 }
 
-TEST_F(TestMatrix3x3WithUnits, CanSubtractDifferentType)
+TEST_F(TestMatrix3x3WithUnits, CanSubtractDifferentTypes)
 {
-    Matrix3x3_CanSubtractDifferentType<
+    Matrix3x3_CanSubtractDifferentTypes<
         units::moment_of_inertia::kilograms_meters_squared_t,
         units::moment_of_inertia::slugs_feet_squared_t
     >();
