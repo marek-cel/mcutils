@@ -1341,6 +1341,69 @@ TEST_F(TestVectorNWithUnits, CanUnaryAdd)
     VectorN_CanUnaryAdd<units::torque::newton_meter_t>();
 }
 
+template <typename T1, typename T2>
+void VectorN_CanUnaryAddDifferentType()
+{
+    mc::VectorN<T1,SIZE> v0;
+    v0(0) = T1{1};
+    v0(1) = T1{2};
+    v0(2) = T1{3};
+
+    mc::VectorN<T2,SIZE> v1;
+    v1(0) = T1{2};
+    v1(1) = T1{3};
+    v1(2) = T1{4};
+
+    v0 += v1;
+
+    EXPECT_NEAR(v0(0)(), 3.0, TOLERANCE);
+    EXPECT_NEAR(v0(1)(), 5.0, TOLERANCE);
+    EXPECT_NEAR(v0(2)(), 7.0, TOLERANCE);
+}
+
+TEST_F(TestVectorNWithUnits, CanUnaryAddDifferentType)
+{
+    VectorN_CanUnaryAddDifferentType<
+        units::length::meter_t,
+        units::length::foot_t
+    >();
+
+    VectorN_CanUnaryAddDifferentType<
+        units::velocity::meters_per_second_t,
+        units::velocity::feet_per_minute_t
+    >();
+
+    VectorN_CanUnaryAddDifferentType<
+        units::acceleration::meters_per_second_squared_t,
+        units::acceleration::feet_per_second_squared_t
+    >();
+
+    VectorN_CanUnaryAddDifferentType<
+        units::angular_velocity::degrees_per_second_t,
+        units::angular_velocity::radians_per_second_t
+    >();
+
+    VectorN_CanUnaryAddDifferentType<
+        units::angular_acceleration::radians_per_second_squared_t,
+        units::angular_acceleration::degrees_per_second_squared_t
+    >();
+
+    VectorN_CanUnaryAddDifferentType<
+        units::angular_acceleration::degrees_per_second_squared_t,
+        units::angular_acceleration::radians_per_second_squared_t
+    >();
+
+    VectorN_CanUnaryAddDifferentType<
+        units::force::newton_t,
+        units::force::pound_t
+    >();
+
+    VectorN_CanUnaryAddDifferentType<
+        units::torque::newton_meter_t,
+        units::torque::foot_pound_t
+    >();
+}
+
 template <typename T>
 void VectorN_CanUnarySubtract()
 {
@@ -1372,6 +1435,69 @@ TEST_F(TestVectorNWithUnits, CanUnarySubtract)
     VectorN_CanUnarySubtract<units::angular_acceleration::degrees_per_second_squared_t>();
     VectorN_CanUnarySubtract<units::force::newton_t>();
     VectorN_CanUnarySubtract<units::torque::newton_meter_t>();
+}
+
+template <typename T1, typename T2>
+void VectorN_CanUnarySubtractDifferentTypes()
+{
+    mc::VectorN<T1,SIZE> v0;
+    v0(0) = T1{3};
+    v0(1) = T1{5};
+    v0(2) = T1{7};
+
+    mc::VectorN<T2,SIZE> v1;
+    v1(0) = T1{2};
+    v1(1) = T1{3};
+    v1(2) = T1{4};
+
+    v0 -= v1;
+
+    EXPECT_NEAR(v0(0)(), 1.0, TOLERANCE);
+    EXPECT_NEAR(v0(1)(), 2.0, TOLERANCE);
+    EXPECT_NEAR(v0(2)(), 3.0, TOLERANCE);
+}
+
+TEST_F(TestVectorNWithUnits, CanUnarySubtractDifferentTypes)
+{
+    VectorN_CanUnarySubtractDifferentTypes<
+        units::length::meter_t,
+        units::length::foot_t
+    >();
+
+    VectorN_CanUnarySubtractDifferentTypes<
+        units::velocity::meters_per_second_t,
+        units::velocity::feet_per_minute_t
+    >();
+
+    VectorN_CanUnarySubtractDifferentTypes<
+        units::acceleration::meters_per_second_squared_t,
+        units::acceleration::feet_per_second_squared_t
+    >();
+
+    VectorN_CanUnarySubtractDifferentTypes<
+        units::angular_velocity::radians_per_second_t,
+        units::angular_velocity::degrees_per_second_t
+    >();
+
+    VectorN_CanUnarySubtractDifferentTypes<
+        units::angular_velocity::degrees_per_second_t,
+        units::angular_velocity::radians_per_second_t
+    >();
+
+    VectorN_CanUnarySubtractDifferentTypes<
+        units::angular_acceleration::degrees_per_second_squared_t,
+        units::angular_acceleration::radians_per_second_squared_t
+    >();
+
+    VectorN_CanUnarySubtractDifferentTypes<
+        units::force::newton_t,
+        units::force::pound_t
+    >();
+
+    VectorN_CanUnarySubtractDifferentTypes<
+        units::torque::newton_meter_t,
+        units::torque::foot_pound_t
+    >();
 }
 
 template <typename T>
