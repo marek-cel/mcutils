@@ -1255,6 +1255,59 @@ TEST_F(TestVectorNWithUnits, CanDivideByScalarDimensionless)
     VectorN_CanDivideByScalarDimensionless<units::torque::newton_meter_t>();
 }
 
+template <typename T1, typename T2>
+void VectorN_CanAssignDifferentType()
+{
+    mc::VectorN<T1,SIZE> v1;
+    mc::VectorN<T2,SIZE> v2;
+
+    v1(0) = T1{1};
+    v1(1) = T1{2};
+    v1(2) = T1{3};
+
+    v2(0) = T1{4};
+    v2(1) = T1{5};
+    v2(2) = T1{6};
+
+    v1 = v2;
+
+    EXPECT_NEAR(v1(0)(), 4.0, TOLERANCE);
+    EXPECT_NEAR(v1(1)(), 5.0, TOLERANCE);
+    EXPECT_NEAR(v1(2)(), 6.0, TOLERANCE);
+}
+
+TEST_F(TestVectorNWithUnits, CanAssignDifferentType)
+{
+    VectorN_CanAssignDifferentType<
+        units::length::meter_t,
+        units::length::foot_t
+    >();
+    VectorN_CanAssignDifferentType<
+        units::velocity::meters_per_second_t,
+        units::velocity::feet_per_minute_t
+    >();
+    VectorN_CanAssignDifferentType<
+        units::acceleration::meters_per_second_squared_t,
+        units::acceleration::feet_per_second_squared_t
+    >();
+    VectorN_CanAssignDifferentType<
+        units::angular_velocity::radians_per_second_t,
+        units::angular_velocity::degrees_per_second_t
+    >();
+    VectorN_CanAssignDifferentType<
+        units::angular_acceleration::radians_per_second_squared_t,
+        units::angular_acceleration::degrees_per_second_squared_t
+    >();
+    VectorN_CanAssignDifferentType<
+        units::force::newton_t,
+        units::force::pound_t
+    >();
+    VectorN_CanAssignDifferentType<
+        units::torque::newton_meter_t,
+        units::torque::foot_pound_t
+    >();
+}
+
 template <typename T>
 void VectorN_CanUnaryAdd()
 {
