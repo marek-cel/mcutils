@@ -276,13 +276,13 @@ void Matrix3x3_CanAddDifferentType()
     mc::Matrix3x3<T1> mr;
     m1.setFromStdVector(x);
     m2.fill(val);
-    mr = m1 + m2;
+    mr = m2 + m1;
 
     for ( unsigned int r = 0; r < SIZE; ++r )
     {
         for ( unsigned int c = 0; c < SIZE; ++c )
         {
-            T1 ref = x[r*SIZE + c] + val;
+            T1 ref = val + x[r*SIZE + c];
             EXPECT_DOUBLE_EQ(mr(r,c)(), ref()) << "Error at row " << r << " and col " << c;
         }
     }
@@ -378,13 +378,13 @@ void Matrix3x3_CanSubtractDifferentType()
     mc::Matrix3x3<T1> mr;
     m1.setFromStdVector(x);
     m2.fill(val);
-    mr = m1 - m2;
+    mr = m2 - m1;
 
     for ( unsigned int r = 0; r < SIZE; ++r )
     {
         for ( unsigned int c = 0; c < SIZE; ++c )
         {
-            T1 ref = x[r*SIZE + c] - val;
+            T1 ref = val - x[r*SIZE + c];
             EXPECT_DOUBLE_EQ(mr(r,c)(), ref()) << "Error at row " << r << " and col " << c;
         }
     }
