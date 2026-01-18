@@ -1102,7 +1102,7 @@ TEST_F(TestMatrix3x3WithUnits, CanUnarySubtractDifferentTypes)
 }
 
 template <typename T>
-void Matrix3x3_CanUnaryMultiplyByScalarDimensionless()
+void Matrix3x3_CanUnaryMultiplyByDimensionlessScalar()
 {
     constexpr double val = 2.0;
 
@@ -1128,13 +1128,13 @@ void Matrix3x3_CanUnaryMultiplyByScalarDimensionless()
     }
 }
 
-TEST_F(TestMatrix3x3WithUnits, CanUnaryMultiplyByScalarDimensionless)
+TEST_F(TestMatrix3x3WithUnits, CanUnaryMultiplyByDimensionlessScalar)
 {
-    Matrix3x3_CanUnaryMultiplyByScalarDimensionless<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanUnaryMultiplyByDimensionlessScalar<units::moment_of_inertia::kilograms_meters_squared_t>();
 }
 
 template <typename T>
-void Matrix3x3_CanUnaryDivideByScalarDimensionless()
+void Matrix3x3_CanUnaryDivideByDimensionlessScalar()
 {
     constexpr double val = 2.0;
 
@@ -1160,9 +1160,9 @@ void Matrix3x3_CanUnaryDivideByScalarDimensionless()
     }
 }
 
-TEST_F(TestMatrix3x3WithUnits, CanUnaryDivideByScalarDimensionless)
+TEST_F(TestMatrix3x3WithUnits, CanUnaryDivideByDimensionlessScalar)
 {
-    Matrix3x3_CanUnaryDivideByScalarDimensionless<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanUnaryDivideByDimensionlessScalar<units::moment_of_inertia::kilograms_meters_squared_t>();
 }
 
 template <typename T>
