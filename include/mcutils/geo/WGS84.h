@@ -56,8 +56,7 @@ static constexpr units::acceleration::meters_per_second_squared_t
 static constexpr double k = 0.00193185265241;                       ///< [-] theoretical (normal) gravity formula constant
 static constexpr double m = 0.00344978650684;                       ///< [-] m = omega^2 * a^2 * b / GM
 
-} // namespace DataWGS84
-
+} // namespace WGS84
 } // namespace mc
 
 #endif // MCUTILS_GEO_WGS84_H_
