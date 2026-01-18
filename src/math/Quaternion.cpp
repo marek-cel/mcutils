@@ -78,10 +78,10 @@ Quaternion::Quaternion(units::angle::radian_t angl, const Vector3d& vect)
 
 bool Quaternion::isValid() const
 {
-    return misc::isValid(_e0)
-        && misc::isValid(_ex)
-        && misc::isValid(_ey)
-        && misc::isValid(_ez);
+    return mc::isValid(_e0)
+        && mc::isValid(_ex)
+        && mc::isValid(_ey)
+        && mc::isValid(_ez);
 }
 
 void Quaternion::conjugate()

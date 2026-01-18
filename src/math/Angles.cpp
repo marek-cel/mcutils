@@ -50,9 +50,9 @@ Angles::Angles(units::angle::radian_t phi,
 
 bool Angles::isValid() const
 {
-    return misc::isValid(_phi)
-        && misc::isValid(_tht)
-        && misc::isValid(_psi);
+    return mc::isValid(_phi)
+        && mc::isValid(_tht)
+        && mc::isValid(_psi);
 }
 
 void Angles::normalize()

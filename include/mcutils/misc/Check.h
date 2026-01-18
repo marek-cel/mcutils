@@ -30,7 +30,6 @@
 #include <vector>
 
 namespace mc {
-namespace misc {
 
 /**
  * \brief Checks if given varaible is Infinite.
@@ -86,7 +85,6 @@ inline bool isValid(const T array[], unsigned int size)
     return true;
 }
 
-} // namespace misc
 } // namespace mc
 
 #endif // MCUTILS_MISC_CHECK_H_

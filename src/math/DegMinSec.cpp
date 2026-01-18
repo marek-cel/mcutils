@@ -36,10 +36,10 @@ DegMinSec::DegMinSec(units::angle::degree_t angle)
 
 bool DegMinSec::isValid() const
 {
-    return misc::isValid(_angle)
-        && misc::isValid(_deg)
-        && misc::isValid(_min)
-        && misc::isValid(_sec);
+    return mc::isValid(_angle)
+        && mc::isValid(_deg)
+        && mc::isValid(_min)
+        && mc::isValid(_sec);
 }
 
 void DegMinSec::setAngle(units::angle::degree_t angle)

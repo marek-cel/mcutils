@@ -80,7 +80,7 @@ public:
      */
     bool isValid() const
     {
-        return misc::isValid(_elements, SIZE);
+        return mc::isValid(_elements, SIZE);
     }
 
     /** \return vector length squared */
@@ -171,7 +171,7 @@ public:
         {
             float temp = std::numeric_limits<float>::quiet_NaN();
             ss >> temp;
-            valid &= misc::isValid(temp);
+            valid &= mc::isValid(temp);
             elements[i] = TYPE{temp};
         }
 

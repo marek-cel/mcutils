@@ -247,7 +247,7 @@ public:
         {
             for (unsigned int c = 0; c < _cols && result; ++c)
             {
-                result &= misc::isValid(_col_values[c]);
+                result &= mc::isValid(_col_values[c]);
 
                 if (c > 0)
                 {
@@ -257,7 +257,7 @@ public:
 
             for (unsigned int r = 0; r < _rows && result; ++r)
             {
-                result = misc::isValid(_row_values[r]);
+                result = mc::isValid(_row_values[r]);
 
                 if (r > 0)
                 {
@@ -267,8 +267,8 @@ public:
 
             for (unsigned int i = 0; i < _size && result; ++i)
             {
-                result &= misc::isValid(_table_data[i]);
-                result &= misc::isValid(_inter_data[i]);
+                result &= mc::isValid(_table_data[i]);
+                result &= mc::isValid(_inter_data[i]);
             }
         }
 
@@ -382,7 +382,7 @@ public:
             double key = std::numeric_limits<double>::quiet_NaN();
             sl >> key; // sic!
             ss >> key; // sic!
-            valid &= misc::isValid(key);
+            valid &= mc::isValid(key);
             col_values_tmp.push_back(COL_TYPE{key});
         }
 
@@ -391,7 +391,7 @@ public:
         {
             double key = std::numeric_limits<double>::quiet_NaN();
             ss >> key;
-            valid &= misc::isValid(key);
+            valid &= mc::isValid(key);
             row_values_tmp.push_back(ROW_TYPE{key});
 
             // table data
@@ -399,7 +399,7 @@ public:
             {
                 double val = std::numeric_limits<double>::quiet_NaN();
                 ss >> val;
-                valid &= misc::isValid(val);
+                valid &= mc::isValid(val);
                 table_data_tmp.push_back(VAL_TYPE{val});
             }
         }
