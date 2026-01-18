@@ -23,27 +23,62 @@
 #define MCUTILS_DOXYGEN_H_
 
 /***************************************************************************//**
- * \author Marek M. Cel
- *
  * \mainpage mcutils - Utilities Library
  *
- * \section Modules
+ * \section intro_sec Introduction
  *
- * \subsection Geodetic (geo)
- * This module contains utilities for various geodetic computations, including
- * Earth-centered Earth-fixed coordinate system or Mercator projection.
+ * mcutils is a modern C++ utilities library providing a collection of reusable
+ * components for scientific, engineering, and general-purpose applications.
+ * The library is modular, well-documented, and designed for performance and
+ * ease of use.
  *
- * \subsection Math (math)
- * This module contains utilities for various mathematical operations, including
- * vectors, matrices and quaternions classes, numerical integration procedures,
- * linear interpolation, etc.
+ * \section modules_sec Modules
  *
- * \subsection Miscelaneous (misc)
- * his module contains miscellaneous utilities, including strings manipulation.
+ * The library is organized into the following modules:
  *
- * \subsection Time (time)
- * This module contains time and date ralted utilities, like date/time structures
- * and function converting to ISO-8601 standard.
+ * \subsection geo_mod Geodetic (geo)
+ * Utilities for geodetic computations, including:
+ * - Earth-centered Earth-fixed (ECEF) coordinate transformations
+ * - Ellipsoid and datum definitions (e.g., WGS84, Mars2015)
+ * - Map projections (e.g., Mercator)
+ * - Geodetic conversions and calculations
+ *
+ * \subsection log_mod Logging (log)
+ * Logging utilities for:
+ * - Console and file logging
+ * - Configurable verbosity levels
+ * - Stream-based and custom logger implementations
+ *
+ * \subsection math_mod Math (math)
+ * Mathematical utilities, including:
+ * - Vector and matrix classes (with and without units)
+ * - Quaternions and rotation matrices
+ * - Numerical integration (e.g., Runge-Kutta)
+ * - Interpolation tables and statistical functions
+ * - Angle and coordinate representations
+ *
+ * \subsection misc_mod Miscellaneous (misc)
+ * Miscellaneous utilities, such as:
+ * - String manipulation and formatting
+ * - Input validation and checking
+ * - Helper functions for common programming tasks
+ *
+ * \subsection physics_mod Physics (physics)
+ * Physics-related utilities, including:
+ * - First-order inertia and dynamic system models
+ * - Physical constants and unit conversions
+ *
+ * \subsection time_mod Time (time)
+ * Time and date utilities, such as:
+ * - Date/time structures and arithmetic
+ * - ISO-8601 formatting and parsing
+ * - High-resolution timers
+ *
+ * \subsection xml_mod XML (xml)
+ * XML parsing and writing utilities, including:
+ * - XML document and node manipulation
+ * - Reading/writing structured data from/to XML files
+ * - Helper functions for common XML operations
  *
  ******************************************************************************/
 
