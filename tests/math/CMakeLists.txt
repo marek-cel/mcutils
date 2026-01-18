@@ -7,6 +7,7 @@ set(SOURCES
     TestDegMinSec.cpp
     TestEulerRect.cpp
     TestGaussJordan.cpp
+    TestMathUtils.cpp
     TestMatrix3x3.cpp
     TestMatrix3x3WithUnits.cpp
     TestMatrixMxN.cpp
