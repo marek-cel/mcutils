@@ -57,3 +57,12 @@ TEST_F(TestMathUtils, CanCalculateSineWave)
     EXPECT_NEAR(mc::math::sineWave(  0.5 ) , sin(M_PI_2)  , tolerance);
     EXPECT_NEAR(mc::math::sineWave(  1.0 ) , sin(M_PI)    , tolerance);
 }
+
+TEST_F(TestMathUtils, CanCalculateSmoothstep)
+{
+    EXPECT_DOUBLE_EQ(mc::math::smoothstep(-1.0, 1.0, -1.5), 0.0);
+    EXPECT_DOUBLE_EQ(mc::math::smoothstep(-1.0, 1.0, -1.0), 0.0);
+    EXPECT_DOUBLE_EQ(mc::math::smoothstep(-1.0, 1.0,  0.0), 0.5);
+    EXPECT_DOUBLE_EQ(mc::math::smoothstep(-1.0, 1.0,  1.0), 1.0);
+    EXPECT_DOUBLE_EQ(mc::math::smoothstep(-1.0, 1.0,  1.5), 1.0);
+}
