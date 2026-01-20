@@ -1,23 +1,23 @@
 #include <gtest/gtest.h>
 
-#include <mcutils/physics/FirstOrderInertia.h>
+#include <mcutils/physics/PhysicsUtils.h>
 
 #include <XcosBinFileReader.h>
 
-class TestFirstOrderInertia : public ::testing::Test
+class TestPhysicsUtils : public ::testing::Test
 {
 protected:
 
     static constexpr double TIME_STEP     { 0.1 };
     static constexpr double TIME_CONSTANT { 2.0 };
 
-    TestFirstOrderInertia() {}
-    virtual ~TestFirstOrderInertia() {}
+    TestPhysicsUtils() {}
+    virtual ~TestPhysicsUtils() {}
     void SetUp() override {}
     void TearDown() override {}
 };
 
-TEST_F(TestFirstOrderInertia, CanComputeFirstOrderInertia)
+TEST_F(TestPhysicsUtils, CanComputeFirstOrderInertia)
 {
     std::vector<double> vals;
 
@@ -63,7 +63,7 @@ TEST_F(TestFirstOrderInertia, CanComputeFirstOrderInertia)
     }
 }
 
-TEST_F(TestFirstOrderInertia, CanComputeInertiaTimeConst0)
+TEST_F(TestPhysicsUtils, CanComputeInertiaTimeConst0)
 {
     double y = 0.0;
 

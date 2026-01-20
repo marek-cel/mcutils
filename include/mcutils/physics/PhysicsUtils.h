@@ -19,10 +19,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  ******************************************************************************/
-#ifndef MCUTILS_PHYSICS_FIRSTORDERINERTIA_H_
-#define MCUTILS_PHYSICS_FIRSTORDERINERTIA_H_
+#ifndef MCUTILS_PHYSICS_PHYSICSUTILS_H_
+#define MCUTILS_PHYSICS_PHYSICSUTILS_H_
 
 #include <cmath>
+
+#include <mcutils/units.h>
+
+using namespace units::math;
 
 namespace mc {
 namespace physics {
@@ -31,13 +35,14 @@ namespace physics {
  * \brief First order inertia.
  * \param u desired value
  * \param y current value
- * \param dt [s] time step
- * \param tc [s] time constant
+ * \param dt time step
+ * \param tc time constant
  * \return firt order inertia output
  */
-inline double firstOrderInertia(double u, double y, double dt, double tc)
+template <typename T_VAL, typename T_TIME>
+inline double firstOrderInertia(T_VAL u, T_VAL y, T_TIME dt, T_TIME tc)
 {
-    if ( tc > 0.0 )
+    if ( tc > T_TIME{0} )
     {
         return y + (1.0 - exp(-dt / tc)) * (u - y);
     }
@@ -47,4 +52,4 @@ inline double firstOrderInertia(double u, double y, double dt, double tc)
 } // namespace physics
 } // namespace mc
 
-#endif // MCUTILS_PHYSICS_FIRSTORDERINERTIA_H_
+#endif // MCUTILS_PHYSICS_PHYSICSUTILS_H_
