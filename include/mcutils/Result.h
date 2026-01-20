@@ -27,7 +27,7 @@ namespace mc {
 /**
  * \brief The Result enum
  */
-enum class Result : int
+enum class Result : uint8_t
 {
     Success = 0,    ///< success
     Failure = 1     ///< failure
