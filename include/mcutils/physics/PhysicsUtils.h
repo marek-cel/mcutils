@@ -25,6 +25,8 @@
 #include <cmath>
 
 #include <mcutils/units.h>
+#include <mcutils/math/Matrix.h>
+#include <mcutils/math/Vector.h>
 
 using namespace units::math;
 
@@ -40,7 +42,7 @@ namespace physics {
  * \return firt order inertia output
  */
 template <typename T_VAL, typename T_TIME>
-inline double firstOrderInertia(T_VAL u, T_VAL y, T_TIME dt, T_TIME tc)
+inline T_VAL firstOrderInertia(const T_VAL& u, const T_VAL& y, const T_TIME& dt, const T_TIME& tc)
 {
     if ( tc > T_TIME{0} )
     {
