@@ -51,6 +51,30 @@ inline T_VAL firstOrderInertia(const T_VAL& u, const T_VAL& y, const T_TIME& dt,
     return u;
 }
 
+/**
+ * \brief Gets matrix of inertia about parallel axis.
+ * \param m [kg] mass
+ * \param i [kg*m^2] inertia tensor
+ * \param r [m] position
+ * \return shifted inertia tensor [kg*m^2]
+ *
+ * ### Refernces:
+ * - Awrejcewicz J.: Classical Mechanics: Kinematics and Statics, 2012, p.163
+ * - [Parallel axis theorem - Wikipedia](https://en.wikipedia.org/wiki/Parallel_axis_theorem)
+ */
+inline Matrix3x3_kg_m_sq parallelAxisInertia(
+    const units::mass::kilogram_t& m, 
+    const Matrix3x3_kg_m_sq& i, 
+    const Vector3_m& r
+)
+{
+    return i + Matrix3x3_kg_m_sq(
+        m * (r.y()*r.y() + r.z()*r.z()) , -m * (r.x()*r.y())               , -m * (r.x()*r.z()),
+       -m * (r.y()*r.x())               ,  m * (r.x()*r.x() + r.z()*r.z()) , -m * (r.y()*r.z()),
+       -m * (r.z()*r.x())               , -m * (r.z()*r.y())               ,  m * (r.x()*r.x() + r.y()*r.y())
+    );
+}
+
 } // namespace physics
 } // namespace mc
 
