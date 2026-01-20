@@ -29,6 +29,7 @@
 #include <mcutils/time/DateTime.h>
 
 namespace mc {
+namespace time {
 
 /**
  * \brief Converts time to the ISO-8601 date and time string.
@@ -133,6 +134,7 @@ inline std::string toISO8601(const DateTime& dt, bool show_msec = true, const st
                      separator);
 }
 
+} // namespace time
 } // namespace mc
 
 #endif // MCUTILS_TIME_ISO8601_H_

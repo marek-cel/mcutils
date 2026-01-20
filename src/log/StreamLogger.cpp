@@ -130,7 +130,7 @@ std::string StreamLogger::timestamp()
     msec = st.wMilliseconds;
 #   endif // WIN32
 
-    return "[" + toISO8601(year, mon, day, hour, min, sec, msec) + "]";
+    return "[" + time::toISO8601(year, mon, day, hour, min, sec, msec) + "]";
 }
 
 } // namespace mc
