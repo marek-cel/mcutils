@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  ******************************************************************************/
-#ifndef MCUTILS_PHYSICS_INERTIA_H_
-#define MCUTILS_PHYSICS_INERTIA_H_
+#ifndef MCUTILS_PHYSICS_FIRSTORDERINERTIA_H_
+#define MCUTILS_PHYSICS_FIRSTORDERINERTIA_H_
 
 #include <cmath>
 
@@ -47,4 +47,4 @@ inline double firstOrderInertia(double u, double y, double dt, double tc)
 } // namespace physics
 } // namespace mc
 
-#endif // MCUTILS_PHYSICS_INERTIA_H_
+#endif // MCUTILS_PHYSICS_FIRSTORDERINERTIA_H_

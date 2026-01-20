@@ -3,7 +3,7 @@ set(MODULE_NAME tests-mcutils-physics)
 ################################################################################
 
 set(SOURCES
-    TestInertia.cpp
+    TestFirstOrderInertia.cpp
     TestUnitsUtils.cpp
 )
 
