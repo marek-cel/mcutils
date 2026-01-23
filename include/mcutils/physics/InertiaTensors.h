@@ -27,7 +27,26 @@
 namespace mc {
 namespace physics {
 
-// TODO
+/**
+ * \brief Calculates inertia tensor of a solid sphere.
+ * \param mass [kg] mass
+ * \param radius [m] radius
+ * \return inertia tensor [kg*m^2]
+ * 
+ * ### References:
+ * - Awrejcewicz J.: Classical Mechanics: Kinematics and Statics, 2012, p.155
+ */
+Matrix3x3_kg_m_sq calculateInrtiaTensorOfSolidSphere(
+    units::mass::kilogram_t mass,
+    units::length::meter_t radius
+)
+{
+    Matrix3x3_kg_m_sq result;
+    result.xx() = (2.0 / 5.0) * mass * radius * radius;
+    result.yy() = result.xx();
+    result.zz() = result.xx();
+    return result;
+}
 
 } // namespace physics
 } // namespace mc
