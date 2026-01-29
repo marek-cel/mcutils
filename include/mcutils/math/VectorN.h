@@ -227,6 +227,22 @@ public:
         }
     }
 
+    // TODO: strip angle
+    template <typename U = TYPE>
+    requires (
+        units::traits::is_unit_t<TYPE>::value &&
+        units::traits::has_angle_dimension_t<TYPE>::value
+    )
+    auto stripAngle() const
+    {
+        VectorN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, SIZE> result;
+        for (unsigned int i = 0; i < SIZE; ++i)
+        {
+            result(i) = units::detail::strip_angle_dimension<TYPE>::strip(_elements[i]);
+        }
+        return result;
+    }
+
     /**
      * \brief Casting operator.
      * Converts the vector to another type.
@@ -457,59 +473,6 @@ public:
     }
 
     /**
-     * \brief Multiplication by a scalar operator.
-     * 
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     * 
-     * \tparam TYPE_RHS right-hand side operand type
-     * \param val value to be multiplied by
-     * \return product of the vector multiplied by the value
-     */
-    template <typename RHS_TYPE>
-    requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
-    auto operator*(const RHS_TYPE& val) const
-    {
-        if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
-        {
-            VectorN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, SIZE> temp;
-            for (unsigned int i = 0; i < SIZE; ++i)
-            {
-                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
-            }
-
-            VectorN<
-                units::unit_t<
-                    units::compound_unit<
-                        typename units::detail::strip_angle_dimension<TYPE>::stripped_unit,
-                        typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
-                    >
-                >,
-                SIZE
-            > result;
-            multiplyVectorByScalar(temp, val, &result);
-            return result;
-		}
-		else
-		{
-            typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type temp = 
-                units::detail::strip_angle_dimension<RHS_TYPE>::strip(val);
-
-            VectorN<
-                units::unit_t<
-                    units::compound_unit<
-                        typename units::traits::unit_t_traits<TYPE>::unit_type,
-                        typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_unit
-                    >
-                >,
-                SIZE
-            > result;
-            multiplyVectorByScalar(*this, temp, &result);
-            return result;
-		}
-    }
-
-    /**
      * \brief Dot product operator.
      * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param vect right-hand side vector
@@ -573,56 +536,6 @@ public:
         > result;
         calculateDotProduct(*this, vect, &result);
         return result;
-    }
-
-    /**
-     * \brief Dot product operator.
-     * 
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     * 
-     * \tparam RHS_TYPE type of the right-hand side vector elements
-     * \param vect right-hand side vector
-     * \return dot product of the vectors
-     */
-    template <typename RHS_TYPE>
-    requires units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value
-    auto operator*(const VectorN<RHS_TYPE,SIZE>& vect) const
-    {
-		if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
-		{
-            VectorN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, SIZE> temp;
-            for (unsigned int i = 0; i < SIZE; ++i)
-            {
-                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
-            }
-
-            units::unit_t<
-                units::compound_unit<
-                    typename units::detail::strip_angle_dimension<TYPE>::stripped_unit,
-                    typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
-                >
-            > result;
-            calculateDotProduct(temp, vect, &result);
-            return result;
-		}
-		else
-		{
-            VectorN<typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type, SIZE> temp;
-            for (unsigned int i = 0; i < SIZE; ++i)
-            {
-                temp(i) = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect(i));
-            }
-
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_unit
-                >
-            > result;
-            calculateDotProduct(*this, temp, &result);
-            return result;
-		}
     }
 
     /**
