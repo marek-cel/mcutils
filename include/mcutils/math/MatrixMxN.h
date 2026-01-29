@@ -75,29 +75,6 @@ public:
     // LCOV_EXCL_STOP
 
     /**
-     * \brief Converting constructor.
-     * 
-     * This template is enabled when TYPE and TYPE2 are convertible units.
-     * 
-     * \tparam TYPE2 type of the other matrix elements
-     * \param mat other matrix
-     */
-    template <typename TYPE2>
-    requires (
-        std::is_arithmetic<TYPE>::value == false && 
-        std::is_arithmetic<TYPE2>::value == false &&
-        std::is_same<TYPE, TYPE2>::value == false &&
-        units::traits::is_convertible_unit_t<TYPE, TYPE2>::value
-    )
-    MatrixMxN(const MatrixMxN<TYPE2, ROWS, COLS>& mat)
-    {
-        for (unsigned int i = 0; i < kSize; ++i)
-        {
-            _elements[i] = mat(i);
-        }
-    }
-
-    /**
      * \brief Fills all matrix elements with the given value.
      * \param val given value to fill all matrix elements
      */
@@ -522,8 +499,7 @@ public:
     template <typename RHS_TYPE>
     requires (
         units::traits::is_unit_t<TYPE>::value && 
-        units::traits::is_unit_t<RHS_TYPE>::value &&
-        units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value == false
+        units::traits::is_unit_t<RHS_TYPE>::value
     )
     auto operator*(const RHS_TYPE& val) const
     {
@@ -538,62 +514,6 @@ public:
         > result;
         multiplyMatrixByScalar(*this, val, &result);
         return result;
-    }
-
-    /**
-     * \brief Multiplication by a scalar operator.
-     * 
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     * 
-     * \tparam RHS_TYPE right-hand side operand type
-     * \param val value to be multiplied by
-     * \return product of the matrix multiplied by the value
-     */
-    template <typename RHS_TYPE>
-    requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
-    auto operator*(const RHS_TYPE& val) const
-    {
-		if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
-		{
-            MatrixMxN<
-                typename units::detail::strip_angle_dimension<TYPE>::stripped_type, 
-                ROWS, COLS
-            > temp;
-            for (unsigned int i = 0; i < kSize; ++i)
-            {
-                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
-            }
-
-            MatrixMxN<
-                units::unit_t<
-                    units::compound_unit<
-                        typename units::detail::strip_angle_dimension<TYPE>::stripped_unit,
-                        typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
-                    >
-                >,
-                ROWS, COLS
-            > result;
-            multiplyMatrixByScalar(temp, val, &result);
-            return result;
-		}
-		else
-		{
-            typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type temp = 
-                units::detail::strip_angle_dimension<RHS_TYPE>::strip(val);
-
-            MatrixMxN<
-                units::unit_t<
-                    units::compound_unit<
-                        typename units::traits::unit_t_traits<TYPE>::unit_type,
-                        typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_unit
-                    >
-                >,
-                ROWS, COLS
-            > result;
-            multiplyMatrixByScalar(*this, temp, &result);
-            return result;
-		}
     }
 
     /**
@@ -647,8 +567,7 @@ public:
     template <typename RHS_TYPE>
     requires (
         units::traits::is_unit_t<TYPE>::value && 
-        units::traits::is_unit_t<RHS_TYPE>::value &&
-        units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value == false
+        units::traits::is_unit_t<RHS_TYPE>::value
     )
     auto operator*(const VectorN<RHS_TYPE, ROWS>& vect) const
     {
@@ -663,62 +582,6 @@ public:
         > result;
         multiplyMatrixByVector(*this, vect, &result);
         return result;
-    }
-
-    /**
-     * \brief Multiplication by a vector operator.
-     * 
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     * 
-     * \tparam RHS_TYPE type of the right-hand side vector elements
-     * \param vect vector to be multiplied by
-     * \return product of the matrix multiplied by the vector
-     */
-    template <typename RHS_TYPE>
-    requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
-    auto operator*(const VectorN<RHS_TYPE, ROWS>& vect) const
-    {
-        if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
-        {
-            MatrixMxN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, ROWS, COLS> temp;
-            for (unsigned int i = 0; i < kSize; ++i)
-            {
-                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
-            }
-
-            VectorN<
-                units::unit_t<
-                    units::compound_unit<
-                        typename units::detail::strip_angle_dimension<TYPE>::stripped_unit,
-                        typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
-                    >
-                >,
-                ROWS
-            > result;
-            multiplyMatrixByVector(temp, vect, &result);
-            return result;
-        }
-        else
-        {
-            VectorN<typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type, ROWS> temp;
-            for (unsigned int i = 0; i < ROWS; ++i)
-            {
-                temp(i) = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect(i));
-            }
-
-            VectorN<
-                units::unit_t<
-                    units::compound_unit<
-                        typename units::traits::unit_t_traits<TYPE>::unit_type,
-                        typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_unit
-                    >
-                >,
-                ROWS
-            > result;
-            multiplyMatrixByVector(*this, temp, &result);
-            return result;
-        }
     }
 
     /**
@@ -775,8 +638,7 @@ public:
     template <typename RHS_TYPE, unsigned int P>
     requires (
         units::traits::is_unit_t<TYPE>::value && 
-        units::traits::is_unit_t<RHS_TYPE>::value &&
-        units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value == false
+        units::traits::is_unit_t<RHS_TYPE>::value
     )
     auto operator*(const MatrixMxN<RHS_TYPE, COLS, P>& mat) const
     {
@@ -791,63 +653,6 @@ public:
         > result;
         multiplyMatrixByMatrix(*this, mat, &result);
         return result;
-    }
-
-    /**
-     * \brief Multiplication by a matrix operator.
-     * 
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     * 
-     * \tparam RHS_TYPE type of the right-hand side matrix elements
-     * \tparam P number of columns of the right-hand side matrix
-     * \param mat matrix to be multiplied by
-     * \return product of the matrices
-     */
-    template <typename RHS_TYPE, unsigned int P>
-    requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
-    auto operator*(const MatrixMxN<RHS_TYPE, COLS, P>& mat) const
-    {
-        if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
-        {
-            MatrixMxN<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type, ROWS, P> temp;
-            for (unsigned int i = 0; i < kSize; ++i)
-            {
-                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip((*this)(i));
-            }
-
-            MatrixMxN<
-                units::unit_t<
-                    units::compound_unit<
-                        typename units::detail::strip_angle_dimension<TYPE>::stripped_unit,
-                        typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
-                    >
-                >,
-                ROWS, P
-            > result;
-            multiplyMatrixByMatrix(temp, mat, &result);
-            return result;
-        }
-        else
-        {
-            MatrixMxN<typename units::traits::unit_t_traits<RHS_TYPE>::unit_type, ROWS, P> temp;
-            for (unsigned int i = 0; i < kSize; ++i)
-            {
-                temp(i) = units::detail::strip_angle_dimension<TYPE>::strip(mat(i));
-            }
-
-            MatrixMxN<
-                units::unit_t<
-                    units::compound_unit<
-                        typename units::traits::unit_t_traits<TYPE>::unit_type,
-                        typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_unit
-                    >
-                >,
-                ROWS, P
-            > result;
-            multiplyMatrixByMatrix(*this, temp, &result);
-            return result;
-        }
     }
 
     /**

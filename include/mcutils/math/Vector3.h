@@ -343,56 +343,6 @@ public:
     }
 
     /**
-     * \brief Multiplication by a scalar operator.
-     * 
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     * 
-     * \tparam TYPE_RHS RHS operand type
-     * \param val value to be multiplied by
-     * \return product of the vector multiplied by the value
-     */
-    template <typename RHS_TYPE>
-    requires (units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value)
-    auto operator*(const RHS_TYPE& val) const
-    {
-		if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
-		{
-            Vector3<typename units::detail::strip_angle_dimension<TYPE>::stripped_type> temp;
-            temp.x() = units::detail::strip_angle_dimension<TYPE>::strip((*this).x());
-            temp.y() = units::detail::strip_angle_dimension<TYPE>::strip((*this).y());
-            temp.z() = units::detail::strip_angle_dimension<TYPE>::strip((*this).z());
-
-            Vector3<
-                units::unit_t<
-                    units::compound_unit<
-                        typename units::detail::strip_angle_dimension<TYPE>::stripped_unit,
-                        typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
-                    >
-                >
-            > result;
-            multiplyVectorByScalar(temp, val, &result);
-            return result;
-		}
-		else
-		{
-            typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type temp = 
-                units::detail::strip_angle_dimension<RHS_TYPE>::strip(val);
-
-            Vector3<
-                units::unit_t<
-                    units::compound_unit<
-                        typename units::traits::unit_t_traits<TYPE>::unit_type,
-                        typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_unit
-                    >
-                >
-            > result;
-            multiplyVectorByScalar(*this, temp, &result);
-            return result;
-		}
-    }
-
-    /**
      * \brief Dot product operator.
      * \tparam RHS_TYPE type of the right-hand side vector elements
      * \param vect right-hand side vector
@@ -456,54 +406,6 @@ public:
         > result;
         calculateDotProduct(*this, vect, &result);
         return result;
-    }
-
-    /**
-     * \brief Dot product operator.
-     * 
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     * 
-     * \tparam RHS_TYPE type of the right-hand side vector elements
-     * \param vect right-hand side vector
-     * \return dot product of the vectors
-     */
-    template <typename RHS_TYPE>
-    requires units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value
-    auto operator*(const Vector3<RHS_TYPE>& vect) const
-    {
-		if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
-		{
-            Vector3<typename units::detail::strip_angle_dimension<TYPE>::stripped_type> temp;
-            temp.x() = units::detail::strip_angle_dimension<TYPE>::strip((*this).x());
-            temp.y() = units::detail::strip_angle_dimension<TYPE>::strip((*this).y());
-            temp.z() = units::detail::strip_angle_dimension<TYPE>::strip((*this).z());
-
-            units::unit_t<
-                units::compound_unit<
-                    typename units::detail::strip_angle_dimension<TYPE>::stripped_unit,
-                    typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
-                >
-            > result;
-            calculateDotProduct(temp, vect, &result);
-            return result;
-		}
-		else
-		{
-            Vector3<typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type> temp;
-            temp.x() = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect.x());
-            temp.y() = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect.y());
-            temp.z() = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect.z());
-
-            units::unit_t<
-                units::compound_unit<
-                    typename units::traits::unit_t_traits<TYPE>::unit_type,
-                    typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_unit
-                >
-            > result;
-            calculateDotProduct(*this, temp, &result);
-            return result;
-		}
     }
 
     /**
@@ -640,58 +542,6 @@ public:
         > result;
         calculateCrossProduct(*this, vect, &result);
         return result;
-    }
-
-    /**
-     * \brief Cross product operator.
-     * 
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension.
-     * 
-     * \tparam RHS_TYPE type of the right-hand side vector elements
-     * \param vect right-hand side vector
-     * \return dot product of the vectors
-     */
-    template <typename RHS_TYPE>
-    requires units::traits::need_angle_stripping_t<TYPE, RHS_TYPE>::value
-    auto operator%(const Vector3<RHS_TYPE>& vect) const
-    {
-		if constexpr (units::traits::has_angle_dimension_t<TYPE>::value)
-		{
-            Vector3<typename units::detail::strip_angle_dimension<TYPE>::stripped_type> temp;
-            temp.x() = units::detail::strip_angle_dimension<TYPE>::strip((*this).x());
-            temp.y() = units::detail::strip_angle_dimension<TYPE>::strip((*this).y());
-            temp.z() = units::detail::strip_angle_dimension<TYPE>::strip((*this).z());
-
-            Vector3<
-                units::unit_t<
-                    units::compound_unit<
-                        typename units::detail::strip_angle_dimension<TYPE>::stripped_unit,
-                        typename units::traits::unit_t_traits<RHS_TYPE>::unit_type
-                    >
-                >
-            > result;
-            calculateCrossProduct(temp, vect, &result);
-            return result;
-		}
-		else
-		{
-            Vector3<typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_type> temp;
-            temp.x() = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect.x());
-            temp.y() = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect.y());
-            temp.z() = units::detail::strip_angle_dimension<RHS_TYPE>::strip(vect.z());
-
-            Vector3<
-                units::unit_t<
-                    units::compound_unit<
-                        typename units::traits::unit_t_traits<TYPE>::unit_type,
-                        typename units::detail::strip_angle_dimension<RHS_TYPE>::stripped_unit
-                    >
-                >
-            > result;
-            calculateCrossProduct(*this, temp, &result);
-            return result;
-		}
     }
 
     /**
