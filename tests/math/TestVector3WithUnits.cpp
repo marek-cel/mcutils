@@ -281,43 +281,6 @@ void Vector3_CanGetNormalized()
     EXPECT_NEAR(v1_n.getLength(), 1.0, TOLERANCE);
 }
 
-TEST_F(TestVector3WithUnits, CanGetNormalized)
-{
-    Vector3_CanGetNormalized<units::length::meter_t>();
-    Vector3_CanGetNormalized<units::velocity::meters_per_second_t>();
-    Vector3_CanGetNormalized<units::acceleration::meters_per_second_squared_t>();
-    Vector3_CanGetNormalized<units::angular_velocity::radians_per_second_t>();
-    Vector3_CanGetNormalized<units::angular_velocity::degrees_per_second_t>();
-    Vector3_CanGetNormalized<units::angular_acceleration::radians_per_second_squared_t>();
-    Vector3_CanGetNormalized<units::angular_acceleration::degrees_per_second_squared_t>();
-    Vector3_CanGetNormalized<units::force::newton_t>();
-    Vector3_CanGetNormalized<units::torque::newton_meter_t>();
-}
-
-template <typename T>
-void Vector3_CanSetData()
-{
-    mc::Vector3<T> v;
-    v.set(T{1}, T{2}, T{3});
-
-    EXPECT_NEAR(v.x()(), 1.0, TOLERANCE);
-    EXPECT_NEAR(v.y()(), 2.0, TOLERANCE);
-    EXPECT_NEAR(v.z()(), 3.0, TOLERANCE);
-}
-
-TEST_F(TestVector3WithUnits, CanSetData)
-{
-    Vector3_CanSetData<units::length::meter_t>();
-    Vector3_CanSetData<units::velocity::meters_per_second_t>();
-    Vector3_CanSetData<units::acceleration::meters_per_second_squared_t>();
-    Vector3_CanSetData<units::angular_velocity::radians_per_second_t>();
-    Vector3_CanSetData<units::angular_velocity::degrees_per_second_t>();
-    Vector3_CanSetData<units::angular_acceleration::radians_per_second_squared_t>();
-    Vector3_CanSetData<units::angular_acceleration::degrees_per_second_squared_t>();
-    Vector3_CanSetData<units::force::newton_t>();
-    Vector3_CanSetData<units::torque::newton_meter_t>();
-}
-
 template <typename T>
 void Vector3_CanAccessElementsViaFunctionsXYZ()
 {

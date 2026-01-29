@@ -446,13 +446,13 @@ TEST_F(TestVectorNWithUnits, CanZeroize)
     VectorN_CanZeroize<units::torque::newton_meter_t>();
 }
 
-TEST_F(TestVectorNWithUnits, CanAngleStripped)
+TEST_F(TestVectorNWithUnits, CanGetStripped)
 {
     mc::VectorN<units::angular_velocity::radians_per_second_t,SIZE> omega;
-    mc::VectorN<units::inverted::per_second_t,SIZE> omega_stripped = omega.angleStripped();
+    mc::VectorN<units::inverted::per_second_t,SIZE> omega_stripped = omega.getStripped();
 
     mc::VectorN<units::angular_acceleration::radians_per_second_squared_t,SIZE> epsilon;
-    mc::VectorN<units::inverted::per_second_squared_t,SIZE> epsilon_stripped = epsilon.angleStripped();
+    mc::VectorN<units::inverted::per_second_squared_t,SIZE> epsilon_stripped = epsilon.getStripped();
 }
 
 template <typename T>

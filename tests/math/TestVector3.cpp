@@ -131,16 +131,6 @@ TEST_F(TestVector3, CanGetNormalized)
     EXPECT_DOUBLE_EQ(v1_n.getLength(), 1.0);
 }
 
-TEST_F(TestVector3, CanSetData)
-{
-    mc::Vector3d v;
-
-    v.set(1.0, 2.0, 3.0);
-    EXPECT_DOUBLE_EQ(v.x(), 1.0);
-    EXPECT_DOUBLE_EQ(v.y(), 2.0);
-    EXPECT_DOUBLE_EQ(v.z(), 3.0);
-}
-
 TEST_F(TestVector3, CanAccessElementsViaFunctionsXYZ)
 {
     mc::Vector3d v;

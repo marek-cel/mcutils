@@ -59,9 +59,11 @@ public:
      * \param y value of the y element
      * \param z value of the z element
      */
-    explicit Vector3(TYPE x = TYPE{0}, TYPE y = TYPE{0}, TYPE z = TYPE{0})
+    Vector3(TYPE x = TYPE{0}, TYPE y = TYPE{0}, TYPE z = TYPE{0})
     {
-        set(x, y, z);
+        this->_elements[0] = x;
+        this->_elements[1] = y;
+        this->_elements[2] = z;
     }
 
     /**
@@ -84,23 +86,9 @@ public:
     )
     Vector3(TYPE_X x, TYPE_Y y, TYPE_Z z)
     {
-        set(x, y, z);
-    }
-
-    /**
-     * \brief Converting constructor.
-     * \param vect other vector
-     * \tparam TYPE2 type of the other vector elements
-     */
-    template <typename TYPE2>
-    requires (
-        std::is_arithmetic<TYPE2>::value == false &&
-        units::traits::is_convertible_unit_t<TYPE, TYPE2>::value &&
-        std::is_same<TYPE, TYPE2>::value == false
-    )
-    Vector3(const Vector3<TYPE>& vect)
-    {
-        set(vect.x(), vect.y(), vect.z());
+        this->_elements[0] = x;
+        this->_elements[1] = y;
+        this->_elements[2] = z;
     }
 
     /** \return length of projection of vector on XY-plane */
@@ -121,41 +109,21 @@ public:
     }
 
     /**
-     * \brief Sets vector values.
-     * \param x value of the x element
-     * \param y value of the y element
-     * \param z value of the z element
+     * \brief Returns angle-dimension-stripped version of the vector.
+     * \return angle-dimension-stripped vector
      */
-    void set(TYPE x, TYPE y, TYPE z)
-    {
-        this->_elements[0] = x;
-        this->_elements[1] = y;
-        this->_elements[2] = z;
-    }
-
-    /**
-     * \brief Sets vector values.
-     * \param x value of the x element
-     * \param y value of the y element
-     * \param z value of the z element
-     * \tparam TYPE_X type of the x element
-     * \tparam TYPE_Y type of the y element
-     * \tparam TYPE_Z type of the z element
-     */
-    template <typename TYPE_X, typename TYPE_Y, typename TYPE_Z>
+    template <typename U = TYPE>
     requires (
-        units::traits::is_unit_t<TYPE_X>::value &&
-        units::traits::is_unit_t<TYPE_Y>::value &&
-        units::traits::is_unit_t<TYPE_Z>::value &&
-        units::traits::is_convertible_unit_t<TYPE, TYPE_X>::value &&
-        units::traits::is_convertible_unit_t<TYPE, TYPE_Y>::value &&
-        units::traits::is_convertible_unit_t<TYPE, TYPE_Z>::value
+        units::traits::is_unit_t<TYPE>::value &&
+        units::traits::has_angle_dimension_t<TYPE>::value
     )
-    void set(TYPE_X x, TYPE_Y y, TYPE_Z z)
+    auto getStripped() const
     {
-        this->_elements[0] = x;
-        this->_elements[1] = y;
-        this->_elements[2] = z;
+        Vector3<typename units::detail::strip_angle_dimension<TYPE>::stripped_type> result;
+        result.x() = units::detail::strip_angle_dimension<TYPE>::strip(this->_elements[0]);
+        result.y() = units::detail::strip_angle_dimension<TYPE>::strip(this->_elements[1]);
+        result.z() = units::detail::strip_angle_dimension<TYPE>::strip(this->_elements[2]);
+        return result;
     }
 
     inline TYPE  x() const { return this->_elements[0]; }
