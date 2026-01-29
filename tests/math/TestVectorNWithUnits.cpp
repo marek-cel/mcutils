@@ -450,6 +450,9 @@ TEST_F(TestVectorNWithUnits, CanAngleStripped)
 {
     mc::VectorN<units::angular_velocity::radians_per_second_t,SIZE> omega;
     mc::VectorN<units::inverted::per_second_t,SIZE> omega_stripped = omega.angleStripped();
+
+    mc::VectorN<units::angular_acceleration::radians_per_second_squared_t,SIZE> epsilon;
+    mc::VectorN<units::inverted::per_second_squared_t,SIZE> epsilon_stripped = epsilon.angleStripped();
 }
 
 template <typename T>
