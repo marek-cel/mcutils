@@ -227,13 +227,16 @@ public:
         }
     }
 
-    // TODO: strip angle
+    /**
+     * \brief Returns angle-dimension-stripped version of the vector.
+     * \return angle-dimension-stripped vector
+     */
     template <typename U = TYPE>
     requires (
         units::traits::is_unit_t<TYPE>::value &&
         units::traits::has_angle_dimension_t<TYPE>::value
     )
-    auto stripAngle() const
+    auto angleStripped() const
     {
         VectorN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, SIZE> result;
         for (unsigned int i = 0; i < SIZE; ++i)
