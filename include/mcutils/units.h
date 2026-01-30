@@ -73,7 +73,7 @@ namespace units {
 	//------------------------------
 #	if !defined(DISABLE_PREDEFINED_UNITS) || defined(ENABLE_PREDEFINED_FIRST_MOMENT_OF_MASS_UNITS)
     UNIT_ADD(first_moment_of_mass, kilogram_meter, kilogram_meters, kg_m, compound_unit<mass::kilogram, length::meter>)
-    UNIT_ADD(first_moment_of_mass, slug_feet, slug_feet, slug_ft, compound_unit<mass::slug, length::feet>)
+    UNIT_ADD(first_moment_of_mass, slug_foot, slug_feet, slug_ft, compound_unit<mass::slug, length::feet>)
 #	endif
 
 	//------------------------------
@@ -155,7 +155,7 @@ namespace units {
 	// DYNAMIC VISCOSITY
 	//------------------------------
 #	if !defined(DISABLE_PREDEFINED_UNITS) || defined(ENABLE_PREDEFINED_DYNAMIC_VISCOSITY_UNITS)
-	UNIT_ADD(dynamic_viscosity, pascal_second, pascal_second, Pa_s, compound_unit<mass::kilogram, inverse<compound_unit<length::meter, time::second>>>)
+	UNIT_ADD(dynamic_viscosity, pascal_second, pascal_seconds, Pa_s, compound_unit<mass::kilogram, inverse<compound_unit<length::meter, time::second>>>)
 #	endif
 
 	//------------------------------

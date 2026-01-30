@@ -56,7 +56,7 @@ TEST_F(TestUnits, CanInstantiateFirstMomentOfMassUnits)
     units::first_moment_of_mass::kilogram_meter_t fm1 = 15.0_kg_m;
     EXPECT_DOUBLE_EQ(fm1(), 15.0);
 
-    units::first_moment_of_mass::slug_feet_t fm2 = 25.0_slug_ft;
+    units::first_moment_of_mass::slug_foot_t fm2 = 25.0_slug_ft;
     EXPECT_DOUBLE_EQ(fm2(), 25.0);
 }
 
