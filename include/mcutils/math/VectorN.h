@@ -83,7 +83,10 @@ public:
         return check::isValid(_elements, SIZE);
     }
 
-    /** \return vector length squared */
+    /**
+     * \brief Calculates and returns the squared length of the vector. 
+     * \return vector length squared 
+     */
     auto getLengthSq() const
     {
         auto length2 = _elements[0] * _elements[0];
@@ -94,13 +97,19 @@ public:
         return length2;
     }
 
-    /** \return vector length */
+    /**
+     * \brief Calculates and returns the length of the vector. 
+     * \return vector length 
+     */
     TYPE getLength() const
     {
         return sqrt(getLengthSq());
     }
 
-    /** \brief Returns normalized vector. */
+    /** 
+     * \brief Returns normalized vector. 
+     * \return normalized vector
+     */
     VectorN<double, SIZE> getNormalized() const
     {
         VectorN<double, SIZE> result;
@@ -151,9 +160,7 @@ public:
 
     /**
      * \brief Sets vector elements from a string.
-     *
      * Values in the given string should be separated by whitespaces.
-     *
      * \param str input string
      */
     void setFromString(const char* str)
@@ -209,7 +216,9 @@ public:
         return ss.str();
     }
 
-    /** \brief Negates (inverts) the vector. */
+    /** 
+     * \brief Negates (inverts) the vector. 
+     */
     void negate()
     {
         for (unsigned int i = 0; i < SIZE; ++i)
@@ -218,7 +227,9 @@ public:
         }
     }
 
-    /** \brief Sets all vector elements to zero. */
+    /** 
+     * \brief Sets all vector elements to zero. 
+     */
     void zeroize()
     {
         for (unsigned int i = 0; i < SIZE; ++i)
@@ -229,6 +240,9 @@ public:
 
     /**
      * \brief Returns angle-dimension-stripped version of the vector.
+     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+     * this makes radians a pure number without physical dimension. So in operations like
+     * v [m/s] = omega [ras/s] x r [m], radians are treated as dimensionless.
      * \return angle-dimension-stripped vector
      */
     template <typename U = TYPE>
