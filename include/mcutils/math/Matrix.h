@@ -40,10 +40,10 @@ using Matrix4x4d = MatrixNxN<double, 4>;
 
 using Matrix6x6d = MatrixNxN<double, 6>;
 
-using Matrix3x3_kg_m_sq = Matrix3x3<units::moment_of_inertia::kilograms_meters_squared_t>;
-extern template class MCUTILS_API Matrix3x3<units::moment_of_inertia::kilograms_meters_squared_t>;
-extern template class MCUTILS_API MatrixMxN<units::moment_of_inertia::kilograms_meters_squared_t, 3, 3>;
-extern template class MCUTILS_API MatrixNxN<units::moment_of_inertia::kilograms_meters_squared_t, 3>;
+using Matrix3x3_kg_m_sq = Matrix3x3<units::moment_of_inertia::kilogram_meter_squared_t>;
+extern template class MCUTILS_API Matrix3x3<units::moment_of_inertia::kilogram_meter_squared_t>;
+extern template class MCUTILS_API MatrixMxN<units::moment_of_inertia::kilogram_meter_squared_t, 3, 3>;
+extern template class MCUTILS_API MatrixNxN<units::moment_of_inertia::kilogram_meter_squared_t, 3>;
 
 } // namespace mc
 

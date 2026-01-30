@@ -37,7 +37,7 @@ void Matrix3x3_CanGetIdentityMatrix()
 
 TEST_F(TestMatrix3x3WithUnits, CanGetIdentityMatrix)
 {
-    Matrix3x3_CanGetIdentityMatrix<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanGetIdentityMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -60,7 +60,7 @@ void Matrix3x3_CanInstantiate()
 
 TEST_F(TestMatrix3x3WithUnits, CanInstantiate)
 {
-    Matrix3x3_CanInstantiate<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanInstantiate<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -87,22 +87,22 @@ void Matrix3x3_CanInstantiateAndSetData()
 
 TEST_F(TestMatrix3x3WithUnits, CanInstantiateAndSetData)
 {
-        Matrix3x3_CanInstantiateAndSetData<units::moment_of_inertia::kilograms_meters_squared_t>();
+        Matrix3x3_CanInstantiateAndSetData<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrix3x3WithUnits, CanInstantiateAndSetDataDifferentTypes)
 {
-    units::moment_of_inertia::kilograms_meters_squared_t xx = 1.0_kg_m_sq;
-    units::moment_of_inertia::slugs_feet_squared_t       xy = 2.0_kg_m_sq;
-    units::moment_of_inertia::kilograms_meters_squared_t xz = 3.0_kg_m_sq;
-    units::moment_of_inertia::slugs_feet_squared_t       yx = 4.0_kg_m_sq;
-    units::moment_of_inertia::kilograms_meters_squared_t yy = 5.0_kg_m_sq;
-    units::moment_of_inertia::slugs_feet_squared_t       yz = 6.0_kg_m_sq;
-    units::moment_of_inertia::kilograms_meters_squared_t zx = 7.0_kg_m_sq;
-    units::moment_of_inertia::slugs_feet_squared_t       zy = 8.0_kg_m_sq;
-    units::moment_of_inertia::kilograms_meters_squared_t zz = 9.0_kg_m_sq;
+    units::moment_of_inertia::kilogram_meter_squared_t xx = 1.0_kg_m_sq;
+    units::moment_of_inertia::slug_foot_squared_t      xy = 2.0_kg_m_sq;
+    units::moment_of_inertia::kilogram_meter_squared_t xz = 3.0_kg_m_sq;
+    units::moment_of_inertia::slug_foot_squared_t      yx = 4.0_kg_m_sq;
+    units::moment_of_inertia::kilogram_meter_squared_t yy = 5.0_kg_m_sq;
+    units::moment_of_inertia::slug_foot_squared_t      yz = 6.0_kg_m_sq;
+    units::moment_of_inertia::kilogram_meter_squared_t zx = 7.0_kg_m_sq;
+    units::moment_of_inertia::slug_foot_squared_t      zy = 8.0_kg_m_sq;
+    units::moment_of_inertia::kilogram_meter_squared_t zz = 9.0_kg_m_sq;
 
-    mc::Matrix3x3<units::moment_of_inertia::kilograms_meters_squared_t> m( 
+    mc::Matrix3x3<units::moment_of_inertia::kilogram_meter_squared_t> m( 
         xx, xy, xz,
         yx, yy, yz,
         zx, zy, zz
@@ -150,7 +150,7 @@ void Matrix3x3_CanGetTransposed()
 
 TEST_F(TestMatrix3x3WithUnits, CanGetTransposed)
 {
-    Matrix3x3_CanGetTransposed<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanGetTransposed<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -182,7 +182,7 @@ void Matrix3x3_CanTranspose()
 
 TEST_F(TestMatrix3x3WithUnits, CanTranspose)
 {
-    Matrix3x3_CanTranspose<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanTranspose<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T1, typename T2>
@@ -221,8 +221,8 @@ void Matrix3x3_CanCastToOtherMatrixType()
 TEST_F(TestMatrix3x3WithUnits, CanCastToOtherMatrixType)
 {
     Matrix3x3_CanCastToOtherMatrixType<
-        units::moment_of_inertia::kilograms_meters_squared_t,
-        units::moment_of_inertia::slugs_feet_squared_t>();
+        units::moment_of_inertia::kilogram_meter_squared_t,
+        units::moment_of_inertia::slug_foot_squared_t>();
 }
 
 template <typename T>
@@ -256,7 +256,7 @@ void Matrix3x3_CanAdd()
 
 TEST_F(TestMatrix3x3WithUnits, CanAdd)
 {
-    Matrix3x3_CanAdd<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanAdd<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T1, typename T2>
@@ -291,8 +291,8 @@ void Matrix3x3_CanAddDifferentTypes()
 TEST_F(TestMatrix3x3WithUnits, CanAddDifferentTypes)
 {
     Matrix3x3_CanAddDifferentTypes<
-        units::moment_of_inertia::kilograms_meters_squared_t,
-        units::moment_of_inertia::slugs_feet_squared_t
+        units::moment_of_inertia::kilogram_meter_squared_t,
+        units::moment_of_inertia::slug_foot_squared_t
     >();
 }
 
@@ -324,7 +324,7 @@ void Matrix3x3_CanNegate()
 
 TEST_F(TestMatrix3x3WithUnits, CanNegate)
 {
-    Matrix3x3_CanNegate<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanNegate<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -358,7 +358,7 @@ void Matrix3x3_CanSubtract()
 
 TEST_F(TestMatrix3x3WithUnits, CanSubtract)
 {
-    Matrix3x3_CanSubtract<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanSubtract<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T1, typename T2>
@@ -393,8 +393,8 @@ void Matrix3x3_CanSubtractDifferentTypes()
 TEST_F(TestMatrix3x3WithUnits, CanSubtractDifferentTypes)
 {
     Matrix3x3_CanSubtractDifferentTypes<
-        units::moment_of_inertia::kilograms_meters_squared_t,
-        units::moment_of_inertia::slugs_feet_squared_t
+        units::moment_of_inertia::kilogram_meter_squared_t,
+        units::moment_of_inertia::slug_foot_squared_t
     >();
 }
 
@@ -434,7 +434,7 @@ void Matrix3x3_CanMultiplyByScalar()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyByScalar)
 {
-    Matrix3x3_CanMultiplyByScalar<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyByScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -473,7 +473,7 @@ void Matrix3x3_CanMultiplyByAngularVelScalar()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyByAngularVelScalar)
 {
-    Matrix3x3_CanMultiplyByAngularVelScalar<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyByAngularVelScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -512,7 +512,7 @@ void Matrix3x3_CanMultiplyByAngularAccScalar()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyByAngularAccScalar)
 {
-    Matrix3x3_CanMultiplyByAngularAccScalar<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyByAngularAccScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -544,7 +544,7 @@ void Matrix3x3_CanMultiplyByDimensionlessScalar()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyByDimensionlessScalar)
 {
-    Matrix3x3_CanMultiplyByDimensionlessScalar<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyByDimensionlessScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyByScalarDimensionlessMatrix)
@@ -611,7 +611,7 @@ void Matrix3x3_CanMultiplyMatrixByVector()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyMatrixByVector)
 {
-    Matrix3x3_CanMultiplyMatrixByVector<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyMatrixByVector<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -652,7 +652,7 @@ void Matrix3x3_CanMultiplyMatrixByAngularVelVector()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyMatrixByAngularVelVector)
 {
-    Matrix3x3_CanMultiplyMatrixByAngularVelVector<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyMatrixByAngularVelVector<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -693,7 +693,7 @@ void Matrix3x3_CanMultiplyMatrixByAngularAccVector()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyMatrixByAngularAccVector)
 {
-    Matrix3x3_CanMultiplyMatrixByAngularAccVector<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyMatrixByAngularAccVector<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -727,7 +727,7 @@ void Matrix3x3_CanMultiplyMatrixByDimensionlessVector()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyMatrixByDimensionlessVector)
 {
-    Matrix3x3_CanMultiplyMatrixByDimensionlessVector<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyMatrixByDimensionlessVector<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyDimensionlessMatrixByVector)
@@ -806,7 +806,7 @@ void Matrix3x3_CanMultiplyMatrixByMatrix()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyMatrixByMatrix)
 {
-    Matrix3x3_CanMultiplyMatrixByMatrix<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyMatrixByMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -865,7 +865,7 @@ void Matrix3x3_CanMultiplyDimensionlessMatrixByMatrix()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyDimensionlessMatrixByMatrix)
 {
-    Matrix3x3_CanMultiplyDimensionlessMatrixByMatrix<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyDimensionlessMatrixByMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -906,7 +906,7 @@ void Matrix3x3_CanDivideByScalar()
 
 TEST_F(TestMatrix3x3WithUnits, CanDivideByScalar)
 {
-    Matrix3x3_CanDivideByScalar<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanDivideByScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -938,7 +938,7 @@ void Matrix3x3_CanDivideByDimensionlessScalar()
 
 TEST_F(TestMatrix3x3WithUnits, CanDivideByDimensionlessScalar)
 {
-    Matrix3x3_CanDivideByDimensionlessScalar<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanDivideByDimensionlessScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 
@@ -994,7 +994,7 @@ void Matrix3x3_CanUnaryAdd()
 
 TEST_F(TestMatrix3x3WithUnits, CanUnaryAdd)
 {
-    Matrix3x3_CanUnaryAdd<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanUnaryAdd<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T1, typename T2>
@@ -1028,8 +1028,8 @@ void Matrix3x3_CanUnaryAddDifferentTypes()
 TEST_F(TestMatrix3x3WithUnits, CanUnaryAddDifferentTypes)
 {
     Matrix3x3_CanUnaryAddDifferentTypes<
-        units::moment_of_inertia::kilograms_meters_squared_t,
-        units::moment_of_inertia::slugs_feet_squared_t
+        units::moment_of_inertia::kilogram_meter_squared_t,
+        units::moment_of_inertia::slug_foot_squared_t
     >();
 }
 
@@ -1062,7 +1062,7 @@ void Matrix3x3_CanUnarySubtract()
 
 TEST_F(TestMatrix3x3WithUnits, CanUnarySubtract)
 {
-    Matrix3x3_CanUnarySubtract<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanUnarySubtract<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T1, typename T2>
@@ -1096,8 +1096,8 @@ void Matrix3x3_CanUnarySubtractDifferentTypes()
 TEST_F(TestMatrix3x3WithUnits, CanUnarySubtractDifferentTypes)
 {
     Matrix3x3_CanUnarySubtractDifferentTypes<
-        units::moment_of_inertia::kilograms_meters_squared_t,
-        units::moment_of_inertia::slugs_feet_squared_t
+        units::moment_of_inertia::kilogram_meter_squared_t,
+        units::moment_of_inertia::slug_foot_squared_t
     >();
 }
 
@@ -1130,7 +1130,7 @@ void Matrix3x3_CanUnaryMultiplyByDimensionlessScalar()
 
 TEST_F(TestMatrix3x3WithUnits, CanUnaryMultiplyByDimensionlessScalar)
 {
-    Matrix3x3_CanUnaryMultiplyByDimensionlessScalar<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanUnaryMultiplyByDimensionlessScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -1162,7 +1162,7 @@ void Matrix3x3_CanUnaryDivideByDimensionlessScalar()
 
 TEST_F(TestMatrix3x3WithUnits, CanUnaryDivideByDimensionlessScalar)
 {
-    Matrix3x3_CanUnaryDivideByDimensionlessScalar<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanUnaryDivideByDimensionlessScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -1191,7 +1191,7 @@ void Matrix3x3_CanCompare()
 
 TEST_F(TestMatrix3x3WithUnits, CanCompare)
 {
-    Matrix3x3_CanCompare<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanCompare<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -1230,7 +1230,7 @@ void Matrix3x3_CanMultiplyScalarByMatrix()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyScalarByMatrix)
 {
-    Matrix3x3_CanMultiplyScalarByMatrix<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyScalarByMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -1269,7 +1269,7 @@ void Matrix3x3_CanMultiplyScalarByMatrixAngularVel()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyScalarByMatrixAngularVel)
 {
-    Matrix3x3_CanMultiplyScalarByMatrixAngularVel<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyScalarByMatrixAngularVel<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -1308,7 +1308,7 @@ void Matrix3x3_CanMultiplyScalarByMatrixAngularAcc()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyScalarByMatrixAngularAcc)
 {
-    Matrix3x3_CanMultiplyScalarByMatrixAngularAcc<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyScalarByMatrixAngularAcc<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 template <typename T>
@@ -1340,7 +1340,7 @@ void Matrix3x3_CanMultiplyScalarByMatrixDimensionless()
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyScalarByMatrixDimensionless)
 {
-    Matrix3x3_CanMultiplyScalarByMatrixDimensionless<units::moment_of_inertia::kilograms_meters_squared_t>();
+    Matrix3x3_CanMultiplyScalarByMatrixDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrix3x3WithUnits, CanMultiplyScalarByMatrixDimensionlessMatrix)

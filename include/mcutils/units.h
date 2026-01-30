@@ -64,15 +64,15 @@ namespace units {
 	// MOMENT OF INERTIA UNITS
 	//------------------------------
 #   if !defined(DISABLE_PREDEFINED_UNITS) || defined(ENABLE_PREDEFINED_MOMENT_OF_INERTIA_UNITS)
-	UNIT_ADD(moment_of_inertia, kilograms_meters_squared, kilograms_meters_squared, kg_m_sq, compound_unit<mass::kilograms, squared<length::meters>>)
-	UNIT_ADD(moment_of_inertia, slugs_feet_squared, slugs_feet_squared, slugs_ft_sq, compound_unit<mass::slugs, squared<length::feet>>)
+	UNIT_ADD(moment_of_inertia, kilogram_meter_squared, kilogram_meters_squared, kg_m_sq, compound_unit<mass::kilograms, squared<length::meters>>)
+	UNIT_ADD(moment_of_inertia, slug_foot_squared, slug_feet_squared, slug_ft_sq, compound_unit<mass::slugs, squared<length::feet>>)
 #   endif
 
 	//------------------------------
 	// FIRST MOMENT OF MASS
 	//------------------------------
 #	if !defined(DISABLE_PREDEFINED_UNITS) || defined(ENABLE_PREDEFINED_FIRST_MOMENT_OF_MASS_UNITS)
-    UNIT_ADD(first_moment_of_mass, kilogram_meter, kilogram_meter, kg_m, compound_unit<mass::kilogram, length::meter>)
+    UNIT_ADD(first_moment_of_mass, kilogram_meter, kilogram_meters, kg_m, compound_unit<mass::kilogram, length::meter>)
     UNIT_ADD(first_moment_of_mass, slug_feet, slug_feet, slug_ft, compound_unit<mass::slug, length::feet>)
 #	endif
 

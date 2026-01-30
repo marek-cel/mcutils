@@ -44,10 +44,10 @@ TEST_F(TestUnits, CanInstantiateInvertedUnits)
 
 TEST_F(TestUnits, CanInstantiateInertiaUnits)
 {
-    units::moment_of_inertia::kilograms_meters_squared_t I1 = 10.0_kg_m_sq;
+    units::moment_of_inertia::kilogram_meter_squared_t I1 = 10.0_kg_m_sq;
     EXPECT_DOUBLE_EQ(I1(), 10.0);
 
-    units::moment_of_inertia::slugs_feet_squared_t I2 = 20.0_slugs_ft_sq;
+    units::moment_of_inertia::slug_foot_squared_t I2 = 20.0_slug_ft_sq;
     EXPECT_DOUBLE_EQ(I2(), 20.0);
 }
 
