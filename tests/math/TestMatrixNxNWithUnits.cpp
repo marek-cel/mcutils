@@ -16,8 +16,11 @@ protected:
     void TearDown() override {}
 };
 
+namespace test {
+namespace MatrixNxN {
+
 template <typename T>
-void MatrixNxN_CanGetIdentityMatrix()
+void CanGetIdentityMatrix()
 {
     mc::MatrixNxN<T,SIZE> m = mc::MatrixNxN<T,SIZE>::getIdentityMatrix();
 
@@ -37,13 +40,8 @@ void MatrixNxN_CanGetIdentityMatrix()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanGetIdentityMatrix)
-{
-    MatrixNxN_CanGetIdentityMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanInstantiate()
+void CanInstantiate()
 {
     mc::MatrixNxN<T,SIZE> m;
     for ( unsigned int r = 0; r < SIZE; ++r )
@@ -55,13 +53,8 @@ void MatrixNxN_CanInstantiate()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanInstantiate)
-{
-    MatrixNxN_CanInstantiate<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanGetTransposed()
+void CanGetTransposed()
 {
     std::vector<T> x
     {
@@ -87,13 +80,8 @@ void MatrixNxN_CanGetTransposed()
     EXPECT_DOUBLE_EQ(mt(2,2)(), 9.0);
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanGetTransposed)
-{
-    MatrixNxN_CanGetTransposed<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanTranspose()
+void CanTranspose()
 {
     std::vector<T> x
     {
@@ -119,13 +107,8 @@ void MatrixNxN_CanTranspose()
     EXPECT_DOUBLE_EQ(m(2,2)(), 9.0);
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanTranspose)
-{
-    MatrixNxN_CanTranspose<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T1, typename T2>
-void MatrixNxN_CanCastToOtherMatrixType()
+void CanCastToOtherMatrixType()
 {
     mc::MatrixNxN<T1,SIZE> m1;
 
@@ -157,15 +140,8 @@ void MatrixNxN_CanCastToOtherMatrixType()
     EXPECT_NEAR(m2(2,2)(), 9.0, TOLERANCE);
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanCastToOtherMatrixType)
-{
-    MatrixNxN_CanCastToOtherMatrixType<
-        units::moment_of_inertia::kilogram_meter_squared_t,
-        units::moment_of_inertia::slug_foot_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanAdd()
+void CanAdd()
 {
     constexpr T val = T{2};
 
@@ -193,13 +169,8 @@ void MatrixNxN_CanAdd()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanAdd)
-{
-    MatrixNxN_CanAdd<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanNegate()
+void CanNegate()
 {
     std::vector<T> x
     {
@@ -224,13 +195,8 @@ void MatrixNxN_CanNegate()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanNegate)
-{
-    MatrixNxN_CanNegate<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanSubtract()
+void CanSubtract()
 {
     constexpr T val = T{2};
 
@@ -258,13 +224,8 @@ void MatrixNxN_CanSubtract()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanSubtract)
-{
-    MatrixNxN_CanSubtract<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyByScalar()
+void CanMultiplyByScalar()
 {
     constexpr units::length::meter_t val = 2.0_m;
 
@@ -298,13 +259,8 @@ void MatrixNxN_CanMultiplyByScalar()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyByScalar)
-{
-    MatrixNxN_CanMultiplyByScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyByScalarAngularVel()
+void CanMultiplyByScalarAngularVel()
 {
     constexpr units::angular_velocity::radians_per_second_t val = 2.0_rad_per_s;
 
@@ -338,13 +294,8 @@ void MatrixNxN_CanMultiplyByScalarAngularVel()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyByScalarAngularVel)
-{
-    MatrixNxN_CanMultiplyByScalarAngularVel<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyByScalarAngularAcc()
+void CanMultiplyByScalarAngularAcc()
 {
     constexpr units::angular_acceleration::radians_per_second_squared_t val = 2.0_rad_per_s_sq;
 
@@ -378,13 +329,8 @@ void MatrixNxN_CanMultiplyByScalarAngularAcc()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyByScalarAngularAcc)
-{
-    MatrixNxN_CanMultiplyByScalarAngularAcc<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyByScalarDimensionless()
+void CanMultiplyByScalarDimensionless()
 {
     constexpr double val = 2.0;
 
@@ -410,39 +356,8 @@ void MatrixNxN_CanMultiplyByScalarDimensionless()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyByScalarDimensionless)
-{
-    MatrixNxN_CanMultiplyByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyByScalarDimensionlessMatrix)
-{
-    constexpr units::length::meter_t val = 2.0_m;
-
-    std::vector<double> x
-    {
-        1.0, 2.0, 3.0,
-        4.0, 5.0, 6.0,
-        7.0, 8.0, 9.0
-    };
-
-    mc::MatrixNxN<double,SIZE> m1;
-    mc::MatrixNxN<units::length::meter_t,SIZE> mr;
-    m1.setFromStdVector(x);
-    mr = m1 * val;
-
-    for ( unsigned int r = 0; r < SIZE; ++r )
-    {
-        for ( unsigned int c = 0; c < SIZE; ++c )
-        {
-            double ref = x[r*SIZE + c] * val();
-            EXPECT_DOUBLE_EQ(mr(r,c)(), ref) << "Error at row " << r << " and col " << c;
-        }
-    }
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyMatrixByVector()
+void CanMultiplyMatrixByVector()
 {
     std::vector<T> x
     {
@@ -478,13 +393,8 @@ void MatrixNxN_CanMultiplyMatrixByVector()
     EXPECT_DOUBLE_EQ(vr(2)(), 50.0);
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByVector)
-{
-    MatrixNxN_CanMultiplyMatrixByVector<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyMatrixByVectorAngularVel()
+void CanMultiplyMatrixByVectorAngularVel()
 {
     std::vector<T> x
     {
@@ -520,13 +430,8 @@ void MatrixNxN_CanMultiplyMatrixByVectorAngularVel()
     EXPECT_DOUBLE_EQ(vr(2)(), 50.0);
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByVectorAngularVel)
-{
-    MatrixNxN_CanMultiplyMatrixByVectorAngularVel<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyMatrixByVectorAngularAcc()
+void CanMultiplyMatrixByVectorAngularAcc()
 {
     std::vector<T> x
     {
@@ -562,13 +467,8 @@ void MatrixNxN_CanMultiplyMatrixByVectorAngularAcc()
     EXPECT_DOUBLE_EQ(vr(2)(), 50.0);
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByVectorAngularAcc)
-{
-    MatrixNxN_CanMultiplyMatrixByVectorAngularAcc<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyMatrixByVectorDimensionless()
+void CanMultiplyMatrixByVectorDimensionless()
 {
     std::vector<T> x
     {
@@ -596,38 +496,8 @@ void MatrixNxN_CanMultiplyMatrixByVectorDimensionless()
     EXPECT_DOUBLE_EQ(vr(2)(), 50.0);
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByVectorDimensionless)
-{
-    MatrixNxN_CanMultiplyMatrixByVectorDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByVectorDimensionlessMatrix)
-{
-    std::vector<double> x
-    {
-        1.0, 2.0, 3.0,
-        4.0, 5.0, 6.0,
-        7.0, 8.0, 9.0
-    };
-    mc::MatrixNxN<double,SIZE> m;
-    m.setFromStdVector(x);
-
-    mc::VectorN<units::length::meter_t,SIZE> v;
-    v(0) = 1.0_m;
-    v(1) = 2.0_m;
-    v(2) = 3.0_m;
-
-    mc::VectorN<units::length::meter_t,SIZE> vr = m * v;
-
-    // Following tests uses expected values calculated with GNU Octave
-    // tests/mcsim/utils/math/octave/test_matrix.m
-    EXPECT_DOUBLE_EQ(vr(0)(), 14.0);
-    EXPECT_DOUBLE_EQ(vr(1)(), 32.0);
-    EXPECT_DOUBLE_EQ(vr(2)(), 50.0);
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyMatrixByMatrix()
+void CanMultiplyMatrixByMatrix()
 {
     std::vector<units::length::meter_t> x1
     {
@@ -676,13 +546,8 @@ void MatrixNxN_CanMultiplyMatrixByMatrix()
     EXPECT_DOUBLE_EQ(mr(2,2)(), 150.0);
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByMatrix)
-{
-    MatrixNxN_CanMultiplyMatrixByMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyMatrixByMatrixDimensionless()
+void CanMultiplyMatrixByMatrixDimensionless()
 {
     std::vector<double> x1
     {
@@ -735,13 +600,8 @@ void MatrixNxN_CanMultiplyMatrixByMatrixDimensionless()
     EXPECT_DOUBLE_EQ(mr21(2,2)(), 150.0);
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByMatrixDimensionless)
-{
-    MatrixNxN_CanMultiplyMatrixByMatrixDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanDivideByScalar()
+void CanDivideByScalar()
 {
     constexpr units::length::meter_t val = 2.0_m;
 
@@ -777,13 +637,8 @@ void MatrixNxN_CanDivideByScalar()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanDivideByScalar)
-{
-    MatrixNxN_CanDivideByScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanDivideByScalarDimensionless()
+void CanDivideByScalarDimensionless()
 {
     constexpr double val = 2.0;
 
@@ -809,37 +664,8 @@ void MatrixNxN_CanDivideByScalarDimensionless()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanDivideByScalarDimensionless)
-{
-    MatrixNxN_CanDivideByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
-
-TEST_F(TestMatrixNxNWithUnits, CanDivideByScalarDimensionlessMatrix)
-{
-    std::vector<double> x
-    {
-        1.0, 2.0, 3.0,
-        4.0, 5.0, 6.0,
-        7.0, 8.0, 9.0
-    };
-
-    mc::MatrixNxN<double,SIZE> m1;
-    mc::MatrixNxN<units::frequency::hertz_t,SIZE> mr;
-    m1.setFromStdVector(x);
-    mr = m1 / 1.0_s;
-
-    for ( unsigned int r = 0; r < SIZE; ++r )
-    {
-        for ( unsigned int c = 0; c < SIZE; ++c )
-        {
-            EXPECT_DOUBLE_EQ(mr(r,c)(), x[r*SIZE + c]) << "Error at row " << r << " and col " << c;
-        }
-    }
-}
-
 template <typename T>
-void MatrixNxN_CanUnaryAdd()
+void CanUnaryAdd()
 {
     constexpr T val = T{2};
 
@@ -865,13 +691,8 @@ void MatrixNxN_CanUnaryAdd()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanUnaryAdd)
-{
-    MatrixNxN_CanUnaryAdd<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanUnarySubtract()
+void CanUnarySubtract()
 {
     constexpr T val = T{2};
 
@@ -897,13 +718,8 @@ void MatrixNxN_CanUnarySubtract()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanUnarySubtract)
-{
-    MatrixNxN_CanUnarySubtract<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanUnaryMultiplyByScalarDimensionless()
+void CanUnaryMultiplyByScalarDimensionless()
 {
     constexpr double val = 2.0;
 
@@ -929,13 +745,8 @@ void MatrixNxN_CanUnaryMultiplyByScalarDimensionless()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanUnaryMultiplyByScalarDimensionless)
-{
-    MatrixNxN_CanUnaryMultiplyByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanUnaryDivideByScalarDimensionless()
+void CanUnaryDivideByScalarDimensionless()
 {
     constexpr double val = 2.0;
 
@@ -961,13 +772,8 @@ void MatrixNxN_CanUnaryDivideByScalarDimensionless()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanUnaryDivideByScalarDimensionless)
-{
-    MatrixNxN_CanUnaryDivideByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanCompare()
+void CanCompare()
 {
     std::vector<T> x
     {
@@ -990,13 +796,8 @@ void MatrixNxN_CanCompare()
     EXPECT_FALSE(m1 == m3);
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanCompare)
-{
-    MatrixNxN_CanCompare<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyScalarByMatrix()
+void CanMultiplyScalarByMatrix()
 {
     constexpr units::length::meter_t val = 2.0_m;
 
@@ -1030,13 +831,8 @@ void MatrixNxN_CanMultiplyScalarByMatrix()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyScalarByMatrix)
-{
-    MatrixNxN_CanMultiplyScalarByMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyScalarByMatrixAngularVel()
+void CanMultiplyScalarByMatrixAngularVel()
 {
     constexpr units::angular_velocity::radians_per_second_t val = 2.0_rad_per_s;
 
@@ -1070,13 +866,8 @@ void MatrixNxN_CanMultiplyScalarByMatrixAngularVel()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyScalarByMatrixAngularVel)
-{
-    MatrixNxN_CanMultiplyScalarByMatrixAngularVel<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyScalarByMatrixAngularAcc()
+void CanMultiplyScalarByMatrixAngularAcc()
 {
     constexpr units::angular_acceleration::radians_per_second_squared_t val = 2.0_rad_per_s_sq;
 
@@ -1110,13 +901,8 @@ void MatrixNxN_CanMultiplyScalarByMatrixAngularAcc()
     }
 }
 
-TEST_F(TestMatrixNxNWithUnits, CanMultiplyScalarByMatrixAngularAcc)
-{
-    MatrixNxN_CanMultiplyScalarByMatrixAngularAcc<units::moment_of_inertia::kilogram_meter_squared_t>();
-}
-
 template <typename T>
-void MatrixNxN_CanMultiplyScalarByMatrixDimensionless()
+void CanMultiplyScalarByMatrixDimensionless()
 {
     constexpr double val = 2.0;
 
@@ -1142,9 +928,229 @@ void MatrixNxN_CanMultiplyScalarByMatrixDimensionless()
     }
 }
 
+} // namespace MatrixNxN
+} // namespace test
+
+TEST_F(TestMatrixNxNWithUnits, CanGetIdentityMatrix)
+{
+    test::MatrixNxN::CanGetIdentityMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanInstantiate)
+{
+    test::MatrixNxN::CanInstantiate<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanGetTransposed)
+{
+    test::MatrixNxN::CanGetTransposed<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanTranspose)
+{
+    test::MatrixNxN::CanTranspose<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanCastToOtherMatrixType)
+{
+    test::MatrixNxN::CanCastToOtherMatrixType<
+        units::moment_of_inertia::kilogram_meter_squared_t,
+        units::moment_of_inertia::slug_foot_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanAdd)
+{
+    test::MatrixNxN::CanAdd<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanNegate)
+{
+    test::MatrixNxN::CanNegate<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanSubtract)
+{
+    test::MatrixNxN::CanSubtract<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyByScalar)
+{
+    test::MatrixNxN::CanMultiplyByScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyByScalarAngularVel)
+{
+    test::MatrixNxN::CanMultiplyByScalarAngularVel<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyByScalarAngularAcc)
+{
+    test::MatrixNxN::CanMultiplyByScalarAngularAcc<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyByScalarDimensionless)
+{
+    test::MatrixNxN::CanMultiplyByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyByScalarDimensionlessMatrix)
+{
+    constexpr units::length::meter_t val = 2.0_m;
+
+    std::vector<double> x
+    {
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    };
+
+    mc::MatrixNxN<double,SIZE> m1;
+    mc::MatrixNxN<units::length::meter_t,SIZE> mr;
+    m1.setFromStdVector(x);
+    mr = m1 * val;
+
+    for ( unsigned int r = 0; r < SIZE; ++r )
+    {
+        for ( unsigned int c = 0; c < SIZE; ++c )
+        {
+            double ref = x[r*SIZE + c] * val();
+            EXPECT_DOUBLE_EQ(mr(r,c)(), ref) << "Error at row " << r << " and col " << c;
+        }
+    }
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByVector)
+{
+    test::MatrixNxN::CanMultiplyMatrixByVector<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByVectorAngularVel)
+{
+    test::MatrixNxN::CanMultiplyMatrixByVectorAngularVel<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByVectorAngularAcc)
+{
+    test::MatrixNxN::CanMultiplyMatrixByVectorAngularAcc<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByVectorDimensionless)
+{
+    test::MatrixNxN::CanMultiplyMatrixByVectorDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByVectorDimensionlessMatrix)
+{
+    std::vector<double> x
+    {
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    };
+    mc::MatrixNxN<double,SIZE> m;
+    m.setFromStdVector(x);
+
+    mc::VectorN<units::length::meter_t,SIZE> v;
+    v(0) = 1.0_m;
+    v(1) = 2.0_m;
+    v(2) = 3.0_m;
+
+    mc::VectorN<units::length::meter_t,SIZE> vr = m * v;
+
+    // Following tests uses expected values calculated with GNU Octave
+    // tests/mcsim/utils/math/octave/test_matrix.m
+    EXPECT_DOUBLE_EQ(vr(0)(), 14.0);
+    EXPECT_DOUBLE_EQ(vr(1)(), 32.0);
+    EXPECT_DOUBLE_EQ(vr(2)(), 50.0);
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByMatrix)
+{
+    test::MatrixNxN::CanMultiplyMatrixByMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyMatrixByMatrixDimensionless)
+{
+    test::MatrixNxN::CanMultiplyMatrixByMatrixDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanDivideByScalar)
+{
+    test::MatrixNxN::CanDivideByScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanDivideByScalarDimensionless)
+{
+    test::MatrixNxN::CanDivideByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+
+TEST_F(TestMatrixNxNWithUnits, CanDivideByScalarDimensionlessMatrix)
+{
+    std::vector<double> x
+    {
+        1.0, 2.0, 3.0,
+        4.0, 5.0, 6.0,
+        7.0, 8.0, 9.0
+    };
+
+    mc::MatrixNxN<double,SIZE> m1;
+    mc::MatrixNxN<units::frequency::hertz_t,SIZE> mr;
+    m1.setFromStdVector(x);
+    mr = m1 / 1.0_s;
+
+    for ( unsigned int r = 0; r < SIZE; ++r )
+    {
+        for ( unsigned int c = 0; c < SIZE; ++c )
+        {
+            EXPECT_DOUBLE_EQ(mr(r,c)(), x[r*SIZE + c]) << "Error at row " << r << " and col " << c;
+        }
+    }
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanUnaryAdd)
+{
+    test::MatrixNxN::CanUnaryAdd<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanUnarySubtract)
+{
+    test::MatrixNxN::CanUnarySubtract<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanUnaryMultiplyByScalarDimensionless)
+{
+    test::MatrixNxN::CanUnaryMultiplyByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanUnaryDivideByScalarDimensionless)
+{
+    test::MatrixNxN::CanUnaryDivideByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanCompare)
+{
+    test::MatrixNxN::CanCompare<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyScalarByMatrix)
+{
+    test::MatrixNxN::CanMultiplyScalarByMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyScalarByMatrixAngularVel)
+{
+    test::MatrixNxN::CanMultiplyScalarByMatrixAngularVel<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
+TEST_F(TestMatrixNxNWithUnits, CanMultiplyScalarByMatrixAngularAcc)
+{
+    test::MatrixNxN::CanMultiplyScalarByMatrixAngularAcc<units::moment_of_inertia::kilogram_meter_squared_t>();
+}
+
 TEST_F(TestMatrixNxNWithUnits, CanMultiplyScalarByMatrixDimensionless)
 {
-    MatrixNxN_CanMultiplyScalarByMatrixDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixNxN::CanMultiplyScalarByMatrixDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixNxNWithUnits, CanMultiplyScalarByMatrixDimensionlessMatrix)

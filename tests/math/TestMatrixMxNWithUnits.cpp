@@ -18,6 +18,7 @@ protected:
 };
 
 namespace test {
+namespace MatrixMxN {
 
 template <typename T>
 void CanInstantiate()
@@ -899,6 +900,7 @@ void CanMultiplyScalarByMatrixDimensionless()
     }
 }
 
+} // namespace MatrixMxN
 } // namespace test
 
 TEST_F(TestMatrixMxNWithUnits, CanMultiplyByScalarDimensionlessMatrix)
@@ -929,104 +931,104 @@ TEST_F(TestMatrixMxNWithUnits, CanMultiplyByScalarDimensionlessMatrix)
 
 TEST_F(TestMatrixMxNWithUnits, CanInstantiate)
 {
-    test::CanInstantiate<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanInstantiate<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanFill)
 {
-    test::CanFill<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanFill<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanValidate)
 {
-    test::CanValidate<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanValidate<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanGetTransposed)
 {
-    test::CanGetTransposed<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanGetTransposed<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanGetStdVector)
 {
-    test::CanGetStdVector<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanGetStdVector<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanSetFromStdVector)
 {
-    test::CanSetFromStdVector<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanSetFromStdVector<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanSetFromString)
 {
-    test::CanSetFromString<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanSetFromString<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanSetFromInvalidString)
 {
-    test::CanSetFromInvalidString<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanSetFromInvalidString<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanSwapRows)
 {
-    test::CanSwapRows<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanSwapRows<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanConvertToString)
 {
-    test::CanConvertToString<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanConvertToString<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanZeroize)
 {
-    test::CanZeroize<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanZeroize<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanCastToOtherMatrixType)
 {
-    test::CanCastToOtherMatrixType<
+    test::MatrixMxN::CanCastToOtherMatrixType<
         units::moment_of_inertia::kilogram_meter_squared_t,
         units::moment_of_inertia::slug_foot_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanAccessItem)
 {
-    test::CanAccessItem<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanAccessItem<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanAdd)
 {
-    test::CanAdd<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanAdd<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanNegate)
 {
-    test::CanNegate<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanNegate<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanSubtract)
 {
-    test::CanSubtract<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanSubtract<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanMultiplyByScalar)
 {
-    test::CanMultiplyByScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanMultiplyByScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanMultiplyByScalarDimensionless)
 {
-    test::CanMultiplyByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanMultiplyByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanMultiplyMatrixByVector)
 {
-    test::CanMultiplyMatrixByVector<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanMultiplyMatrixByVector<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanMultiplyMatrixByVectorDimensionless)
 {
-    test::CanMultiplyMatrixByVectorDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanMultiplyMatrixByVectorDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanMultiplyMatrixByVectorDimensionlessMatrix)
@@ -1056,22 +1058,22 @@ TEST_F(TestMatrixMxNWithUnits, CanMultiplyMatrixByVectorDimensionlessMatrix)
 
 TEST_F(TestMatrixMxNWithUnits, CanMultiplyMatrixByMatrix)
 {
-    test::CanMultiplyMatrixByMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanMultiplyMatrixByMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanMultiplyMatrixByMatrixDimensionless)
 {
-    test::CanMultiplyMatrixByMatrixDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanMultiplyMatrixByMatrixDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanDivideByScalar)
 {
-    test::CanDivideByScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanDivideByScalar<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanDivideByScalarDimensionless)
 {
-    test::CanDivideByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanDivideByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanDivideByScalarDimensionlessMatrix)
@@ -1099,37 +1101,37 @@ TEST_F(TestMatrixMxNWithUnits, CanDivideByScalarDimensionlessMatrix)
 
 TEST_F(TestMatrixMxNWithUnits, CanUnaryAdd)
 {
-    test::CanUnaryAdd<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanUnaryAdd<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanUnarySubtract)
 {
-    test::CanUnarySubtract<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanUnarySubtract<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanUnaryMultiplyByScalarDimensionless)
 {
-    test::CanUnaryMultiplyByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanUnaryMultiplyByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanUnaryDivideByScalarDimensionless)
 {
-    test::CanUnaryDivideByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanUnaryDivideByScalarDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanCompare)
 {
-    test::CanCompare<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanCompare<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanMultiplyScalarByMatrix)
 {
-    test::CanMultiplyScalarByMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanMultiplyScalarByMatrix<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanMultiplyScalarByMatrixDimensionless)
 {
-    test::CanMultiplyScalarByMatrixDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
+    test::MatrixMxN::CanMultiplyScalarByMatrixDimensionless<units::moment_of_inertia::kilogram_meter_squared_t>();
 }
 
 TEST_F(TestMatrixMxNWithUnits, CanMultiplyScalarByMatrixDimensionlessMatrix)
