@@ -87,7 +87,7 @@ public:
      * \brief Calculates and returns the squared length of the vector. 
      * \return vector length squared 
      */
-    auto getLengthSq() const
+    auto getLengthSquared() const
     {
         auto length2 = _elements[0] * _elements[0];
         for (unsigned int i = 1; i < SIZE; ++i)
@@ -103,7 +103,7 @@ public:
      */
     TYPE getLength() const
     {
-        return sqrt(getLengthSq());
+        return sqrt(getLengthSquared());
     }
 
     /** 
@@ -114,6 +114,28 @@ public:
     {
         VectorN<double, SIZE> result;
         calculateNormalized(*this, &result);
+        return result;
+    }
+
+    /**
+     * \brief Returns angle-dimension-stripped version of the vector.
+     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
+     * this makes radians a pure number without physical dimension. So in operations like
+     * v [m/s] = omega [ras/s] x r [m], radians are treated as dimensionless.
+     * \return angle-dimension-stripped vector
+     */
+    template <typename U = TYPE>
+    requires (
+        units::traits::is_unit_t<TYPE>::value &&
+        units::traits::has_angle_dimension_t<TYPE>::value
+    )
+    auto getAngleStripped() const
+    {
+        VectorN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, SIZE> result;
+        for (unsigned int i = 0; i < SIZE; ++i)
+        {
+            result(i) = units::detail::strip_angle_dimension<TYPE>::strip(_elements[i]);
+        }
         return result;
     }
 
@@ -236,28 +258,6 @@ public:
         {
             _elements[i] = TYPE{0};
         }
-    }
-
-    /**
-     * \brief Returns angle-dimension-stripped version of the vector.
-     * As radians can be treated as dimensionless ratio of two lengths: arc length and radius,
-     * this makes radians a pure number without physical dimension. So in operations like
-     * v [m/s] = omega [ras/s] x r [m], radians are treated as dimensionless.
-     * \return angle-dimension-stripped vector
-     */
-    template <typename U = TYPE>
-    requires (
-        units::traits::is_unit_t<TYPE>::value &&
-        units::traits::has_angle_dimension_t<TYPE>::value
-    )
-    auto getStripped() const
-    {
-        VectorN<typename units::detail::strip_angle_dimension<TYPE>::stripped_type, SIZE> result;
-        for (unsigned int i = 0; i < SIZE; ++i)
-        {
-            result(i) = units::detail::strip_angle_dimension<TYPE>::strip(_elements[i]);
-        }
-        return result;
     }
 
     /**

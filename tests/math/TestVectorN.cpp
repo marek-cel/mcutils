@@ -56,7 +56,7 @@ TEST_F(TestVectorN, CanGetLengthSquared)
     v(2) = 3.0;
 
     // 1^2 + 2^2 + 3^2 = 1 + 4 + 9 = 14
-    EXPECT_DOUBLE_EQ(v.getLengthSq(), 14.0);
+    EXPECT_DOUBLE_EQ(v.getLengthSquared(), 14.0);
 }
 
 TEST_F(TestVectorN, CanGetLength)

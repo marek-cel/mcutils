@@ -70,7 +70,7 @@ void CanGetLengthSquared()
     v(2) = T{3};
 
     // 1^2 + 2^2 + 3^2 = 1 + 4 + 9 = 14
-    EXPECT_DOUBLE_EQ(v.getLengthSq()(), 14.0);
+    EXPECT_DOUBLE_EQ(v.getLengthSquared()(), 14.0);
 }
 
 template <typename T>
@@ -106,6 +106,36 @@ void CanGetNormalized()
     EXPECT_NEAR(v1_n(2), 0.801784, 1.0e-5);
 
     EXPECT_NEAR(v1_n.getLength(), 1.0, TOLERANCE);
+}
+
+template <typename T>
+void CanGetAngleStrippedAngularVel()
+{
+    mc::VectorN<T,SIZE> v1;
+    v1(0) = 1.0_rad_per_s;
+    v1(1) = 2.0_rad_per_s;
+    v1(2) = 3.0_rad_per_s;
+
+    mc::VectorN<units::inverted::per_second_t,SIZE> v1_as = v1.getAngleStripped();
+
+    EXPECT_DOUBLE_EQ(v1_as(0)(), 1.0);
+    EXPECT_DOUBLE_EQ(v1_as(1)(), 2.0);
+    EXPECT_DOUBLE_EQ(v1_as(2)(), 3.0);
+}
+
+template <typename T>
+void CanGetAngleStrippedAngularAcc()
+{
+    mc::VectorN<T,SIZE> v1;
+    v1(0) = 1.0_rad_per_s_sq;
+    v1(1) = 2.0_rad_per_s_sq;
+    v1(2) = 3.0_rad_per_s_sq;
+
+    mc::VectorN<units::inverted::per_second_squared_t,SIZE> v1_as = v1.getAngleStripped();
+
+    EXPECT_DOUBLE_EQ(v1_as(0)(), 1.0);
+    EXPECT_DOUBLE_EQ(v1_as(1)(), 2.0);
+    EXPECT_DOUBLE_EQ(v1_as(2)(), 3.0);
 }
 
 template <typename T>
@@ -358,7 +388,7 @@ void CanSubtractDifferentTypes()
 }
 
 template <typename T>
-void CanMultiplyByDouble()
+void CanMultiplyByDimensionlessScalar()
 {
     mc::VectorN<T,SIZE> v;
     v(0) = T{1};
@@ -844,6 +874,15 @@ TEST_F(TestVectorNWithUnits, CanGetNormalized)
     test::VectorN::CanGetNormalized<units::torque::newton_meter_t>();
 }
 
+TEST_F(TestVectorNWithUnits, CanGetAngleStripped)
+{
+    test::VectorN::CanGetAngleStrippedAngularVel<units::angular_velocity::radians_per_second_t>();
+    test::VectorN::CanGetAngleStrippedAngularVel<units::angular_velocity::degrees_per_second_t>();
+
+    test::VectorN::CanGetAngleStrippedAngularAcc<units::angular_acceleration::radians_per_second_squared_t>();
+    test::VectorN::CanGetAngleStrippedAngularAcc<units::angular_acceleration::degrees_per_second_squared_t>();
+}
+
 TEST_F(TestVectorNWithUnits, CanGetStdArray)
 {
     test::VectorN::CanGetStdArray<units::length::meter_t>();
@@ -959,15 +998,6 @@ TEST_F(TestVectorNWithUnits, CanZeroize)
     test::VectorN::CanZeroize<units::angular_acceleration::degrees_per_second_squared_t>();
     test::VectorN::CanZeroize<units::force::newton_t>();
     test::VectorN::CanZeroize<units::torque::newton_meter_t>();
-}
-
-TEST_F(TestVectorNWithUnits, CanGetStripped)
-{
-    mc::VectorN<units::angular_velocity::radians_per_second_t,SIZE> omega;
-    mc::VectorN<units::inverted::per_second_t,SIZE> omega_stripped = omega.getStripped();
-
-    mc::VectorN<units::angular_acceleration::radians_per_second_squared_t,SIZE> epsilon;
-    mc::VectorN<units::inverted::per_second_squared_t,SIZE> epsilon_stripped = epsilon.getStripped();
 }
 
 TEST_F(TestVectorNWithUnits, CanCastToDimensionless)
@@ -1142,17 +1172,17 @@ TEST_F(TestVectorNWithUnits, CanSubtractDifferentTypes)
     >();
 }
 
-TEST_F(TestVectorNWithUnits, CanMultiplyByDouble)
+TEST_F(TestVectorNWithUnits, CanMultiplyByDimensionlessScalar)
 {
-    test::VectorN::CanMultiplyByDouble<units::length::meter_t>();
-    test::VectorN::CanMultiplyByDouble<units::velocity::meters_per_second_t>();
-    test::VectorN::CanMultiplyByDouble<units::acceleration::meters_per_second_squared_t>();
-    test::VectorN::CanMultiplyByDouble<units::angular_velocity::radians_per_second_t>();
-    test::VectorN::CanMultiplyByDouble<units::angular_velocity::degrees_per_second_t>();
-    test::VectorN::CanMultiplyByDouble<units::angular_acceleration::radians_per_second_squared_t>();
-    test::VectorN::CanMultiplyByDouble<units::angular_acceleration::degrees_per_second_squared_t>();
-    test::VectorN::CanMultiplyByDouble<units::force::newton_t>();
-    test::VectorN::CanMultiplyByDouble<units::torque::newton_meter_t>();
+    test::VectorN::CanMultiplyByDimensionlessScalar<units::length::meter_t>();
+    test::VectorN::CanMultiplyByDimensionlessScalar<units::velocity::meters_per_second_t>();
+    test::VectorN::CanMultiplyByDimensionlessScalar<units::acceleration::meters_per_second_squared_t>();
+    test::VectorN::CanMultiplyByDimensionlessScalar<units::angular_velocity::radians_per_second_t>();
+    test::VectorN::CanMultiplyByDimensionlessScalar<units::angular_velocity::degrees_per_second_t>();
+    test::VectorN::CanMultiplyByDimensionlessScalar<units::angular_acceleration::radians_per_second_squared_t>();
+    test::VectorN::CanMultiplyByDimensionlessScalar<units::angular_acceleration::degrees_per_second_squared_t>();
+    test::VectorN::CanMultiplyByDimensionlessScalar<units::force::newton_t>();
+    test::VectorN::CanMultiplyByDimensionlessScalar<units::torque::newton_meter_t>();
 }
 
 TEST_F(TestVectorNWithUnits, CanMultiplyDimensionlessVectorByScalar)
@@ -1173,6 +1203,7 @@ TEST_F(TestVectorNWithUnits, CanMultiplyByScalar)
     test::VectorN::CanMultiplyByScalar<units::length::meter_t>();
     test::VectorN::CanMultiplyByScalar<units::velocity::meters_per_second_t>();
     test::VectorN::CanMultiplyByScalar<units::acceleration::meters_per_second_squared_t>();
+    // units with angular dimensions are treated differently
     test::VectorN::CanMultiplyByScalar<units::force::newton_t>();
     test::VectorN::CanMultiplyByScalar<units::torque::newton_meter_t>();
 }
